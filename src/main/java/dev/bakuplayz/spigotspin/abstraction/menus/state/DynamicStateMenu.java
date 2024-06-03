@@ -22,7 +22,7 @@ public interface DynamicStateMenu<S extends MenuState> extends DynamicMenu, Dyna
     void setItem(
             @Range(from = 0, to = DYNAMIC_MENU_MAX_SIZE) int position,
             @NotNull ClickableStateItem<S> item,
-            @NotNull ClickableAction action,
+            @NotNull ClickableAction<ClickableStateItem<S>> action,
             int flag
     );
 
@@ -30,7 +30,7 @@ public interface DynamicStateMenu<S extends MenuState> extends DynamicMenu, Dyna
     void setItem(
             @Range(from = 0, to = DYNAMIC_MENU_MAX_SIZE) int position,
             @NotNull ClickableStateItem<S> item,
-            @NotNull ClickableAction action,
+            @NotNull ClickableAction<ClickableStateItem<S>> action,
             @NotNull List<Integer> flags
     );
 

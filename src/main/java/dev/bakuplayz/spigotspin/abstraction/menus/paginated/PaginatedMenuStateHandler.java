@@ -29,12 +29,11 @@ public abstract class PaginatedMenuStateHandler<S extends PaginatedMenuState> ex
 
         return onUpdateState(partialState, flag);
     }
-    
+
 
     @Override
     protected <P> S onUpdateState(@NotNull P partialState, int flag) {
         return state;
     }
-
 
 }

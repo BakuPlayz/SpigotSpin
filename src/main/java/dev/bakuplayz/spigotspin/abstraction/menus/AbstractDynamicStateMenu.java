@@ -41,7 +41,7 @@ public abstract class AbstractDynamicStateMenu<S extends MenuState>
     public final void setItem(
             @Range(from = 0, to = DYNAMIC_MENU_MAX_SIZE) int position,
             @NotNull ClickableStateItem<S> item,
-            @NotNull ClickableAction action,
+            @NotNull ClickableAction<ClickableStateItem<S>> action,
             int flag
     ) {
         this.setItem(position, item, action, Collections.singletonList(flag));
@@ -52,7 +52,7 @@ public abstract class AbstractDynamicStateMenu<S extends MenuState>
     public final void setItem(
             @Range(from = 0, to = DYNAMIC_MENU_MAX_SIZE) int position,
             @NotNull ClickableStateItem<S> item,
-            @NotNull ClickableAction action,
+            @NotNull ClickableAction<ClickableStateItem<S>> action,
             @NotNull List<Integer> flags
     ) {
         item.setFlags(flags);

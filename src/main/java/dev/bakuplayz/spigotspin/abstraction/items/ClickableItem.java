@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class ClickableItem extends Item implements Clickable {
 
     @Nullable
-    private ClickableAction action;
+    private ClickableAction<ClickableItem> action;
 
 
     @Override

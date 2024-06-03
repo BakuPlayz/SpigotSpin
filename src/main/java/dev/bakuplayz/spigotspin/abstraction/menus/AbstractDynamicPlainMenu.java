@@ -32,7 +32,7 @@ public abstract class AbstractDynamicPlainMenu extends AbstractDynamicMenu imple
 
 
     @Override
-    public final void setItem(@Range(from = 0, to = DYNAMIC_MENU_MAX_SIZE) int position, @NotNull ClickableItem item, @NotNull ClickableAction action) {
+    public final void setItem(@Range(from = 0, to = DYNAMIC_MENU_MAX_SIZE) int position, @NotNull ClickableItem item, @NotNull ClickableAction<ClickableItem> action) {
         item.setAction(action);
         item.setPosition(position);
         items.put(position, item);
