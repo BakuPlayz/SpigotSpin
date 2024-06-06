@@ -130,7 +130,7 @@ explained above make us able to perform click-specific functionality when a play
 <br>
 
 ```java
-import dev.bakuplayz.spigotspin.abstraction.items.ClickableItem;
+import dev.bakuplayz.spigotspin.abstraction.menu.items.ClickableItem;
 
 public final class ExampleItem extends ClickableItem {
 
@@ -171,7 +171,7 @@ inside the class, but rather update it using our setter as we'll see soon.
 <br>
 
 ```java
-import dev.bakuplayz.spigotspin.abstraction.menus.state.MenuState;
+import dev.bakuplayz.spigotspin.abstraction.menu.menus.state.MenuState;
 
 @Getter
 @Setter
@@ -242,8 +242,8 @@ be a set all of a sudden.
 <br>
 
 ```java
-import dev.bakuplayz.spigotspin.abstraction.menus.state.MenuStateHandler;
-import dev.bakuplayz.spigotspin.abstraction.menus.state.MenuStateObserver;
+import dev.bakuplayz.spigotspin.abstraction.menu.menus.state.MenuStateHandler;
+import dev.bakuplayz.spigotspin.abstraction.menu.menus.state.MenuStateObserver;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -286,7 +286,7 @@ the newly updated count which we then in this case use to change the color to `C
 <br>
 
 ```java
-import dev.bakuplayz.spigotspin.abstraction.items.state.ClickableStateItem;
+import dev.bakuplayz.spigotspin.abstraction.menu.items.state.ClickableStateItem;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -317,7 +317,7 @@ the flag or flags are given to make the `StateItem` listen for changes to these 
 <br>
 
 ```java
-import dev.bakuplayz.spigotspin.abstraction.menus.AbstractDynamicStateMenu;
+import dev.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicStateMenu;
 
 public final class ExampleStateMenu extends AbstractDynamicStateMenu<ExampleState> {
 
@@ -367,7 +367,7 @@ indicators at the bottom of each page to head back, see the current or go to the
 <br>
 
 ```java
-import dev.bakuplayz.spigotspin.abstraction.menus.AbstractDynamicPaginatedMenu;
+import dev.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicPaginatedMenu;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;

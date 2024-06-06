@@ -1,7 +1,7 @@
 package dev.bakuplayz.spigotspin.examples.pagination;
 
-import dev.bakuplayz.spigotspin.abstraction.menus.paginated.PaginatedMenuStateHandler;
-import dev.bakuplayz.spigotspin.abstraction.menus.paginated.PaginatedMenuStateObserver;
+import dev.bakuplayz.spigotspin.abstraction.menu.menus.paginated.PaginatedMenuStateHandler;
+import dev.bakuplayz.spigotspin.abstraction.menu.menus.paginated.PaginatedMenuStateObserver;
 import org.jetbrains.annotations.NotNull;
 
 public final class ExampleStateHandler extends PaginatedMenuStateHandler<ExampleState> {

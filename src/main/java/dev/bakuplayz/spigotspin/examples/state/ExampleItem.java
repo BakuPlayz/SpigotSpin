@@ -1,7 +1,7 @@
 package dev.bakuplayz.spigotspin.examples.state;
 
 import com.cryptomorin.xseries.XMaterial;
-import dev.bakuplayz.spigotspin.abstraction.items.state.ClickableStateItem;
+import dev.bakuplayz.spigotspin.abstraction.menu.items.state.ClickableStateItem;
 import org.jetbrains.annotations.NotNull;
 
 public final class ExampleItem extends ClickableStateItem<ExampleState> {

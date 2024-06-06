@@ -1,6 +1,6 @@
 package dev.bakuplayz.spigotspin.examples.shared;
 
-import dev.bakuplayz.spigotspin.abstraction.menus.AbstractDynamicSharedMenu;
+import dev.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicSharedMenu;
 
 public final class ExampleSharedMenu extends AbstractDynamicSharedMenu<ExampleState> {
 
@@ -15,7 +15,7 @@ public final class ExampleSharedMenu extends AbstractDynamicSharedMenu<ExampleSt
 
     @Override
     public void setItems() {
-        setItem(9, new ExampleItem("Test item"), (ignored) -> stateHandler.incrementCounter(), ExampleStateFlag.COUNT);
+        setItem(9, new ExampleItem("Test item"), (ignored, player) -> stateHandler.incrementCounter(), ExampleStateFlag.COUNT);
     }
 
 }

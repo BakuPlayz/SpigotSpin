@@ -1,7 +1,7 @@
 package dev.bakuplayz.spigotspin.examples.pagination;
 
 import com.cryptomorin.xseries.XMaterial;
-import dev.bakuplayz.spigotspin.abstraction.items.state.StateItem;
+import dev.bakuplayz.spigotspin.abstraction.menu.items.state.StateItem;
 import org.jetbrains.annotations.NotNull;
 
 public final class ExampleItem extends StateItem<ExampleState> {

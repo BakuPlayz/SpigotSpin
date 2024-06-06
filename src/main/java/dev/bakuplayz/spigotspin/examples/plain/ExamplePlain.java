@@ -1,6 +1,6 @@
 package dev.bakuplayz.spigotspin.examples.plain;
 
-import dev.bakuplayz.spigotspin.abstraction.menus.AbstractDynamicPlainMenu;
+import dev.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicPlainMenu;
 
 import java.util.logging.Logger;
 
@@ -16,7 +16,7 @@ public final class ExamplePlain extends AbstractDynamicPlainMenu {
 
     @Override
     public void setItems() {
-        setItem(9, new ExampleItem(), (item) -> LOGGER.info(String.valueOf(item.getPosition())));
+        setItem(9, new ExampleItem(), (item, player) -> LOGGER.info(String.valueOf(item.getPosition())));
     }
 
 }

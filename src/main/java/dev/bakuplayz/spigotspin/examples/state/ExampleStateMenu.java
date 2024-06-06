@@ -1,6 +1,6 @@
 package dev.bakuplayz.spigotspin.examples.state;
 
-import dev.bakuplayz.spigotspin.abstraction.menus.AbstractDynamicStateMenu;
+import dev.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicStateMenu;
 
 public final class ExampleStateMenu extends AbstractDynamicStateMenu<ExampleState> {
 
@@ -15,7 +15,7 @@ public final class ExampleStateMenu extends AbstractDynamicStateMenu<ExampleStat
 
     @Override
     public void setItems() {
-        setItem(9, new ExampleItem("Test item"), (ignored) -> stateHandler.incrementCounter(), ExampleStateFlag.COUNT);
+        setItem(9, new ExampleItem("Test item"), (ignored, player) -> stateHandler.incrementCounter(), ExampleStateFlag.COUNT);
     }
 
 }

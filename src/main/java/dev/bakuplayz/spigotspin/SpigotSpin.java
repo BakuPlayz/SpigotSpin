@@ -1,6 +1,6 @@
 package dev.bakuplayz.spigotspin;
 
-import dev.bakuplayz.spigotspin.abstraction.listeners.MenuListener;
+import dev.bakuplayz.spigotspin.abstraction.menu.listeners.MenuListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;

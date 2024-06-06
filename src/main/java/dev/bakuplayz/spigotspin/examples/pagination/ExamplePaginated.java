@@ -1,7 +1,7 @@
 package dev.bakuplayz.spigotspin.examples.pagination;
 
-import dev.bakuplayz.spigotspin.abstraction.items.Item;
-import dev.bakuplayz.spigotspin.abstraction.menus.AbstractDynamicPaginatedMenu;
+import dev.bakuplayz.spigotspin.abstraction.menu.items.Item;
+import dev.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicPaginatedMenu;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;

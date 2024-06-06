@@ -1,6 +1,6 @@
 package dev.bakuplayz.spigotspin.examples.state;
 
-import dev.bakuplayz.spigotspin.abstraction.menus.state.MenuState;
+import dev.bakuplayz.spigotspin.abstraction.menu.menus.state.MenuState;
 import lombok.Getter;
 import lombok.Setter;
 
