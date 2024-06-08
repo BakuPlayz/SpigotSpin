@@ -54,7 +54,7 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
 
     @Setter
     @Nullable
-    private List<?> paginationItems;
+    protected List<?> paginationItems;
 
 
     protected AbstractDynamicPaginatedMenu(@NotNull String title) {
@@ -134,7 +134,7 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
     }
 
     @Override
-    public ItemAction<Item> getPaginatedItemAction() {
+    public ItemAction<Item> getPaginatedItemAction(int position) {
         throw new RuntimeException("Paginated item action must be set, if using either clickable or draggable items.");
     }
 
@@ -152,11 +152,12 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
         int itemPosition = calculateItemPosition(indexed.getIndex(), page);
         int inventoryPosition = indexed.getValue();
 
-        Item item = loadPaginatedItem(itemPosition * (page + 1));
+        int position = itemPosition * (page + 1);
+        Item item = loadPaginatedItem(position);
         if (item instanceof ClickableItem) {
-            ((ClickableItem) item).setAction(TypeUtils.infer(getPaginatedItemAction()));
+            ((ClickableItem) item).setAction(TypeUtils.infer(getPaginatedItemAction(position)));
         } else if (item instanceof DraggableItem) {
-            ((DraggableItem) item).setAction(TypeUtils.infer(getPaginatedItemAction()));
+            ((DraggableItem) item).setAction(TypeUtils.infer(getPaginatedItemAction(position)));
         }
 
         item.setPosition(inventoryPosition);

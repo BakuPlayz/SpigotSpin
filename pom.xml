@@ -6,7 +6,7 @@
 
     <groupId>com.github.bakuplayz</groupId>
     <artifactId>spigotspin</artifactId>
-    <version>0.1.1.4-BETA</version>
+    <version>0.1.1.5-BETA</version>
     <packaging>jar</packaging>
 
     <distributionManagement>
@@ -104,7 +104,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <stylesheet>java</stylesheet>
                     <doclint>none</doclint>
                 </configuration>
             </plugin>

@@ -24,7 +24,7 @@ public final class ExamplePaginated extends AbstractDynamicPaginatedMenu<Example
 
     @NotNull
     @Override
-    public ItemAction<Item> getPaginatedItemAction() {
+    public ItemAction<Item> getPaginatedItemAction(int position) {
         return (item, player) -> {
             player.sendMessage("You clicked at an item :O");
         };

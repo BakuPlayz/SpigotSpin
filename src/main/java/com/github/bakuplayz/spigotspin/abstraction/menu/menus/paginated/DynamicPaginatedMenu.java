@@ -14,7 +14,7 @@ public interface DynamicPaginatedMenu extends PaginationContext {
 
     void loadPaginatedItems(@NotNull List<Item> batch);
 
-    ItemAction<Item> getPaginatedItemAction();
+    ItemAction<Item> getPaginatedItemAction(int position);
 
     @NotNull
     Item loadPaginatedItem(int position);
