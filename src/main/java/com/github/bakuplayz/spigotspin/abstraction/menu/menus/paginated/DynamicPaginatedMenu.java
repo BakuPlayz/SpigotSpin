@@ -1,6 +1,7 @@
 package com.github.bakuplayz.spigotspin.abstraction.menu.menus.paginated;
 
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.Item;
+import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.ItemAction;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.CurrentPageItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.NextPageItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.PreviousPageItem;
@@ -11,14 +12,12 @@ import java.util.List;
 public interface DynamicPaginatedMenu extends PaginationContext {
 
 
-    int getItemsAmount();
+    void loadPaginatedItems(@NotNull List<Item> batch);
 
-
-    void loadItems(@NotNull List<Item> batch);
-
+    ItemAction<Item> getPaginatedItemAction();
 
     @NotNull
-    Item loadItem(int itemPosition, int inventoryPosition, int page, int displayPage);
+    Item loadPaginatedItem(int position);
 
 
     @NotNull

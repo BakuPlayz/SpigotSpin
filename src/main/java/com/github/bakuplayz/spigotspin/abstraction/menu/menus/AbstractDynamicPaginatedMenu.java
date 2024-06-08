@@ -1,6 +1,9 @@
 package com.github.bakuplayz.spigotspin.abstraction.menu.menus;
 
+import com.github.bakuplayz.spigotspin.abstraction.menu.items.ClickableItem;
+import com.github.bakuplayz.spigotspin.abstraction.menu.items.DraggableItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.Item;
+import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.ItemAction;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.CurrentPageItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.NextPageItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.PreviousPageItem;
@@ -14,6 +17,7 @@ import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -48,6 +52,10 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
     @NotNull
     protected SH stateHandler;
 
+    @Setter
+    @Nullable
+    private List<?> paginationItems;
+
 
     protected AbstractDynamicPaginatedMenu(@NotNull String title) {
         super(title);
@@ -56,7 +64,6 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
         this.previousItem = new PreviousPageItem<>();
         this.nextItem = new NextPageItem<>(this);
     }
-
 
     @Override
     public void open(@NotNull Player player) {
@@ -87,12 +94,12 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
                 .collect(Collectors.toList());
 
         setItems();
-        loadItems(items);
+        loadPaginatedItems(items);
     }
 
 
     @Override
-    public final void loadItems(@NotNull List<Item> batch) {
+    public final void loadPaginatedItems(@NotNull List<Item> batch) {
         batch.forEach(item -> {
             if (!(item instanceof StateItem)) {
                 return;
@@ -122,17 +129,36 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
 
 
     @Override
-    public boolean hasNextPage() {
+    public final boolean hasNextPage() {
         return calculateMaxItemsPerPage(this::isFramePosition) * stateHandler.getState().getDisplayPage() <= getItemsAmount();
     }
 
+    @Override
+    public ItemAction<Item> getPaginatedItemAction() {
+        throw new RuntimeException("Paginated item action must be set, if using either clickable or draggable items.");
+    }
+
+
+    private int getItemsAmount() {
+        if (paginationItems == null) {
+            throw new IllegalArgumentException("Pagination items must be set.");
+        }
+
+        return paginationItems.size();
+    }
 
     @NotNull
     private Item convertIndexedToItem(@NotNull Collection<Integer> indexed, int page) {
-        int inventoryPosition = indexed.getValue();
         int itemPosition = calculateItemPosition(indexed.getIndex(), page);
+        int inventoryPosition = indexed.getValue();
 
-        Item item = loadItem(itemPosition, inventoryPosition, page, page + 1);
+        Item item = loadPaginatedItem(itemPosition * (page + 1));
+        if (item instanceof ClickableItem) {
+            ((ClickableItem) item).setAction(TypeUtils.infer(getPaginatedItemAction()));
+        } else if (item instanceof DraggableItem) {
+            ((DraggableItem) item).setAction(TypeUtils.infer(getPaginatedItemAction()));
+        }
+
         item.setPosition(inventoryPosition);
         return item;
     }

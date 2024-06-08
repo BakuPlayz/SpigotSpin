@@ -5,7 +5,13 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 @FunctionalInterface
-public interface DraggableAction {
+public interface DraggableAction extends ItemAction<DraggableItem> {
+
+    @Override
+    default void performAction(@NotNull DraggableItem item, @NotNull Player player) {
+        onDrag(item, player);
+    }
+
 
     void onDrag(@NotNull DraggableItem item, @NotNull Player player);
 

@@ -1,7 +1,10 @@
 package com.github.bakuplayz.spigotspin.examples.pagination;
 
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.Item;
+import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.DraggableAction;
+import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.ItemAction;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicPaginatedMenu;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -15,19 +18,23 @@ public final class ExamplePaginated extends AbstractDynamicPaginatedMenu<Example
 
     public ExamplePaginated() {
         super("Paginated example");
-    }
-
-
-    @Override
-    public int getItemsAmount() {
-        return items.size();
+        setPaginationItems(items);
     }
 
 
     @NotNull
     @Override
-    public Item loadItem(int itemPosition, int inventoryPosition, int page, int displayPage) {
-        return new ExampleItem(items.get(itemPosition * displayPage));
+    public ItemAction<Item> getPaginatedItemAction() {
+        return (item, player) -> {
+            player.sendMessage("You clicked at an item :O");
+        };
+    }
+
+
+    @NotNull
+    @Override
+    public Item loadPaginatedItem(int itemPosition) {
+        return new ExampleItem(items.get(itemPosition));
     }
 
 }
