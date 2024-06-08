@@ -52,9 +52,8 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
     @NotNull
     protected SH stateHandler;
 
-    @Setter
     @Nullable
-    protected List<?> paginationItems;
+    private List<?> paginationItems;
 
 
     protected AbstractDynamicPaginatedMenu(@NotNull String title) {
@@ -64,6 +63,7 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
         this.previousItem = new PreviousPageItem<>();
         this.nextItem = new NextPageItem<>(this);
     }
+
 
     @Override
     public void open(@NotNull Player player) {
@@ -113,6 +113,19 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
 
 
     @Override
+    @Nullable
+    public <I> List<I> getPaginationItems() {
+        return (List<I>) paginationItems;
+    }
+
+
+    @Override
+    public <I> void setPaginationItems(@NotNull List<I> items) {
+        this.paginationItems = items;
+    }
+
+
+    @Override
     public boolean isFramePosition(int position) {
         boolean isLeft = position % 9 == 0;
         boolean isRight = position % 9 == 8;
@@ -133,6 +146,7 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
         return calculateMaxItemsPerPage(this::isFramePosition) * stateHandler.getState().getDisplayPage() <= getItemsAmount();
     }
 
+
     @Override
     public ItemAction<Item> getPaginatedItemAction(int position) {
         throw new RuntimeException("Paginated item action must be set, if using either clickable or draggable items.");
@@ -146,6 +160,7 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
 
         return paginationItems.size();
     }
+
 
     @NotNull
     private Item convertIndexedToItem(@NotNull Collection<Integer> indexed, int page) {
