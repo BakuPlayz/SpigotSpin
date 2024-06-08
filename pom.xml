@@ -6,7 +6,7 @@
 
     <groupId>com.github.bakuplayz</groupId>
     <artifactId>spigotspin</artifactId>
-    <version>0.1.1.3-BETA</version>
+    <version>0.1.1.4-BETA</version>
     <packaging>jar</packaging>
 
     <distributionManagement>
@@ -59,7 +59,7 @@
                             <artifact>*:*</artifact>
                             <excludes>
                                 <exclude>META-INF/*</exclude>
-                                <exclude>dev/bakuplayz/spigotspin/examples/*</exclude>
+                                <exclude>com/github/bakuplayz/spigotspin/examples/*</exclude>
                                 <exclude>com/cryptomorin/xseries/abstractions/*</exclude>
                                 <exclude>com/cryptomorin/xseries/messages/*</exclude>
                                 <exclude>com/cryptomorin/xseries/particles/*</exclude>
@@ -89,6 +89,24 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadoc</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <stylesheet>java</stylesheet>
+                    <doclint>none</doclint>
+                </configuration>
             </plugin>
 
             <plugin>
