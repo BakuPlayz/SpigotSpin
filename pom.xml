@@ -6,7 +6,7 @@
 
     <groupId>com.github.bakuplayz</groupId>
     <artifactId>spigotspin</artifactId>
-    <version>0.1.1.6-BETA</version>
+    <version>0.1.1.7-BETA</version>
     <packaging>jar</packaging>
 
     <distributionManagement>
@@ -50,7 +50,7 @@
                     <relocations>
                         <relocation>
                             <pattern>com.cryptomorin.xseries</pattern>
-                            <shadedPattern>dev.bakuplayz.spigotspin.utils</shadedPattern>
+                            <shadedPattern>com.github.bakuplayz.spigotspin.utils</shadedPattern>
                         </relocation>
                     </relocations>
 
@@ -142,6 +142,7 @@
             <groupId>com.github.cryptomorin</groupId>
             <artifactId>XSeries</artifactId>
             <version>10.0.0</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>

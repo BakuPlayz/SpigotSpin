@@ -1,16 +1,14 @@
 package com.github.bakuplayz.spigotspin.examples.pagination;
 
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.Item;
-import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.DraggableAction;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.ItemAction;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicPaginatedMenu;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
 
-public final class ExamplePaginated extends AbstractDynamicPaginatedMenu<ExampleState, ExampleStateHandler> {
+public final class ExamplePaginated extends AbstractDynamicPaginatedMenu<ExampleState, ExampleStateHandler, String> {
 
 
     private final List<String> items = Arrays.asList("Hello", "World!");
@@ -24,7 +22,7 @@ public final class ExamplePaginated extends AbstractDynamicPaginatedMenu<Example
 
     @NotNull
     @Override
-    public ItemAction<Item> getPaginatedItemAction(int position) {
+    public ItemAction<Item> getPaginatedItemAction(@NotNull String paginatedItem) {
         return (item, player) -> {
             player.sendMessage("You clicked at an item :O");
         };
@@ -33,8 +31,9 @@ public final class ExamplePaginated extends AbstractDynamicPaginatedMenu<Example
 
     @NotNull
     @Override
-    public Item loadPaginatedItem(int itemPosition) {
-        return new ExampleItem(items.get(itemPosition));
+    public Item loadPaginatedItem(@NotNull String paginatedItem) {
+        return new ExampleItem(paginatedItem);
     }
+
 
 }
