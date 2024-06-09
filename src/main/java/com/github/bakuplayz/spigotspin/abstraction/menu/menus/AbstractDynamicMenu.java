@@ -150,7 +150,7 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
      * @param player The player that should open the previous menu.
      */
     public static void popBackStack(@NotNull Player player) {
-        if (backStack.containsKey(player.getUniqueId().toString())) return;
+        if (!backStack.containsKey(player.getUniqueId().toString())) return;
         backStack.remove(player.getUniqueId().toString()).open(player);
     }
 

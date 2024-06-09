@@ -102,6 +102,22 @@ public final class MenuListener implements Listener {
     public void onMenuLeave(@NotNull InventoryCloseEvent event) {
         InventoryHolder holder = event.getInventory().getHolder();
 
+        if (!(holder instanceof AbstractDynamicSharedMenu)) {
+            return;
+        }
+
+        HumanEntity entity = event.getPlayer();
+        if (!(entity instanceof Player)) {
+            return;
+        }
+
+        ((AbstractDynamicSharedMenu<?>) holder).leave((Player) event.getPlayer());
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void onMenuClose(@NotNull InventoryCloseEvent event) {
+        InventoryHolder holder = event.getInventory().getHolder();
+
         if (!(holder instanceof AbstractDynamicMenu)) {
             return;
         }
@@ -112,12 +128,6 @@ public final class MenuListener implements Listener {
         }
 
         ((AbstractDynamicMenu) holder).handleClose(event);
-
-        if (!(holder instanceof AbstractDynamicSharedMenu)) {
-            return;
-        }
-
-        ((AbstractDynamicSharedMenu<?>) holder).leave((Player) event.getPlayer());
     }
 
 
