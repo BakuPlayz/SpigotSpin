@@ -1,6 +1,7 @@
 package com.github.bakuplayz.spigotspin.abstraction.menu.listeners;
 
 import com.github.bakuplayz.spigotspin.abstraction.menu.listeners.events.ExtendedInventoryDragEvent;
+import com.github.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicMenu;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicSharedMenu;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.DynamicMenu;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.shared.SharedInternal;
@@ -101,12 +102,18 @@ public final class MenuListener implements Listener {
     public void onMenuLeave(@NotNull InventoryCloseEvent event) {
         InventoryHolder holder = event.getInventory().getHolder();
 
-        if (!(holder instanceof AbstractDynamicSharedMenu)) {
+        if (!(holder instanceof AbstractDynamicMenu)) {
             return;
         }
 
         HumanEntity entity = event.getPlayer();
         if (!(entity instanceof Player)) {
+            return;
+        }
+
+        ((AbstractDynamicMenu) holder).handleClose(event);
+
+        if (!(holder instanceof AbstractDynamicSharedMenu)) {
             return;
         }
 

@@ -13,15 +13,19 @@ import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 import java.util.stream.IntStream;
 
 @EqualsAndHashCode
 public abstract class AbstractDynamicMenu implements DynamicMenu {
+
+    private static final Map<String, DynamicMenu> backStack = new HashMap<>();
 
     @NotNull
     protected final String title;
@@ -100,6 +104,13 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
     }
 
 
+    @Override
+    public void handleClose(@NotNull InventoryCloseEvent event) {
+        backStack.put(event.getPlayer().getUniqueId().toString(), this);
+    }
+
+
+    @Override
     public final void open(@NotNull Player player, @NotNull OpenInventoryHandler handler) {
         handler.beforeInventoryLoaded();
         handler.loadInventory();
@@ -131,6 +142,17 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
         return (int) Math.ceil(lastIndex / 9.0d) * 9;
     }
 
+
+    /**
+     * Attempts to pop the backstack to get the last menu that was open
+     * previous to this one, if it doesn't succeed then nothing happens.
+     *
+     * @param player The player that should open the previous menu.
+     */
+    public static void popBackStack(@NotNull Player player) {
+        if (backStack.containsKey(player.getUniqueId().toString())) return;
+        backStack.remove(player.getUniqueId().toString()).open(player);
+    }
 
     private boolean isMenuDrag(@NotNull InventoryClickEvent event) {
         return event.getClickedInventory() == getInventory();
