@@ -6,11 +6,11 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 @FunctionalInterface
-public interface ClickableAction<C extends Item & Clickable> extends ItemAction<C> {
+public interface ClickableAction<C extends Item & Clickable> extends ItemAction {
 
     @Override
-    default void performAction(@NotNull C item, @NotNull Player player) {
-        onClick(item, player);
+    default void performAction(@NotNull Item item, @NotNull Player player) {
+        onClick((C) item, player);
     }
 
 

@@ -5,6 +5,7 @@ import com.github.bakuplayz.spigotspin.abstraction.menu.items.DraggableItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.Item;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.ClickableAction;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.DraggableAction;
+import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.ItemAction;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.plain.DynamicPlainMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;

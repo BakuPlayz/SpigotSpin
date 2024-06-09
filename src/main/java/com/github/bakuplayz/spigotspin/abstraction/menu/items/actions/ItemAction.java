@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 @FunctionalInterface
-public interface ItemAction<I extends Item> {
+public interface ItemAction {
 
-    void performAction(@NotNull I item, @NotNull Player player);
+     void performAction(@NotNull Item item, @NotNull Player player);
 
 }

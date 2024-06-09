@@ -1,6 +1,6 @@
 package com.github.bakuplayz.spigotspin.abstraction.menu.items;
 
-import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.DraggableAction;
+import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.ItemAction;
 import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class DraggableItem extends Item implements Draggable {
 
     @Nullable
-    private DraggableAction action;
+    private ItemAction action;
 
 
     @Override
@@ -19,7 +19,7 @@ public abstract class DraggableItem extends Item implements Draggable {
             throw new IllegalArgumentException("Action cannot be null.");
         }
 
-        action.onDrag(this, player);
+        action.performAction(this, player);
     }
 
 }
