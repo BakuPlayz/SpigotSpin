@@ -164,7 +164,7 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
 
 
     public static void clearBackStack(@NotNull Player player) {
-        backStack.get(player.getUniqueId().toString()).clear();
+        backStack.put(player.getUniqueId().toString(), new Stack<>());
     }
 
 

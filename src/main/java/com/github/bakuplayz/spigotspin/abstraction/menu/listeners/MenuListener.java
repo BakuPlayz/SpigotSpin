@@ -131,7 +131,7 @@ public final class MenuListener implements Listener {
         if (!(entity instanceof Player)) {
             return;
         }
-
+        
         if (event.getReason() != InventoryCloseEvent.Reason.OPEN_NEW) {
             AbstractDynamicMenu.clearBackStack((Player) entity);
             return;
