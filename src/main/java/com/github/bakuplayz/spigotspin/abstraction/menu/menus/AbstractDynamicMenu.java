@@ -25,7 +25,8 @@ import java.util.stream.IntStream;
 @EqualsAndHashCode
 public abstract class AbstractDynamicMenu implements DynamicMenu {
 
-    private static final Map<String, DynamicMenu> backStack = new HashMap<>();
+    // TODO: Move to a separate class.
+    private static final Map<String, Stack<DynamicMenu>> backStack = new HashMap<>();
 
     @NotNull
     protected final String title;
@@ -106,7 +107,9 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
 
     @Override
     public void handleClose(@NotNull InventoryCloseEvent event) {
-        backStack.put(event.getPlayer().getUniqueId().toString(), this);
+        String uuid = event.getPlayer().getUniqueId().toString();
+        backStack.putIfAbsent(uuid, new Stack<>());
+        backStack.get(uuid).push(this);
     }
 
 
@@ -150,9 +153,20 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
      * @param player The player that should open the previous menu.
      */
     public static void popBackStack(@NotNull Player player) {
-        if (!backStack.containsKey(player.getUniqueId().toString())) return;
-        backStack.remove(player.getUniqueId().toString()).open(player);
+        String uuid = player.getUniqueId().toString();
+
+        if (!backStack.containsKey(uuid) || backStack.get(uuid).empty()) {
+            return;
+        }
+
+        backStack.get(uuid).pop().open(player);
     }
+
+
+    public static void clearBackStack(@NotNull Player player) {
+        backStack.get(player.getUniqueId().toString()).clear();
+    }
+
 
     private boolean isMenuDrag(@NotNull InventoryClickEvent event) {
         return event.getClickedInventory() == getInventory();

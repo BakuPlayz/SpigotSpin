@@ -111,7 +111,7 @@ public final class MenuListener implements Listener {
             return;
         }
 
-        ((AbstractDynamicSharedMenu<?>) holder).leave((Player) event.getPlayer());
+        ((AbstractDynamicSharedMenu<?>) holder).leave((Player) entity);
     }
 
     @EventHandler(priority = EventPriority.LOW)
@@ -122,8 +122,18 @@ public final class MenuListener implements Listener {
             return;
         }
 
+        // It is not safe to navigate back to shared menus.
+        if (holder instanceof AbstractDynamicSharedMenu<?>) {
+            return;
+        }
+
         HumanEntity entity = event.getPlayer();
         if (!(entity instanceof Player)) {
+            return;
+        }
+
+        if (event.getReason() != InventoryCloseEvent.Reason.OPEN_NEW) {
+            AbstractDynamicMenu.clearBackStack((Player) entity);
             return;
         }
 
