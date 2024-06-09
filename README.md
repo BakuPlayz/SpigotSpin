@@ -9,7 +9,8 @@
 
 > [!Note]
 > This library is still in its Beta days, however feel free to use it and send in feature requests if
-> you feel like something is missing or needing more attention.
+> you feel like something is missing or needing more attention. **Also observe that this libarary currently
+> only support paperspigot versions and not pure spigot.**
 
 ## Table of Contents
 
@@ -48,7 +49,7 @@ your pom.xml and replacing the `version` with the current version:
 ```xml
 
 <dependency>
-    <groupId>dev.bakuplayz</groupId>
+    <groupId>com.github.bakuplayz</groupId>
     <artifactId>spigotspin</artifactId>
     <version>version</version>
 </dependency>
