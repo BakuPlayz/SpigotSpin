@@ -1,6 +1,8 @@
 package com.github.bakuplayz.spigotspin;
 
 import com.github.bakuplayz.spigotspin.abstraction.menu.listeners.MenuListener;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -12,11 +14,8 @@ public final class SpigotSpin {
 
     public static final Logger LOGGER = Logger.getLogger("SpigotSpin");
 
-    private final Plugin plugin;
-
-
     public SpigotSpin(@NotNull Plugin plugin) {
-        this.plugin = plugin;
+        PLUGIN.REFERENCE.setPlugin(plugin);
 
         registerListeners();
     }
@@ -25,7 +24,15 @@ public final class SpigotSpin {
     private void registerListeners() {
         PluginManager manager = Bukkit.getPluginManager();
 
-        manager.registerEvents(new MenuListener(), plugin);
+        manager.registerEvents(new MenuListener(), PLUGIN.REFERENCE.getPlugin());
+    }
+
+    @Getter
+    public enum PLUGIN {
+        REFERENCE;
+
+        @Setter
+        public Plugin plugin;
     }
 
 

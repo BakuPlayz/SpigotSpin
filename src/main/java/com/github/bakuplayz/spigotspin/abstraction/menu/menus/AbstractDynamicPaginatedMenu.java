@@ -58,7 +58,7 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
     private List<PI> paginationItems;
 
 
-    protected AbstractDynamicPaginatedMenu(@NotNull String title) {
+    public AbstractDynamicPaginatedMenu(@NotNull String title) {
         super(title);
 
         this.currentItem = new CurrentPageItem<>();
