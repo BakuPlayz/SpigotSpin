@@ -6,7 +6,7 @@
 
     <groupId>com.github.bakuplayz</groupId>
     <artifactId>spigotspin</artifactId>
-    <version>0.1.1.15-BETA</version>
+    <version>0.1.1.16-BETA</version>
     <packaging>jar</packaging>
 
     <distributionManagement>

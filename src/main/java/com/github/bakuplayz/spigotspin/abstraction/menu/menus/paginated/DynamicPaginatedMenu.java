@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public interface DynamicPaginatedMenu<PI> extends PaginationContext {
+public interface DynamicPaginatedMenu<S extends PaginatedMenuState, PI> extends PaginationContext {
 
 
     void loadPaginatedItems(@NotNull List<Item> batch);
@@ -31,14 +31,14 @@ public interface DynamicPaginatedMenu<PI> extends PaginationContext {
 
 
     @NotNull
-    PreviousPageItem<PaginatedMenuState> getPreviousItem();
+    PreviousPageItem<S> getPreviousItem();
 
 
     @NotNull
-    CurrentPageItem<PaginatedMenuState> getCurrentItem();
+    CurrentPageItem<S> getCurrentItem();
 
 
     @NotNull
-    NextPageItem<PaginatedMenuState> getNextItem();
+    NextPageItem<S> getNextItem();
 
 }

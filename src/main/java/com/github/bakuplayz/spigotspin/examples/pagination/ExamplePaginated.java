@@ -2,6 +2,7 @@ package com.github.bakuplayz.spigotspin.examples.pagination;
 
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.Item;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.ItemAction;
+import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.NextPageItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicPaginatedMenu;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,6 +35,5 @@ public final class ExamplePaginated extends AbstractDynamicPaginatedMenu<Example
     public Item loadPaginatedItem(@NotNull String paginatedItem) {
         return new ExampleItem(paginatedItem);
     }
-
 
 }

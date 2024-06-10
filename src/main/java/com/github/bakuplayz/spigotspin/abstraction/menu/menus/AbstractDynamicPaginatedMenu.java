@@ -3,13 +3,11 @@ package com.github.bakuplayz.spigotspin.abstraction.menu.menus;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.ClickableItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.DraggableItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.Item;
-import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.ClickableAction;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.ItemAction;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.CurrentPageItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.NextPageItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.PreviousPageItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.state.StateItem;
-import com.github.bakuplayz.spigotspin.abstraction.menu.listeners.PaginatedListener;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.handlers.OpenInventoryHandler;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.paginated.*;
 import com.github.bakuplayz.spigotspin.abstraction.menu.utils.Collection;
@@ -20,7 +18,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -30,26 +27,13 @@ import java.util.stream.IntStream;
 
 
 public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState, SH extends PaginatedMenuStateHandler<S>, PI>
-        extends AbstractDynamicStateMenu<S> implements DynamicPaginatedMenu<PI>, PaginatedMenuStateObserver<S> {
+        extends AbstractDynamicStateMenu<S> implements DynamicPaginatedMenu<S, PI>, PaginatedMenuStateObserver<S> {
 
     public static final int STARTING_PAGE = 0;
 
     public static final int PAGE_ITEM_INDEX_MIN = 0;
 
     public static final int PAGE_ITEM_INDEX_MAX = 45;
-
-
-    @Getter
-    @NotNull
-    private final NextPageItem<PaginatedMenuState> nextItem;
-
-    @Getter
-    @NotNull
-    private final CurrentPageItem<PaginatedMenuState> currentItem;
-
-    @Getter
-    @NotNull
-    private final PreviousPageItem<PaginatedMenuState> previousItem;
 
     @Setter
     @NotNull
@@ -63,10 +47,28 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
     public AbstractDynamicPaginatedMenu(@NotNull String title) {
         super(title);
 
-        this.currentItem = new CurrentPageItem<>();
-        this.previousItem = new PreviousPageItem<>();
-        this.nextItem = new NextPageItem<>(this);
         this.paginationItems = Collections.emptyList();
+    }
+
+
+    @NotNull
+    @Override
+    public NextPageItem<S> getNextItem() {
+        return new NextPageItem<>(this);
+    }
+
+
+    @NotNull
+    @Override
+    public PreviousPageItem<S> getPreviousItem() {
+        return new PreviousPageItem<>();
+    }
+
+
+    @NotNull
+    @Override
+    public CurrentPageItem<S> getCurrentItem() {
+        return new CurrentPageItem<>();
     }
 
 
