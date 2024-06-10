@@ -43,32 +43,23 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
     @Setter
     private List<PI> paginationItems;
 
+    @Getter
+    private final NextPageItem<S> nextItem;
+
+    @Getter
+    private final CurrentPageItem<S> currentItem;
+
+    @Getter
+    private final PreviousPageItem<S> previousItem;
+
 
     public AbstractDynamicPaginatedMenu(@NotNull String title) {
         super(title);
 
+        this.nextItem = createNextItem();
+        this.currentItem = createCurrentItem();
+        this.previousItem = createPreviousItem();
         this.paginationItems = Collections.emptyList();
-    }
-
-
-    @NotNull
-    @Override
-    public NextPageItem<S> getNextItem() {
-        return new NextPageItem<>(this);
-    }
-
-
-    @NotNull
-    @Override
-    public PreviousPageItem<S> getPreviousItem() {
-        return new PreviousPageItem<>();
-    }
-
-
-    @NotNull
-    @Override
-    public CurrentPageItem<S> getCurrentItem() {
-        return new CurrentPageItem<>();
     }
 
 
@@ -116,9 +107,6 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
         });
         batch.forEach(item -> setItem(item.getPosition(), item));
         batch.forEach(dispatcher::updateItem);
-        dispatcher.updateItem(getNextItem());
-        dispatcher.updateItem(getCurrentItem());
-        dispatcher.updateItem(getPreviousItem());
     }
 
 

@@ -35,10 +35,28 @@ public interface DynamicPaginatedMenu<S extends PaginatedMenuState, PI> extends 
 
 
     @NotNull
+    default PreviousPageItem<S> createPreviousItem() {
+        return new PreviousPageItem<>();
+    }
+
+
+    @NotNull
     CurrentPageItem<S> getCurrentItem();
 
 
     @NotNull
+    default CurrentPageItem<S> createCurrentItem() {
+        return new CurrentPageItem<>();
+    }
+
+
+    @NotNull
     NextPageItem<S> getNextItem();
+
+
+    @NotNull
+    default NextPageItem<S> createNextItem() {
+        return new NextPageItem<>(this);
+    }
 
 }
