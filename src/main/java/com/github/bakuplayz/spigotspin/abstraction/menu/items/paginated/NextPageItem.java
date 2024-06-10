@@ -4,6 +4,7 @@ import com.cryptomorin.xseries.XMaterial;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.state.ClickableStateItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.utils.ViewState;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.paginated.PaginatedMenuState;
+import com.github.bakuplayz.spigotspin.abstraction.menu.menus.paginated.PaginatedMenuStateFlag;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.paginated.PaginationContext;
 import org.jetbrains.annotations.NotNull;
 

@@ -5,6 +5,9 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class PaginatedMenuStateHandler<S extends PaginatedMenuState> extends MenuStateHandler<S, PaginatedMenuStateObserver<S>> {
 
+    public static final int STARTING_PAGE = 0;
+
+
     public PaginatedMenuStateHandler(@NotNull PaginatedMenuStateObserver<S> observer, @NotNull S initialState) {
         super(observer, initialState);
     }
@@ -17,6 +20,11 @@ public abstract class PaginatedMenuStateHandler<S extends PaginatedMenuState> ex
 
     public final void decreasePage() {
         updateState(state.page, (page) -> page - 1, PaginatedMenuStateFlag.PAGE);
+    }
+
+
+    public final void goToStartingPage() {
+        updateState(state.page, page -> STARTING_PAGE, PaginatedMenuStateFlag.PAGE);
     }
 
 

@@ -29,8 +29,6 @@ import java.util.stream.IntStream;
 public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState, SH extends PaginatedMenuStateHandler<S>, PI>
         extends AbstractDynamicStateMenu<S> implements DynamicPaginatedMenu<S, PI>, PaginatedMenuStateObserver<S> {
 
-    public static final int STARTING_PAGE = 0;
-
     public static final int PAGE_ITEM_INDEX_MIN = 0;
 
     public static final int PAGE_ITEM_INDEX_MAX = 45;
@@ -43,13 +41,10 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
     @Setter
     private List<PI> paginationItems;
 
-    @Getter
     private final NextPageItem<S> nextItem;
 
-    @Getter
     private final CurrentPageItem<S> currentItem;
 
-    @Getter
     private final PreviousPageItem<S> previousItem;
 
 
@@ -138,6 +133,26 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
     }
 
 
+    @NotNull
+    @Override
+    public final PreviousPageItem<S> getPreviousItem() {
+        return previousItem;
+    }
+
+
+    @NotNull
+    @Override
+    public final CurrentPageItem<S> getCurrentItem() {
+        return currentItem;
+    }
+
+    @NotNull
+    @Override
+    public final NextPageItem<S> getNextItem() {
+        return nextItem;
+    }
+
+
     private int getItemsAmount() {
         return paginationItems.size();
     }
@@ -200,7 +215,7 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
         @Override
         public void afterInventoryLoaded() {
             stateHandler.getState().setMaxItems(getItemsAmount());
-            onChangePage(STARTING_PAGE);
+            stateHandler.goToStartingPage();
         }
 
 
