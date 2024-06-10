@@ -9,6 +9,7 @@ import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.CurrentP
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.NextPageItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.PreviousPageItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.state.StateItem;
+import com.github.bakuplayz.spigotspin.abstraction.menu.listeners.PaginatedListener;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.handlers.OpenInventoryHandler;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.paginated.*;
 import com.github.bakuplayz.spigotspin.abstraction.menu.utils.Collection;
@@ -19,6 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -112,6 +114,9 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
         });
         batch.forEach(item -> setItem(item.getPosition(), item));
         batch.forEach(dispatcher::updateItem);
+        dispatcher.updateItem(getNextItem());
+        dispatcher.updateItem(getCurrentItem());
+        dispatcher.updateItem(getPreviousItem());
     }
 
 
