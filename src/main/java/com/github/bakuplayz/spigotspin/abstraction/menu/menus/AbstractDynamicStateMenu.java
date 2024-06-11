@@ -31,7 +31,7 @@ public abstract class AbstractDynamicStateMenu<S extends MenuState>
             int flag
     ) {
         item.setFlags(Collections.singletonList(flag));
-        item.injectDispatcher(dispatcher);
+        item.injectDispatcher(getDispatcher());
         item.setPosition(position);
         items.put(position, item);
     }
@@ -58,7 +58,7 @@ public abstract class AbstractDynamicStateMenu<S extends MenuState>
         item.setFlags(flags);
         item.setAction(action);
         item.setPosition(position);
-        item.injectDispatcher(dispatcher);
+        item.injectDispatcher(getDispatcher());
         items.put(position, item);
     }
 

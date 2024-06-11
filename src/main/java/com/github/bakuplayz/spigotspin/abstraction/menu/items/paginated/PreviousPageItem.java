@@ -4,11 +4,16 @@ import com.cryptomorin.xseries.XMaterial;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.state.ClickableStateItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.utils.ViewState;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.paginated.PaginatedMenuState;
+import com.github.bakuplayz.spigotspin.abstraction.menu.menus.paginated.PaginationContext;
 import org.jetbrains.annotations.NotNull;
 
 public class PreviousPageItem<S extends PaginatedMenuState> extends ClickableStateItem<S> {
 
-    public PreviousPageItem() {
+    protected final PaginationContext context;
+
+    public PreviousPageItem(@NotNull PaginationContext context) {
+        this.context = context;
+
         setName("&7Previous page");
         setMaterial(XMaterial.ARROW);
         setViewState(ViewState.INVISIBLE);

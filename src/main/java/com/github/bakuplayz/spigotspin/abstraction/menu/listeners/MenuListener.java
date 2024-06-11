@@ -1,5 +1,6 @@
 package com.github.bakuplayz.spigotspin.abstraction.menu.listeners;
 
+import com.github.bakuplayz.spigotspin.abstraction.menu.dispatchers.HistoryDispatcher;
 import com.github.bakuplayz.spigotspin.abstraction.menu.listeners.events.ExtendedInventoryDragEvent;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicMenu;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicSharedMenu;
@@ -131,9 +132,12 @@ public final class MenuListener implements Listener {
         if (!(entity instanceof Player)) {
             return;
         }
-        
+
+        // We need to make sure to clear the backstack whenever, we
+        // realize that we no longer needs it to be stored. Thanks
+        // paper for this reasons enum.
         if (event.getReason() != InventoryCloseEvent.Reason.OPEN_NEW) {
-            AbstractDynamicMenu.clearBackStack((Player) entity);
+            HistoryDispatcher.clearBackStack(entity);
             return;
         }
 

@@ -1,6 +1,6 @@
 package com.github.bakuplayz.spigotspin.abstraction.menu.items.state;
 
-import com.github.bakuplayz.spigotspin.abstraction.menu.dispatchers.DynamicMenuDispatcher;
+import com.github.bakuplayz.spigotspin.abstraction.menu.dispatchers.InventoryDispatcher;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.Item;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.state.MenuState;
 import lombok.Getter;
@@ -17,10 +17,10 @@ public abstract class StateItem<S extends MenuState> extends Item implements Sta
     @NotNull
     private List<Integer> flags;
 
-    private DynamicMenuDispatcher dispatcher;
+    private InventoryDispatcher dispatcher;
 
 
-    public final void injectDispatcher(@NotNull DynamicMenuDispatcher dispatcher) {
+    public final void injectDispatcher(@NotNull InventoryDispatcher dispatcher) {
         this.dispatcher = dispatcher;
     }
 

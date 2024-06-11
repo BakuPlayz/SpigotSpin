@@ -78,7 +78,7 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
                 .boxed().filter((position) -> !isFramePosition(position))
                 .collect(Collectors.toList());
 
-        dispatcher.clearItemsFromTo(items, PAGE_ITEM_INDEX_MIN, PAGE_ITEM_INDEX_MAX);
+        getDispatcher().clearItemsFromTo(items, PAGE_ITEM_INDEX_MIN, PAGE_ITEM_INDEX_MAX);
 
         List<Item> items = positions.stream()
                 .map(Collection.toIndexed())
@@ -98,10 +98,10 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
                 return;
             }
 
-            ((StateItem<?>) item).injectDispatcher(dispatcher);
+            ((StateItem<?>) item).injectDispatcher(getDispatcher());
         });
         batch.forEach(item -> setItem(item.getPosition(), item));
-        batch.forEach(dispatcher::updateItem);
+        batch.forEach(getDispatcher()::updateItem);
     }
 
 
@@ -221,7 +221,7 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
 
         @Override
         public void afterInventoryOpened() {
-            items.values().forEach(dispatcher::updateItem);
+            items.values().forEach(getDispatcher()::updateItem);
         }
 
     }

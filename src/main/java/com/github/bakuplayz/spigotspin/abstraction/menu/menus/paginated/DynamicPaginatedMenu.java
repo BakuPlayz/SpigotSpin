@@ -5,13 +5,13 @@ import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.ItemAction
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.CurrentPageItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.NextPageItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.PreviousPageItem;
-import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public interface DynamicPaginatedMenu<S extends PaginatedMenuState, PI> extends PaginationContext {
+
 
     void loadPaginatedItems(@NotNull List<Item> batch);
 
@@ -36,7 +36,7 @@ public interface DynamicPaginatedMenu<S extends PaginatedMenuState, PI> extends 
 
     @NotNull
     default PreviousPageItem<S> createPreviousItem() {
-        return new PreviousPageItem<>();
+        return new PreviousPageItem<>(this);
     }
 
 
@@ -46,7 +46,7 @@ public interface DynamicPaginatedMenu<S extends PaginatedMenuState, PI> extends 
 
     @NotNull
     default CurrentPageItem<S> createCurrentItem() {
-        return new CurrentPageItem<>();
+        return new CurrentPageItem<>(this);
     }
 
 

@@ -9,13 +9,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-public final class DynamicMenuDispatcher {
+public final class InventoryDispatcher {
 
     @NotNull
     private final LazyEvaluator<Inventory> lazyInventory;
 
 
-    public DynamicMenuDispatcher(@NotNull LazyEvaluator<Inventory> lazyInventory) {
+    public InventoryDispatcher(@NotNull LazyEvaluator<Inventory> lazyInventory) {
         this.lazyInventory = lazyInventory;
     }
 

@@ -86,7 +86,7 @@ public abstract class AbstractDynamicSharedMenu<S extends MenuState>
 
         @Override
         public void afterInventoryOpened() {
-            items.values().forEach(dispatcher::updateItem);
+            items.values().forEach(getDispatcher()::updateItem);
         }
 
     }

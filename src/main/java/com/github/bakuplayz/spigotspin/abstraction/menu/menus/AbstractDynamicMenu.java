@@ -1,6 +1,7 @@
 package com.github.bakuplayz.spigotspin.abstraction.menu.menus;
 
-import com.github.bakuplayz.spigotspin.abstraction.menu.dispatchers.DynamicMenuDispatcher;
+import com.github.bakuplayz.spigotspin.abstraction.menu.dispatchers.HistoryDispatcher;
+import com.github.bakuplayz.spigotspin.abstraction.menu.dispatchers.InventoryDispatcher;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.Clickable;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.Draggable;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.Item;
@@ -19,14 +20,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 import java.util.stream.IntStream;
 
 @EqualsAndHashCode
 public abstract class AbstractDynamicMenu implements DynamicMenu {
 
-    // TODO: Move to a separate class.
-    private static final Map<String, Stack<DynamicMenu>> backStack = new HashMap<>();
 
     @NotNull
     protected final String title;
@@ -42,7 +40,7 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
     @NotNull
     @Getter
     @Setter(AccessLevel.MODULE)
-    protected DynamicMenuDispatcher dispatcher;
+    private InventoryDispatcher dispatcher;
 
     @Getter
     @Setter(AccessLevel.MODULE)
@@ -53,7 +51,7 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
         this.title = title;
         this.dragState = DragState.DISABLED;
         this.items = new HashMap<>(DYNAMIC_MENU_MAX_SIZE);
-        this.dispatcher = new DynamicMenuDispatcher(() -> inventory);
+        this.dispatcher = new InventoryDispatcher(() -> inventory);
     }
 
 
@@ -106,10 +104,8 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
 
 
     @Override
-    public void handleClose(@NotNull InventoryCloseEvent event) {
-        String uuid = event.getPlayer().getUniqueId().toString();
-        backStack.putIfAbsent(uuid, new Stack<>());
-        backStack.get(uuid).push(this);
+    public final void handleClose(@NotNull InventoryCloseEvent event) {
+        HistoryDispatcher.addToBackStack(event.getPlayer(), this);
     }
 
 
@@ -143,28 +139,6 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
                 .orElse(0);
 
         return (int) Math.ceil(lastIndex / 9.0d) * 9;
-    }
-
-
-    /**
-     * Attempts to pop the backstack to get the last menu that was open
-     * previous to this one, if it doesn't succeed then nothing happens.
-     *
-     * @param player The player that should open the previous menu.
-     */
-    public static void popBackStack(@NotNull Player player) {
-        String uuid = player.getUniqueId().toString();
-
-        if (!backStack.containsKey(uuid) || backStack.get(uuid).empty()) {
-            return;
-        }
-
-        backStack.get(uuid).pop().open(player);
-    }
-
-
-    public static void clearBackStack(@NotNull Player player) {
-        backStack.put(player.getUniqueId().toString(), new Stack<>());
     }
 
 
