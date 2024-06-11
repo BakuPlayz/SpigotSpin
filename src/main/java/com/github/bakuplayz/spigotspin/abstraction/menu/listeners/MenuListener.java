@@ -1,10 +1,9 @@
 package com.github.bakuplayz.spigotspin.abstraction.menu.listeners;
 
+import com.github.bakuplayz.spigotspin.abstraction.menu.MenuManager;
 import com.github.bakuplayz.spigotspin.abstraction.menu.dispatchers.HistoryDispatcher;
 import com.github.bakuplayz.spigotspin.abstraction.menu.listeners.events.ExtendedInventoryDragEvent;
-import com.github.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicMenu;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicSharedMenu;
-import com.github.bakuplayz.spigotspin.abstraction.menu.menus.DynamicMenu;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.shared.SharedInternal;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -16,18 +15,22 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.server.PluginDisableEvent;
-import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class MenuListener implements Listener {
 
-    private final static Set<InventoryAction> ALLOWED_ACTIONS = new HashSet<>(Arrays.asList(
+    // https://github.com/Flo0/GUITutorial/blob/master/src/main/java/com/gestankbratwurst/guitutorial/gui/GUIManager.java#L29
+
+    // https://www.spigotmc.org/threads/a-modern-approach-to-inventory-guis.594005/
+
+    // https://www.spigotmc.org/threads/understanding-and-working-with-inventoryholders.626493/
+
+    private final static List<InventoryAction> ALLOWED_ACTIONS = Arrays.asList(
             InventoryAction.PLACE_ALL,
             InventoryAction.PLACE_ONE,
             InventoryAction.PLACE_SOME,
@@ -36,23 +39,24 @@ public final class MenuListener implements Listener {
             InventoryAction.PICKUP_ONE,
             InventoryAction.PICKUP_SOME,
             InventoryAction.NOTHING
-    ));
+    );
 
-    private final ConcurrentMap<String, Integer> lastClickedItemLocation = new ConcurrentHashMap<>();
+    private final Map<String, Integer> lastClickedItemLocation = new HashMap<>();
+
+    private final MenuManager menuManager;
+
+
+    public MenuListener(@NotNull MenuManager menuManager) {
+        this.menuManager = menuManager;
+    }
 
 
     @EventHandler(priority = EventPriority.LOW)
     public void onMenuClick(@NotNull InventoryClickEvent event) {
-        InventoryHolder holder = event.getInventory().getHolder();
-
         if (!(event.getWhoClicked() instanceof Player)) {
             return;
         }
 
-        if (!(holder instanceof DynamicMenu)) {
-            return;
-        }
-        
         if (!isAllowedInventoryAction(event.getAction())) {
             event.setCancelled(true);
             return;
@@ -63,27 +67,24 @@ public final class MenuListener implements Listener {
                 event.getSlot()
         );
 
-        DynamicMenu menu = ((DynamicMenu) holder);
-        if (menu.shouldCloseClickingOutside() && event.getRawSlot() == -999) {
+        MenuHandler handler = menuManager.findHandlerByPlayer(event.getWhoClicked());
+        if (handler == null) return;
+
+        if (handler.shouldCloseClickingOutside() && event.getRawSlot() == -999) {
             event.getWhoClicked().closeInventory();
             event.setCancelled(true);
             return;
         }
 
-        menu.handleClick(event);
+        handler.handleClick(event);
     }
 
 
     @EventHandler(priority = EventPriority.LOW)
     public void onMenuDrag(@NotNull InventoryDragEvent event) {
-        InventoryHolder holder = event.getInventory().getHolder();
         HumanEntity entity = event.getWhoClicked();
 
         if (!(entity instanceof Player)) {
-            return;
-        }
-
-        if (!(holder instanceof DynamicMenu)) {
             return;
         }
 
@@ -95,53 +96,55 @@ public final class MenuListener implements Listener {
             return;
         }
 
-        ((DynamicMenu) holder).handleDrag(new ExtendedInventoryDragEvent(event, slot));
+        MenuHandler handler = menuManager.findHandlerByPlayer(event.getWhoClicked());
+        if (handler == null) return;
+
+        handler.handleDrag(new ExtendedInventoryDragEvent(event, slot));
     }
 
 
     @EventHandler(priority = EventPriority.LOW)
     public void onMenuLeave(@NotNull InventoryCloseEvent event) {
-        InventoryHolder holder = event.getInventory().getHolder();
-
-        if (!(holder instanceof AbstractDynamicSharedMenu)) {
+        HumanEntity human = event.getPlayer();
+        if (!(human instanceof Player)) {
             return;
         }
 
-        HumanEntity entity = event.getPlayer();
-        if (!(entity instanceof Player)) {
+        MenuHandler handler = menuManager.findHandlerByPlayer(human);
+        if (handler == null) return;
+
+        if (!(handler instanceof AbstractDynamicSharedMenu)) {
             return;
         }
 
-        ((AbstractDynamicSharedMenu<?>) holder).leave((Player) entity);
+        ((AbstractDynamicSharedMenu<?>) handler).leave((Player) human);
     }
+
 
     @EventHandler(priority = EventPriority.LOW)
     public void onMenuClose(@NotNull InventoryCloseEvent event) {
-        InventoryHolder holder = event.getInventory().getHolder();
-
-        if (!(holder instanceof AbstractDynamicMenu)) {
+        HumanEntity human = event.getPlayer();
+        if (!(human instanceof Player)) {
             return;
         }
+
+        MenuHandler handler = menuManager.findHandlerByPlayer(human);
+        if (handler == null) return;
 
         // It is not safe to navigate back to shared menus.
-        if (holder instanceof AbstractDynamicSharedMenu<?>) {
-            return;
-        }
-
-        HumanEntity entity = event.getPlayer();
-        if (!(entity instanceof Player)) {
+        if (handler instanceof AbstractDynamicSharedMenu<?>) {
             return;
         }
 
         // We need to make sure to clear the backstack whenever, we
         // realize that we no longer needs it to be stored. Thanks
-        // paper for this reasons enum.
+        // paper for this Reasons-enum.
         if (event.getReason() != InventoryCloseEvent.Reason.OPEN_NEW) {
-            HistoryDispatcher.clearBackStack(entity);
+            HistoryDispatcher.clearBackStack(human);
             return;
         }
 
-        ((AbstractDynamicMenu) holder).handleClose(event);
+        handler.handleClose(event);
     }
 
 

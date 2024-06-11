@@ -71,7 +71,7 @@ public abstract class AbstractDynamicSharedMenu<S extends MenuState>
         @Override
         public void loadInventory() {
             if (SharedInternal.STATE.ACTIVE_MENUS.get(identifier) != null) return;
-            setInventory(Bukkit.createInventory(AbstractDynamicSharedMenu.this, getSize(), title));
+            setInventory(Bukkit.createInventory(null, getSize(), title));
         }
 
 

@@ -208,7 +208,7 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
 
         @Override
         public void loadInventory() {
-            setInventory(Bukkit.createInventory(AbstractDynamicPaginatedMenu.this, getSize(), title));
+            setInventory(Bukkit.createInventory(null, getSize(), title));
         }
 
 

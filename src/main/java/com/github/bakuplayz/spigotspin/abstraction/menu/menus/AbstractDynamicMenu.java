@@ -1,5 +1,6 @@
 package com.github.bakuplayz.spigotspin.abstraction.menu.menus;
 
+import com.github.bakuplayz.spigotspin.SpigotSpin;
 import com.github.bakuplayz.spigotspin.abstraction.menu.dispatchers.HistoryDispatcher;
 import com.github.bakuplayz.spigotspin.abstraction.menu.dispatchers.InventoryDispatcher;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.Clickable;
@@ -25,7 +26,6 @@ import java.util.stream.IntStream;
 @EqualsAndHashCode
 public abstract class AbstractDynamicMenu implements DynamicMenu {
 
-
     @NotNull
     protected final String title;
 
@@ -40,11 +40,12 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
     @NotNull
     @Getter
     @Setter(AccessLevel.MODULE)
-    private InventoryDispatcher dispatcher;
+    protected Inventory inventory;
 
+    @NotNull
     @Getter
     @Setter(AccessLevel.MODULE)
-    protected Inventory inventory;
+    private InventoryDispatcher dispatcher;
 
 
     protected AbstractDynamicMenu(@NotNull String title) {
@@ -116,6 +117,8 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
         handler.afterInventoryLoaded();
         player.openInventory(inventory);
         handler.afterInventoryOpened();
+        
+        SpigotSpin.MANAGER.REF.getMenuManager().assignPlayerHandler(player, this);
     }
 
 
@@ -143,7 +146,7 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
 
 
     private boolean isMenuDrag(@NotNull InventoryClickEvent event) {
-        return event.getClickedInventory() == getInventory();
+        return event.getClickedInventory() == inventory;
     }
 
 
@@ -162,18 +165,19 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
 
         @Override
         public void loadInventory() {
-            setInventory(Bukkit.createInventory(AbstractDynamicMenu.this, getSize(), title));
+            setInventory(Bukkit.createInventory(null, getSize(), title));
         }
 
 
         @Override
         public void afterInventoryLoaded() {
+            // TODO: Not tested see if this helps, was in #afterInventoryOpened()
+            items.values().forEach(dispatcher::updateItem);
         }
 
 
         @Override
         public void afterInventoryOpened() {
-            items.values().forEach(dispatcher::updateItem);
         }
 
     }
