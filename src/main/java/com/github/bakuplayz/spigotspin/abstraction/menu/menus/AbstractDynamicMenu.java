@@ -1,7 +1,6 @@
 package com.github.bakuplayz.spigotspin.abstraction.menu.menus;
 
 import com.github.bakuplayz.spigotspin.SpigotSpin;
-import com.github.bakuplayz.spigotspin.abstraction.menu.dispatchers.HistoryDispatcher;
 import com.github.bakuplayz.spigotspin.abstraction.menu.dispatchers.InventoryDispatcher;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.Clickable;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.Draggable;
@@ -106,7 +105,7 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
 
     @Override
     public final void handleClose(@NotNull InventoryCloseEvent event) {
-        HistoryDispatcher.addToBackStack(event.getPlayer(), this);
+        SpigotSpin.Manager.REF.getHistory().addToBackStack(event.getPlayer(), this);
     }
 
 
@@ -117,8 +116,8 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
         handler.afterInventoryLoaded();
         player.openInventory(inventory);
         handler.afterInventoryOpened();
-        
-        SpigotSpin.MANAGER.REF.getMenuManager().assignPlayerHandler(player, this);
+
+        SpigotSpin.Manager.REF.getMenuManager().associatePlayerWithHandler(player, this);
     }
 
 

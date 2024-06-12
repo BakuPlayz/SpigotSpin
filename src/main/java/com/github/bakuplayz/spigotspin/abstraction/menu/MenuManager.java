@@ -21,8 +21,13 @@ public final class MenuManager {
     }
 
 
-    public void assignPlayerHandler(@NotNull HumanEntity player, @NotNull MenuHandler handler) {
+    public void associatePlayerWithHandler(@NotNull HumanEntity player, MenuHandler handler) {
         menus.put(player.getUniqueId().toString(), handler);
+    }
+
+
+    public void dissociatePlayerFromHandler(@NotNull HumanEntity player) {
+        menus.remove(player.getUniqueId().toString());
     }
 
 }

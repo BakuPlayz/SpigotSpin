@@ -1,12 +1,12 @@
 package com.github.bakuplayz.spigotspin;
 
 import com.github.bakuplayz.spigotspin.abstraction.menu.MenuManager;
+import com.github.bakuplayz.spigotspin.abstraction.menu.dispatchers.HistoryDispatcher;
 import com.github.bakuplayz.spigotspin.abstraction.menu.listeners.MenuListener;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,9 +20,10 @@ public final class SpigotSpin {
     public static final Logger LOGGER = Logger.getLogger("SpigotSpin");
 
 
-    public SpigotSpin(@NotNull Plugin plugin) {
-        MANAGER.REF.setMenuManager(new MenuManager());
-        PLUGIN.REF.setPlugin(plugin);
+    public SpigotSpin(@NotNull org.bukkit.plugin.Plugin plugin) {
+        Manager.REF.setHistory(new HistoryDispatcher());
+        Manager.REF.setMenuManager(new MenuManager());
+        Plugin.REF.setPlugin(plugin);
 
         registerListeners();
     }
@@ -31,7 +32,7 @@ public final class SpigotSpin {
     private void registerListeners() {
         PluginManager manager = Bukkit.getPluginManager();
 
-        manager.registerEvents(new MenuListener(MANAGER.REF.getMenuManager()), PLUGIN.REF.getPlugin());
+        manager.registerEvents(new MenuListener(Manager.REF.getMenuManager()), Plugin.REF.getPlugin());
     }
 
 
@@ -42,7 +43,7 @@ public final class SpigotSpin {
      * that some extending plugins require.
      */
     @Getter
-    public enum PLUGIN {
+    public enum Plugin {
 
         /**
          * For the curious ones, these can be whatever,
@@ -55,17 +56,20 @@ public final class SpigotSpin {
          * Plugin reference to the extending plugin.
          */
         @Setter(AccessLevel.PROTECTED)
-        private Plugin plugin;
+        private org.bukkit.plugin.Plugin plugin;
 
     }
 
     @Getter
-    public enum MANAGER {
+    public enum Manager {
 
         REF;
 
         @Setter(AccessLevel.PROTECTED)
         private MenuManager menuManager;
+
+        @Setter(AccessLevel.PROTECTED)
+        private HistoryDispatcher history;
 
     }
 

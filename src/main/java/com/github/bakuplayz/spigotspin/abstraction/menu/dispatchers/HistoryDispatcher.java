@@ -12,11 +12,7 @@ import java.util.Stack;
 
 public final class HistoryDispatcher {
 
-    private static final Map<String, Stack<DynamicMenu>> backStack = new HashMap<>();
-
-
-    private HistoryDispatcher() {
-    }
+    private final Map<String, Stack<DynamicMenu>> backStack = new HashMap<>();
 
 
     /**
@@ -25,7 +21,7 @@ public final class HistoryDispatcher {
      *
      * @param player The player that should open the previous menu.
      */
-    public static void popBackStack(@NotNull HumanEntity player) {
+    public void popBackStack(@NotNull HumanEntity player) {
         String uuid = player.getUniqueId().toString();
 
         if (!backStack.containsKey(uuid) || backStack.get(uuid).empty()) {
@@ -43,7 +39,7 @@ public final class HistoryDispatcher {
      * @param player The player that should be associated with the entry.
      * @param entry  The menu entry to add to the player's backstack.
      */
-    public static void addToBackStack(@NotNull HumanEntity player, @NotNull DynamicMenu entry) {
+    public void addToBackStack(@NotNull HumanEntity player, @NotNull DynamicMenu entry) {
         String uuid = player.getUniqueId().toString();
         backStack.putIfAbsent(uuid, new Stack<>());
         backStack.get(uuid).push(entry);
@@ -56,7 +52,7 @@ public final class HistoryDispatcher {
      *
      * @param player The player to wipe the backstack of.
      */
-    public static void clearBackStack(@NotNull HumanEntity player) {
+    public void clearBackStack(@NotNull HumanEntity player) {
         backStack.put(player.getUniqueId().toString(), new Stack<>());
     }
 

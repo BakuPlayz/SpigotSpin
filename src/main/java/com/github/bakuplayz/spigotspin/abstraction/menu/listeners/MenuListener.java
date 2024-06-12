@@ -1,10 +1,9 @@
 package com.github.bakuplayz.spigotspin.abstraction.menu.listeners;
 
+import com.github.bakuplayz.spigotspin.SpigotSpin;
 import com.github.bakuplayz.spigotspin.abstraction.menu.MenuManager;
-import com.github.bakuplayz.spigotspin.abstraction.menu.dispatchers.HistoryDispatcher;
 import com.github.bakuplayz.spigotspin.abstraction.menu.listeners.events.ExtendedInventoryDragEvent;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicSharedMenu;
-import com.github.bakuplayz.spigotspin.abstraction.menu.menus.shared.SharedInternal;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,12 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 public final class MenuListener implements Listener {
-
-    // https://github.com/Flo0/GUITutorial/blob/master/src/main/java/com/gestankbratwurst/guitutorial/gui/GUIManager.java#L29
-
-    // https://www.spigotmc.org/threads/a-modern-approach-to-inventory-guis.594005/
-
-    // https://www.spigotmc.org/threads/understanding-and-working-with-inventoryholders.626493/
 
     private final static List<InventoryAction> ALLOWED_ACTIONS = Arrays.asList(
             InventoryAction.PLACE_ALL,
@@ -57,7 +50,7 @@ public final class MenuListener implements Listener {
             return;
         }
 
-        if (!isAllowedInventoryAction(event.getAction())) {
+        if (!ALLOWED_ACTIONS.contains(event.getAction())) {
             event.setCancelled(true);
             return;
         }
@@ -133,6 +126,7 @@ public final class MenuListener implements Listener {
 
         // It is not safe to navigate back to shared menus.
         if (handler instanceof AbstractDynamicSharedMenu<?>) {
+            menuManager.dissociatePlayerFromHandler(human);
             return;
         }
 
@@ -140,24 +134,18 @@ public final class MenuListener implements Listener {
         // realize that we no longer needs it to be stored. Thanks
         // paper for this Reasons-enum.
         if (event.getReason() != InventoryCloseEvent.Reason.OPEN_NEW) {
-            HistoryDispatcher.clearBackStack(human);
+            SpigotSpin.Manager.REF.getHistory().clearBackStack(human);
             return;
         }
 
         handler.handleClose(event);
+        menuManager.dissociatePlayerFromHandler(human);
     }
 
 
     @EventHandler(priority = EventPriority.LOW)
     public void onDisable(@NotNull PluginDisableEvent event) {
         lastClickedItemLocation.clear();
-        SharedInternal.STATE.ACTIVE_MENUS.clear();
-        SharedInternal.STATE.PLAYER_OPENED_MENUS.clear();
-    }
-
-
-    private boolean isAllowedInventoryAction(@NotNull InventoryAction action) {
-        return ALLOWED_ACTIONS.contains(action);
     }
 
 }
