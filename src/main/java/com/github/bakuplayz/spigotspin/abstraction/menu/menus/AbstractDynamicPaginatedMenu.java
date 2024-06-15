@@ -1,10 +1,14 @@
 package com.github.bakuplayz.spigotspin.abstraction.menu.menus;
 
-import com.github.bakuplayz.spigotspin.abstraction.menu.items.*;
+import com.github.bakuplayz.spigotspin.abstraction.menu.items.ClickableItem;
+import com.github.bakuplayz.spigotspin.abstraction.menu.items.Draggable;
+import com.github.bakuplayz.spigotspin.abstraction.menu.items.DraggableItem;
+import com.github.bakuplayz.spigotspin.abstraction.menu.items.Item;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.ItemAction;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.CurrentPageItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.NextPageItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.PreviousPageItem;
+import com.github.bakuplayz.spigotspin.abstraction.menu.items.state.ClickableStateItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.state.StateItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.handlers.OpenInventoryHandler;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.paginated.*;
@@ -164,8 +168,11 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
 
         PI paginatedItem = paginationItems.get(itemPosition);
         Item item = loadPaginatedItem(paginatedItem, itemPosition);
-        if (item instanceof Clickable) {
+        
+        if (item instanceof ClickableItem) {
             ((ClickableItem) item).setAction(getPaginatedItemAction(paginatedItem, itemPosition));
+        } else if (item instanceof ClickableStateItem<?>) {
+            ((ClickableStateItem<?>) item).setAction(getPaginatedItemAction(paginatedItem, itemPosition));
         } else if (item instanceof Draggable) {
             ((DraggableItem) item).setAction(getPaginatedItemAction(paginatedItem, itemPosition));
         }

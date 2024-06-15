@@ -1,7 +1,7 @@
 package com.github.bakuplayz.spigotspin.abstraction.menu.items.state;
 
-import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.ClickableAction;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.Clickable;
+import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.ItemAction;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.state.MenuState;
 import lombok.Setter;
 import org.bukkit.entity.Player;
@@ -13,7 +13,7 @@ public abstract class ClickableStateItem<S extends MenuState>
         extends StateItem<S> implements Clickable, StateUpdatable<S> {
 
 
-    private ClickableAction<ClickableStateItem<S>> action;
+    private ItemAction action;
 
 
     @Override
@@ -22,7 +22,7 @@ public abstract class ClickableStateItem<S extends MenuState>
             throw new RuntimeException("Action cannot be null.");
         }
 
-        action.onClick(this, player);
+        action.performAction(this, player);
     }
 
 
