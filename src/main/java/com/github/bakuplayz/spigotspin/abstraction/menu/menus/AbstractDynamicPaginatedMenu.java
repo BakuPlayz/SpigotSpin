@@ -165,7 +165,7 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
         int inventoryPosition = indexed.getValue();
 
         PI paginatedItem = paginationItems.get(itemPosition);
-        Item item = loadPaginatedItem(paginatedItem);
+        Item item = loadPaginatedItem(paginatedItem, itemPosition);
         if (item instanceof ClickableItem) {
             ((ClickableItem) item).setAction(getPaginatedItemAction(paginatedItem));
         } else if (item instanceof DraggableItem) {

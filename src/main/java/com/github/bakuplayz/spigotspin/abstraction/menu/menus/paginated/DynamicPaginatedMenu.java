@@ -16,11 +16,11 @@ public interface DynamicPaginatedMenu<S extends PaginatedMenuState, PI> extends 
     void loadPaginatedItems(@NotNull List<Item> batch);
 
 
-    void setPaginationItems(@NotNull List<PI> items);
-
-
     @Nullable
     List<PI> getPaginationItems();
+
+
+    void setPaginationItems(@NotNull List<PI> items);
 
 
     ItemAction getPaginatedItemAction(@NotNull PI paginatedItem);
@@ -28,6 +28,12 @@ public interface DynamicPaginatedMenu<S extends PaginatedMenuState, PI> extends 
 
     @NotNull
     Item loadPaginatedItem(@NotNull PI paginatedItem);
+
+
+    @NotNull
+    default Item loadPaginatedItem(@NotNull PI paginatedItem, int position) {
+        return loadPaginatedItem(paginatedItem);
+    }
 
 
     @NotNull
