@@ -1,8 +1,6 @@
 package com.github.bakuplayz.spigotspin.abstraction.menu.menus;
 
-import com.github.bakuplayz.spigotspin.abstraction.menu.items.ClickableItem;
-import com.github.bakuplayz.spigotspin.abstraction.menu.items.DraggableItem;
-import com.github.bakuplayz.spigotspin.abstraction.menu.items.Item;
+import com.github.bakuplayz.spigotspin.abstraction.menu.items.*;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.ItemAction;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.CurrentPageItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.paginated.NextPageItem;
@@ -166,9 +164,9 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
 
         PI paginatedItem = paginationItems.get(itemPosition);
         Item item = loadPaginatedItem(paginatedItem, itemPosition);
-        if (item instanceof ClickableItem) {
+        if (item instanceof Clickable) {
             ((ClickableItem) item).setAction(getPaginatedItemAction(paginatedItem));
-        } else if (item instanceof DraggableItem) {
+        } else if (item instanceof Draggable) {
             ((DraggableItem) item).setAction(getPaginatedItemAction(paginatedItem));
         }
 

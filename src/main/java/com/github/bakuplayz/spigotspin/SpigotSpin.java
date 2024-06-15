@@ -26,7 +26,8 @@ public final class SpigotSpin {
         Manager.REF.setMenuManager(new MenuManager());
         Plugin.REF.setPlugin(plugin);
 
-        if (XMaterial.supports(XMaterial.getVersion())) {
+        /* Loads XMaterial's cache and also serves as a little sanity check. */
+        if (!XMaterial.DIRT.isSupported()) {
             LOGGER.severe("You're Minecraft version is not supported with SpigotSpin.");
         }
 
