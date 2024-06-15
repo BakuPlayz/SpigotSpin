@@ -27,13 +27,7 @@ public interface DynamicPaginatedMenu<S extends PaginatedMenuState, PI> extends 
 
 
     @NotNull
-    Item loadPaginatedItem(@NotNull PI paginatedItem);
-
-
-    @NotNull
-    default Item loadPaginatedItem(@NotNull PI paginatedItem, int position) {
-        return loadPaginatedItem(paginatedItem);
-    }
+    Item loadPaginatedItem(@NotNull PI paginatedItem, int position);
 
 
     @NotNull
