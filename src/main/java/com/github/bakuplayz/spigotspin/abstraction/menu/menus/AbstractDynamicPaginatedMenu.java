@@ -126,7 +126,7 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
 
 
     @Override
-    public ItemAction getPaginatedItemAction(@NotNull PI paginatedItem) {
+    public ItemAction getPaginatedItemAction(@NotNull PI paginatedItem, int position) {
         throw new RuntimeException("Paginated item action must be set, if using either clickable or draggable items.");
     }
 
@@ -165,9 +165,9 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
         PI paginatedItem = paginationItems.get(itemPosition);
         Item item = loadPaginatedItem(paginatedItem, itemPosition);
         if (item instanceof Clickable) {
-            ((ClickableItem) item).setAction(getPaginatedItemAction(paginatedItem));
+            ((ClickableItem) item).setAction(getPaginatedItemAction(paginatedItem, itemPosition));
         } else if (item instanceof Draggable) {
-            ((DraggableItem) item).setAction(getPaginatedItemAction(paginatedItem));
+            ((DraggableItem) item).setAction(getPaginatedItemAction(paginatedItem, itemPosition));
         }
 
         item.setPosition(inventoryPosition);

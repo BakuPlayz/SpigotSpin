@@ -23,7 +23,7 @@ public interface DynamicPaginatedMenu<S extends PaginatedMenuState, PI> extends 
     void setPaginationItems(@NotNull List<PI> items);
 
 
-    ItemAction getPaginatedItemAction(@NotNull PI paginatedItem);
+    ItemAction getPaginatedItemAction(@NotNull PI paginatedItem, int position);
 
 
     @NotNull
