@@ -13,7 +13,6 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.server.PluginDisableEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -140,12 +139,6 @@ public final class MenuListener implements Listener {
 
         handler.handleClose(event);
         menuManager.dissociatePlayerFromHandler(human);
-    }
-
-
-    @EventHandler(priority = EventPriority.LOW)
-    public void onDisable(@NotNull PluginDisableEvent event) {
-        lastClickedItemLocation.clear();
     }
 
 }

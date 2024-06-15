@@ -33,6 +33,12 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
 
     public static final int PAGE_ITEM_INDEX_MAX = 45;
 
+    private final NextPageItem<S> nextItem;
+
+    private final CurrentPageItem<S> currentItem;
+
+    private final PreviousPageItem<S> previousItem;
+
     @Setter
     @NotNull
     protected SH stateHandler;
@@ -40,12 +46,6 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
     @Getter
     @Setter
     private List<PI> paginationItems;
-
-    private final NextPageItem<S> nextItem;
-
-    private final CurrentPageItem<S> currentItem;
-
-    private final PreviousPageItem<S> previousItem;
 
 
     public AbstractDynamicPaginatedMenu(@NotNull String title) {
@@ -146,6 +146,7 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
         return currentItem;
     }
 
+
     @NotNull
     @Override
     public final NextPageItem<S> getNextItem() {
@@ -160,7 +161,7 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
 
     @NotNull
     private Item convertIndexedToItem(@NotNull Collection<Integer> indexed, int page) {
-        int itemPosition = calculateItemPosition(indexed.getIndex(), page);
+        int itemPosition = calculateItemPosition(indexed.getIndex(), page + 1);
         int inventoryPosition = indexed.getValue();
 
         PI paginatedItem = paginationItems.get(itemPosition * (page + 1));

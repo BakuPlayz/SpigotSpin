@@ -50,6 +50,7 @@ public final class ItemBuilder {
     private Material material;
 
     private String name;
+
     private List<String> lore;
 
 
@@ -64,6 +65,7 @@ public final class ItemBuilder {
         this.amount = amount;
         this.name = name;
     }
+
 
     /**
      * Sets the {@link #amount} to the provided amount.
@@ -85,7 +87,6 @@ public final class ItemBuilder {
     }
 
 
-
     /**
      * Sets the {@link #name} to the provided name.
      *
@@ -97,7 +98,7 @@ public final class ItemBuilder {
 
 
     /**
-     * Sets the {@link #lore} of the item to the {@link List<String> provided lore}.
+     * Sets the {@link #lore} of the item to the provided lore.
      *
      * @param lore the lore to set.
      */
