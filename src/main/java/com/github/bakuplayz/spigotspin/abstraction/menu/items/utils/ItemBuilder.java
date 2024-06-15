@@ -117,12 +117,6 @@ public final class ItemBuilder {
     }
 
 
-    @NotNull
-    private String colorize(@NotNull String content) {
-        return ChatColor.translateAlternateColorCodes('&', content);
-    }
-
-
     /**
      * Converts the {@link ItemBuilder item builder} to a {@link ItemStack item}.
      *
@@ -166,6 +160,12 @@ public final class ItemBuilder {
      */
     private boolean isToolOrWeapon(@NotNull ItemStack item) {
         return EnchantmentTarget.WEAPON.includes(item) || EnchantmentTarget.TOOL.includes(item);
+    }
+
+
+    @NotNull
+    private String colorize(@NotNull String content) {
+        return ChatColor.translateAlternateColorCodes('&', content);
     }
 
 }

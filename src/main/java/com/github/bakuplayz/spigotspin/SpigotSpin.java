@@ -1,5 +1,6 @@
 package com.github.bakuplayz.spigotspin;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.github.bakuplayz.spigotspin.abstraction.menu.MenuManager;
 import com.github.bakuplayz.spigotspin.abstraction.menu.dispatchers.HistoryDispatcher;
 import com.github.bakuplayz.spigotspin.abstraction.menu.listeners.MenuListener;
@@ -24,6 +25,10 @@ public final class SpigotSpin {
         Manager.REF.setHistory(new HistoryDispatcher());
         Manager.REF.setMenuManager(new MenuManager());
         Plugin.REF.setPlugin(plugin);
+
+        if (XMaterial.supports(XMaterial.getVersion())) {
+            LOGGER.severe("You're Minecraft version is not supported with SpigotSpin.");
+        }
 
         registerListeners();
     }
