@@ -161,10 +161,10 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
 
     @NotNull
     private Item convertIndexedToItem(@NotNull Collection<Integer> indexed, int page) {
-        int itemPosition = calculateItemPosition(indexed.getIndex(), page + 1);
+        int itemPosition = calculateItemPosition(indexed.getIndex(), page);
         int inventoryPosition = indexed.getValue();
 
-        PI paginatedItem = paginationItems.get(itemPosition * (page + 1));
+        PI paginatedItem = paginationItems.get(itemPosition);
         Item item = loadPaginatedItem(paginatedItem);
         if (item instanceof ClickableItem) {
             ((ClickableItem) item).setAction(getPaginatedItemAction(paginatedItem));
