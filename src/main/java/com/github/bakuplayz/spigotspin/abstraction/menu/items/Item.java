@@ -81,7 +81,7 @@ public abstract class Item {
         if (viewState == ViewState.INVISIBLE) {
             return null;
         }
-        if (player != null) {
+        if (viewState == ViewState.DISABLED && player != null) {
             return builder.toPlayerHead(player);
         }
         return builder.toItemStack();
