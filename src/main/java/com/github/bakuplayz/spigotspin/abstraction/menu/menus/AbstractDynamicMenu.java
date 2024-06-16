@@ -105,7 +105,7 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
 
     @Override
     public final void handleClose(@NotNull InventoryCloseEvent event) {
-        close((Player) event.getPlayer());
+        // close((Player) event.getPlayer());
     }
 
 

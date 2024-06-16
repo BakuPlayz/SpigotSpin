@@ -29,7 +29,7 @@ public final class HistoryDispatcher {
         }
 
         // Pops inclusive :)
-        backStack.get(uuid).pop(); // TODO: Close?
+        backStack.get(uuid).pop();
         backStack.get(uuid).pop().open((Player) player);
     }
 
