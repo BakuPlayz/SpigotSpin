@@ -9,8 +9,7 @@
 
 > [!Note]
 > This library is still in its Beta days, however feel free to use it and send in feature requests if
-> you feel like something is missing or needing more attention. **Also observe that this libarary currently
-> only support paperspigot versions and not pure spigot.**
+> you feel like something is missing or needing more attention.
 
 ## Table of Contents
 
@@ -421,7 +420,9 @@ shown under the [Stateful menus](#stateful-menus) as it to this point is exactly
 your state further or learn more about how these paginated menus work then head on over to there.  
 <br><br>
 The only difference between the `AbstractDynamicStateMenu` and `AbstractDynamicSharedMenu` is that the shared menu
-doesn't allow calls to the `open()` method, instead it uses the `join(identifier)` method which takes in an identifier that is then joinable by multiple players using the very same identifier. Changing this identifier would allow for another subtype of menus that share state for multiple players. 
+doesn't allow calls to the `open()` method, instead it uses the `join(identifier)` method which takes in an identifier
+that is then joinable by multiple players using the very same identifier. Changing this identifier would allow for
+another subtype of menus that share state for multiple players.
 <br><br>
 
 > However, note that when the last player has left the menu the state and everything manipulated inside of it will be

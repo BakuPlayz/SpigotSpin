@@ -1,6 +1,5 @@
 package com.github.bakuplayz.spigotspin.abstraction.menu.listeners;
 
-import com.github.bakuplayz.spigotspin.SpigotSpin;
 import com.github.bakuplayz.spigotspin.abstraction.menu.MenuManager;
 import com.github.bakuplayz.spigotspin.abstraction.menu.listeners.events.ExtendedInventoryDragEvent;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicSharedMenu;
@@ -126,14 +125,6 @@ public final class MenuListener implements Listener {
         // It is not safe to navigate back to shared menus.
         if (handler instanceof AbstractDynamicSharedMenu<?>) {
             menuManager.dissociatePlayerFromHandler(human);
-            return;
-        }
-
-        // We need to make sure to clear the backstack whenever, we
-        // realize that we no longer needs it to be stored. Thanks
-        // paper for this Reasons-enum.
-        if (event.getReason() != InventoryCloseEvent.Reason.OPEN_NEW) {
-            SpigotSpin.Manager.REF.getHistory().clearBackStack(human);
             return;
         }
 

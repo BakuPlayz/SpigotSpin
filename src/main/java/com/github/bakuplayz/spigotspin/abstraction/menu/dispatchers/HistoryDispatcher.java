@@ -28,6 +28,7 @@ public final class HistoryDispatcher {
             return;
         }
 
+        // Pops inclusive :)
         backStack.get(uuid).pop(); // TODO: Close?
         backStack.get(uuid).pop().open((Player) player);
     }
@@ -53,6 +54,7 @@ public final class HistoryDispatcher {
      *
      * @param player The player to wipe the backstack of.
      */
+    // TODO: Find where this can optimally be placed.
     public void clearBackStack(@NotNull HumanEntity player) {
         backStack.put(player.getUniqueId().toString(), new Stack<>());
     }
