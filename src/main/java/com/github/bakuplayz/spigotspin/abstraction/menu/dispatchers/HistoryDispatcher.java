@@ -14,8 +14,6 @@ public final class HistoryDispatcher {
 
     private final Map<String, Stack<DynamicMenu>> backStack = new HashMap<>();
 
-    private final Map<String, DynamicMenu> lastStackItem = new HashMap<>();
-
 
     /**
      * Attempts to pop the backstack to get the last menu that was open
@@ -30,8 +28,7 @@ public final class HistoryDispatcher {
             return;
         }
 
-        backStack.get(uuid).pop();
-        lastStackItem.put(uuid, backStack.get(uuid).peek());
+        backStack.get(uuid).pop(); // TODO: Close?
         backStack.get(uuid).pop().open((Player) player);
     }
 
@@ -46,9 +43,7 @@ public final class HistoryDispatcher {
     public void addToBackStack(@NotNull HumanEntity player, @NotNull DynamicMenu entry) {
         String uuid = player.getUniqueId().toString();
         backStack.putIfAbsent(uuid, new Stack<>());
-        if (!backStack.get(uuid).contains(entry) && entry != lastStackItem.get(uuid)) {
-            backStack.get(uuid).push(entry);
-        }
+        backStack.get(uuid).push(entry);
     }
 
 
