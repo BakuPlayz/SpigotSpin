@@ -105,7 +105,7 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
 
     @Override
     public final void handleClose(@NotNull InventoryCloseEvent event) {
-        SpigotSpin.Manager.REF.getHistory().addToBackStack(event.getPlayer(), this);
+        SpigotSpin.Manager.REF.getHistory().popBackStack(event.getPlayer());
     }
 
 
@@ -117,6 +117,7 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
         player.openInventory(inventory);
         handler.afterInventoryOpened();
 
+        SpigotSpin.Manager.REF.getHistory().addToBackStack(player, this);
         SpigotSpin.Manager.REF.getMenuManager().associatePlayerWithHandler(player, this);
     }
 

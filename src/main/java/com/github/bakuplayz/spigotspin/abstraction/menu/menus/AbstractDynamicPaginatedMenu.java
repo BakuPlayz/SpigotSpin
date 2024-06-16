@@ -12,7 +12,7 @@ import com.github.bakuplayz.spigotspin.abstraction.menu.items.state.ClickableSta
 import com.github.bakuplayz.spigotspin.abstraction.menu.items.state.StateItem;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.handlers.OpenInventoryHandler;
 import com.github.bakuplayz.spigotspin.abstraction.menu.menus.paginated.*;
-import com.github.bakuplayz.spigotspin.abstraction.menu.utils.Collection;
+import com.github.bakuplayz.spigotspin.abstraction.menu.utils.CollectionUtils;
 import com.github.bakuplayz.spigotspin.abstraction.menu.utils.TypeUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -83,7 +83,7 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
         getDispatcher().clearItemsFromTo(items, PAGE_ITEM_INDEX_MIN, PAGE_ITEM_INDEX_MAX);
 
         List<Item> items = positions.stream()
-                .map(Collection.toIndexed())
+                .map(CollectionUtils.toIndexed())
                 .filter((indexed) -> !isItemOutOfBounds(indexed.getIndex(), page))
                 .map((indexed) -> convertIndexedToItem(indexed, page))
                 .collect(Collectors.toList());
@@ -162,13 +162,13 @@ public abstract class AbstractDynamicPaginatedMenu<S extends PaginatedMenuState,
 
 
     @NotNull
-    private Item convertIndexedToItem(@NotNull Collection<Integer> indexed, int page) {
+    private Item convertIndexedToItem(@NotNull CollectionUtils<Integer> indexed, int page) {
         int itemPosition = calculateItemPosition(indexed.getIndex(), page);
         int inventoryPosition = indexed.getValue();
 
         PI paginatedItem = paginationItems.get(itemPosition);
         Item item = loadPaginatedItem(paginatedItem, itemPosition);
-        
+
         if (item instanceof ClickableItem) {
             ((ClickableItem) item).setAction(getPaginatedItemAction(paginatedItem, itemPosition));
         } else if (item instanceof ClickableStateItem<?>) {

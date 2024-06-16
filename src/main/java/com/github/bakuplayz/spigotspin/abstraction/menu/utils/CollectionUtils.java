@@ -16,22 +16,22 @@ import java.util.function.Function;
  */
 @Getter
 @AllArgsConstructor
-public final class Collection<T> {
+public final class CollectionUtils<T> {
 
     private T value;
 
     private int index;
 
 
-    public static <T> @NotNull Function<T, Collection<T>> toIndexed() {
-        return new Function<T, Collection<T>>() {
+    public static <T> @NotNull Function<T, CollectionUtils<T>> toIndexed() {
+        return new Function<T, CollectionUtils<T>>() {
 
             int currentIndex = 0;
 
 
             @Override
-            public Collection<T> apply(@NotNull T item) {
-                return new Collection<>(item, currentIndex++);
+            public CollectionUtils<T> apply(@NotNull T item) {
+                return new CollectionUtils<>(item, currentIndex++);
             }
 
         };
