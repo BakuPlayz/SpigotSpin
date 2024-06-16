@@ -14,7 +14,7 @@ public final class HistoryDispatcher {
 
     private final Map<String, Stack<DynamicMenu>> backStack = new HashMap<>();
 
-    private final Map<String, DynamicMenu> currentMenu = new HashMap<>();
+    private final Map<String, DynamicMenu> secondLastPop = new HashMap<>();
 
 
     /**
@@ -30,9 +30,7 @@ public final class HistoryDispatcher {
             return;
         }
 
-        DynamicMenu previousMenu = backStack.get(uuid).pop();
-        currentMenu.put(uuid, previousMenu);
-        previousMenu.open((Player) player);
+        backStack.get(uuid).pop().open((Player) player);
     }
 
 
@@ -45,12 +43,17 @@ public final class HistoryDispatcher {
      */
     public void addToBackStack(@NotNull HumanEntity player, @NotNull DynamicMenu entry) {
         String uuid = player.getUniqueId().toString();
+        backStack.putIfAbsent(uuid, new Stack<>());
 
-        if (currentMenu.get(uuid) != entry) {
-            backStack.putIfAbsent(uuid, new Stack<>());
-            backStack.get(uuid).push(entry);
+        if (isSecondLastSame(uuid, entry)) {
+            return;
         }
-        currentMenu.put(uuid, entry);
+
+        if (backStack.get(uuid).size() % 3 == 0) {
+            secondLastPop.put(uuid, entry);
+        }
+
+        backStack.get(uuid).push(entry);
     }
 
 
@@ -62,7 +65,12 @@ public final class HistoryDispatcher {
      */
     public void clearBackStack(@NotNull HumanEntity player) {
         backStack.put(player.getUniqueId().toString(), new Stack<>());
-        currentMenu.remove(player.getUniqueId().toString());
+    }
+
+
+    private boolean isSecondLastSame(@NotNull String uuid, @NotNull DynamicMenu entry) {
+        if (secondLastPop.get(uuid) == null) return false;
+        return secondLastPop.get(uuid).getIdentifier().equals(entry.getIdentifier());
     }
 
 }

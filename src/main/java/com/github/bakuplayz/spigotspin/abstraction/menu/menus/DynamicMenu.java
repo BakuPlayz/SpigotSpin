@@ -32,4 +32,9 @@ public interface DynamicMenu extends MenuHandler {
 
     Inventory getInventory();
 
+
+    default String getIdentifier() {
+        return IDENTIFIER;
+    }
+
 }
