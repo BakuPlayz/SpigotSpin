@@ -22,10 +22,12 @@ package com.github.bakuplayz.spigotspin.abstraction.menu.items.utils;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,11 +49,11 @@ public final class ItemBuilder {
 
     private int amount;
 
-    private Material material;
-
     private String name;
 
     private List<String> lore;
+
+    private Material material;
 
 
     public ItemBuilder() {
@@ -153,6 +155,33 @@ public final class ItemBuilder {
 
 
     /**
+     * Converts the {@link ItemBuilder item builder} to a {@link ItemStack item} of the {@link OfflinePlayer provided player's} head.
+     *
+     * @param player the player whose head you want to use.
+     * @return the head of the provided {@link OfflinePlayer}.
+     */
+    public @NotNull ItemStack toPlayerHead(@NotNull OfflinePlayer player) {
+        ItemStack stack = new ItemStack(Material.PLAYER_HEAD, amount);
+        SkullMeta meta = (SkullMeta) stack.getItemMeta();
+
+        if (lore != null) {
+            meta.setLore(lore);
+        }
+
+        if (name != null) {
+            meta.setDisplayName(name);
+        }
+
+        if (name != null || lore != null) {
+            meta.setOwningPlayer(player);
+            stack.setItemMeta(meta);
+        }
+        
+        return stack;
+    }
+
+
+    /**
      * Checks whether the passed {@link ItemStack item} is a tool or weapon.
      *
      * @param item the item to check.
@@ -163,6 +192,12 @@ public final class ItemBuilder {
     }
 
 
+    /**
+     * Colorizes the given content using the format of '&'.
+     *
+     * @param content the content to colorize.
+     * @return the content being colorized.
+     */
     @NotNull
     private String colorize(@NotNull String content) {
         return ChatColor.translateAlternateColorCodes('&', content);
