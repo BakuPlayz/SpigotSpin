@@ -105,7 +105,7 @@ public abstract class AbstractDynamicMenu implements DynamicMenu {
 
     @Override
     public final void handleClose(@NotNull InventoryCloseEvent event) {
-        SpigotSpin.Manager.REF.getHistory().popBackStack(event.getPlayer());
+        close((Player) event.getPlayer());
     }
 
 
