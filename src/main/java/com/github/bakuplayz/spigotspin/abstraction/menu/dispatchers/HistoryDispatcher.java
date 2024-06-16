@@ -30,6 +30,7 @@ public final class HistoryDispatcher {
             return;
         }
 
+        backStack.get(uuid).pop();
         lastStackItem.put(uuid, backStack.get(uuid).peek());
         backStack.get(uuid).pop().open((Player) player);
     }
