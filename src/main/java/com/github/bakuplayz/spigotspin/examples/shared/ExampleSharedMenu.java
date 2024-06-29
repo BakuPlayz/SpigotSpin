@@ -1,8 +1,9 @@
 package com.github.bakuplayz.spigotspin.examples.shared;
 
-import com.github.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicSharedMenu;
+import com.github.bakuplayz.spigotspin.menu.menus.SizeType;
+import com.github.bakuplayz.spigotspin.menu.menus.abstracts.AbstractSharedMenu;
 
-public final class ExampleSharedMenu extends AbstractDynamicSharedMenu<ExampleState> {
+public final class ExampleSharedMenu extends AbstractSharedMenu<ExampleState> {
 
     private final ExampleStateHandler stateHandler;
 
@@ -16,6 +17,12 @@ public final class ExampleSharedMenu extends AbstractDynamicSharedMenu<ExampleSt
     @Override
     public void setItems() {
         setItem(9, new ExampleItem("Test item"), (ignored, player) -> stateHandler.incrementCounter(), ExampleStateFlag.COUNT);
+    }
+
+
+    @Override
+    public SizeType getSizeType() {
+        return SizeType.DYNAMIC;
     }
 
 }

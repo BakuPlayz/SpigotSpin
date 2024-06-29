@@ -1,14 +1,15 @@
 package com.github.bakuplayz.spigotspin.examples.pagination;
 
-import com.github.bakuplayz.spigotspin.abstraction.menu.items.Item;
-import com.github.bakuplayz.spigotspin.abstraction.menu.items.actions.ItemAction;
-import com.github.bakuplayz.spigotspin.abstraction.menu.menus.AbstractDynamicPaginatedMenu;
+import com.github.bakuplayz.spigotspin.menu.items.Item;
+import com.github.bakuplayz.spigotspin.menu.items.actions.ItemAction;
+import com.github.bakuplayz.spigotspin.menu.menus.SizeType;
+import com.github.bakuplayz.spigotspin.menu.menus.abstracts.AbstractPaginatedMenu;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
 
-public final class ExamplePaginated extends AbstractDynamicPaginatedMenu<ExampleState, ExampleStateHandler, String> {
+public final class ExamplePaginated extends AbstractPaginatedMenu<ExampleState, ExampleStateHandler, String> {
 
 
     private final List<String> items = Arrays.asList("Hello", "World!");
@@ -33,4 +34,10 @@ public final class ExamplePaginated extends AbstractDynamicPaginatedMenu<Example
         return new ExampleItem(paginatedItem);
     }
 
+
+    @Override
+    public SizeType getSizeType() {
+        return SizeType.DYNAMIC;
+    }
+    
 }

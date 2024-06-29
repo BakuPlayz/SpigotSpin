@@ -1,9 +1,9 @@
 package com.github.bakuplayz.spigotspin;
 
 import com.cryptomorin.xseries.XMaterial;
-import com.github.bakuplayz.spigotspin.abstraction.menu.MenuManager;
-import com.github.bakuplayz.spigotspin.abstraction.menu.dispatchers.HistoryDispatcher;
-import com.github.bakuplayz.spigotspin.abstraction.menu.listeners.MenuListener;
+import com.github.bakuplayz.spigotspin.menu.MenuManager;
+import com.github.bakuplayz.spigotspin.menu.dispatchers.HistoryDispatcher;
+import com.github.bakuplayz.spigotspin.menu.listeners.MenuListener;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,9 +26,10 @@ public final class SpigotSpin {
         Manager.REF.setMenuManager(new MenuManager());
         Plugin.REF.setPlugin(plugin);
 
-        /* Loads XMaterial's cache and also serves as a little sanity check. */
+        /* Loads XMaterial's cache, and also serves as a little sanity check. */
         if (!XMaterial.DIRT.isSupported()) {
             LOGGER.severe("You're Minecraft version is not supported with SpigotSpin.");
+            return;
         }
 
         registerListeners();
