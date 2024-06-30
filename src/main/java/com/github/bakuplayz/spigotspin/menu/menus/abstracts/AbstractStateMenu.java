@@ -26,10 +26,17 @@ public abstract class AbstractStateMenu<S extends MenuState> extends AbstractPla
 
     @Override
     public void setItem(int position, @NotNull StateItem<S> item, int flag) {
+        validatePosition(position);
         item.setFlags(Collections.singletonList(flag));
         item.injectDispatcher(getDispatcher());
         item.setPosition(position);
         items.put(position, item);
+    }
+
+
+    @Override
+    public void setItemIf(boolean setIfTrue, int position, @NotNull StateItem<S> item, int flag) {
+        if (setIfTrue) setItem(position, item, flag);
     }
 
 
@@ -40,12 +47,25 @@ public abstract class AbstractStateMenu<S extends MenuState> extends AbstractPla
 
 
     @Override
+    public void setItemIf(boolean setIfTrue, int position, @NotNull ClickableStateItem<S> item, @NotNull ClickableAction<ClickableStateItem<S>> action, int flag) {
+        if (setIfTrue) setItem(position, item, action, flag);
+    }
+
+
+    @Override
     public void setItem(int position, @NotNull ClickableStateItem<S> item, @NotNull ClickableAction<ClickableStateItem<S>> action, @NotNull List<Integer> flags) {
+        validatePosition(position);
         item.setFlags(flags);
         item.setAction(action);
         item.setPosition(position);
         item.injectDispatcher(getDispatcher());
         items.put(position, item);
+    }
+
+
+    @Override
+    public void setItemIf(boolean setIfTrue, int position, @NotNull ClickableStateItem<S> item, @NotNull ClickableAction<ClickableStateItem<S>> action, @NotNull List<Integer> flags) {
+        if (setIfTrue) setItem(position, item, action, flags);
     }
 
 
