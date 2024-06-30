@@ -39,5 +39,12 @@ public final class ExamplePaginated extends AbstractPaginatedMenu<ExampleState, 
     public SizeType getSizeType() {
         return SizeType.DYNAMIC;
     }
-    
+
+
+    @NotNull
+    @Override
+    public ExampleStateHandler createStateHandler() {
+        return new ExampleStateHandler(this);
+    }
+
 }

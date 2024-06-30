@@ -3,14 +3,23 @@ package com.github.bakuplayz.spigotspin.menu.menus.common.components;
 import com.github.bakuplayz.spigotspin.menu.items.state.StateUpdatable;
 import com.github.bakuplayz.spigotspin.menu.menus.Menu;
 import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuState;
-import lombok.AllArgsConstructor;
+import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuStateHandler;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
-@AllArgsConstructor
 public final class StateComponent<S extends MenuState> {
 
 
     private final Menu menu;
+
+    @Getter
+    private final S state;
+
+
+    public StateComponent(@NotNull Menu menu, @NotNull MenuStateHandler<S, ?> stateHandler) {
+        this.menu = menu;
+        this.state = stateHandler.getState();
+    }
 
 
     public void handleUpdate(@NotNull S state, int flag) {

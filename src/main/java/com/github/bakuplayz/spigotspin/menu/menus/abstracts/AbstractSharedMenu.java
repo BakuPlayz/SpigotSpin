@@ -4,6 +4,8 @@ import com.github.bakuplayz.spigotspin.menu.menus.common.handlers.OpenInventoryH
 import com.github.bakuplayz.spigotspin.menu.menus.common.shared.SharedInternal;
 import com.github.bakuplayz.spigotspin.menu.menus.common.shared.SharedMenu;
 import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuState;
+import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuStateHandler;
+import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuStateObserver;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Player;
@@ -11,7 +13,8 @@ import org.jetbrains.annotations.NotNull;
 
 @Getter
 @Setter
-public abstract class AbstractSharedMenu<S extends MenuState> extends AbstractStateMenu<S> implements SharedMenu {
+public abstract class AbstractSharedMenu<S extends MenuState, SH extends MenuStateHandler<S, ? extends MenuStateObserver<S>>>
+        extends AbstractStateMenu<S, SH> implements SharedMenu {
 
 
     protected AbstractSharedMenu(@NotNull String title) {

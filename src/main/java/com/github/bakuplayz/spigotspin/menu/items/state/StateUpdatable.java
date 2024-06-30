@@ -14,6 +14,10 @@ public interface StateUpdatable<S extends MenuState> {
     void setFlags(@NotNull List<Integer> flags);
 
 
+    @NotNull
+    S getState();
+
+
     void update(@NotNull S state, int flag);
 
 

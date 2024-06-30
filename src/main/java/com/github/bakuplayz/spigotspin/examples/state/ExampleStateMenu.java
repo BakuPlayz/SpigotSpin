@@ -2,15 +2,13 @@ package com.github.bakuplayz.spigotspin.examples.state;
 
 import com.github.bakuplayz.spigotspin.menu.menus.SizeType;
 import com.github.bakuplayz.spigotspin.menu.menus.abstracts.AbstractStateMenu;
+import org.jetbrains.annotations.NotNull;
 
-public final class ExampleStateMenu extends AbstractStateMenu<ExampleState> {
-
-    private final ExampleStateHandler stateHandler;
+public final class ExampleStateMenu extends AbstractStateMenu<ExampleState, ExampleStateHandler> {
 
 
     public ExampleStateMenu() {
         super("State example");
-        this.stateHandler = new ExampleStateHandler(this);
     }
 
 
@@ -25,4 +23,10 @@ public final class ExampleStateMenu extends AbstractStateMenu<ExampleState> {
         return SizeType.DYNAMIC;
     }
 
+
+    @NotNull
+    @Override
+    public ExampleStateHandler createStateHandler() {
+        return new ExampleStateHandler(this);
+    }
 }

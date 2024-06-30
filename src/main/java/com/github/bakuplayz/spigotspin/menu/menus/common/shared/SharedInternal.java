@@ -13,7 +13,7 @@ public enum SharedInternal {
 
     STATE;
 
-    public final Map<String, AbstractStateMenu<?>> ACTIVE_MENUS = new HashMap<>();
+    public final Map<String, AbstractStateMenu<?, ?>> ACTIVE_MENUS = new HashMap<>();
 
     public final Map<String, String> PLAYER_OPENED_MENUS = new HashMap<>();
 

@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Setter
-public abstract class ClickableItem extends Item implements Clickable {
+public abstract class ClickableItem extends Item implements ItemActionable, Clickable {
 
     @Nullable
     private ItemAction action;

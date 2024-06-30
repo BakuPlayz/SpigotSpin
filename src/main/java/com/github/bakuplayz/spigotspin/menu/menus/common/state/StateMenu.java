@@ -8,7 +8,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface StateMenu<S extends MenuState> extends Menu {
+public interface StateMenu<S extends MenuState, SH extends MenuStateHandler<S, ? extends MenuStateObserver<S>>> extends Menu {
+    
+    SH createStateHandler();
 
 
     void setItem(int position, @NotNull StateItem<S> item, int flag);

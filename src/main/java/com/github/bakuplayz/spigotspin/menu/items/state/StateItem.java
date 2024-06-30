@@ -17,11 +17,19 @@ public abstract class StateItem<S extends MenuState> extends Item implements Sta
     @NotNull
     private List<Integer> flags;
 
+    @Getter
+    private S state;
+
     private InventoryDispatcher dispatcher;
 
 
     public final void injectDispatcher(@NotNull InventoryDispatcher dispatcher) {
         this.dispatcher = dispatcher;
+    }
+
+
+    public final void injectState(@NotNull S state) {
+        this.state = state;
     }
 
 

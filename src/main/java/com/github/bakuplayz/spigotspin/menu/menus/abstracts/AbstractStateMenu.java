@@ -5,6 +5,7 @@ import com.github.bakuplayz.spigotspin.menu.items.state.ClickableStateItem;
 import com.github.bakuplayz.spigotspin.menu.items.state.StateItem;
 import com.github.bakuplayz.spigotspin.menu.menus.common.components.StateComponent;
 import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuState;
+import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuStateHandler;
 import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuStateObserver;
 import com.github.bakuplayz.spigotspin.menu.menus.common.state.StateMenu;
 import org.jetbrains.annotations.NotNull;
@@ -12,15 +13,19 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractStateMenu<S extends MenuState> extends AbstractPlainMenu
-        implements StateMenu<S>, MenuStateObserver<S> {
+public abstract class AbstractStateMenu<S extends MenuState, SH extends MenuStateHandler<S, ? extends MenuStateObserver<S>>>
+        extends AbstractPlainMenu implements StateMenu<S, SH>, MenuStateObserver<S> {
 
     private final StateComponent<S> stateComponent;
+
+    @NotNull
+    protected SH stateHandler;
 
 
     public AbstractStateMenu(@NotNull String title) {
         super(title);
-        this.stateComponent = new StateComponent<>(this);
+        this.stateHandler = createStateHandler();
+        this.stateComponent = new StateComponent<>(this, stateHandler);
     }
 
 
@@ -28,6 +33,7 @@ public abstract class AbstractStateMenu<S extends MenuState> extends AbstractPla
     public void setItem(int position, @NotNull StateItem<S> item, int flag) {
         validatePosition(position);
         item.setFlags(Collections.singletonList(flag));
+        item.injectState(stateComponent.getState());
         item.injectDispatcher(getDispatcher());
         item.setPosition(position);
         items.put(position, item);
@@ -59,6 +65,7 @@ public abstract class AbstractStateMenu<S extends MenuState> extends AbstractPla
         item.setAction(action);
         item.setPosition(position);
         item.injectDispatcher(getDispatcher());
+        item.injectState(stateComponent.getState());
         items.put(position, item);
     }
 

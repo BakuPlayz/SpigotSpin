@@ -108,7 +108,7 @@ public final class MenuListener implements Listener {
             return;
         }
 
-        ((AbstractSharedMenu<?>) handler).leave((Player) human);
+        ((AbstractSharedMenu<?, ?>) handler).leave((Player) human);
     }
 
 
@@ -123,7 +123,7 @@ public final class MenuListener implements Listener {
         if (handler == null) return;
 
         // It is not safe to navigate back to shared menus.
-        if (handler instanceof AbstractSharedMenu<?>) {
+        if (handler instanceof AbstractSharedMenu<?, ?>) {
             menuManager.dissociatePlayerFromHandler(human);
             return;
         }

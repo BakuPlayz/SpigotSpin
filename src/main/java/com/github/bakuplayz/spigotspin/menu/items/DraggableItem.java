@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Setter
-public abstract class DraggableItem extends Item implements Draggable {
+public abstract class DraggableItem extends Item implements ItemActionable, Draggable {
 
     @Nullable
     private ItemAction action;

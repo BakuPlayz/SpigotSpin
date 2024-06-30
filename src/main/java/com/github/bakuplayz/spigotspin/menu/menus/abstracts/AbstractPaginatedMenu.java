@@ -1,14 +1,11 @@
 package com.github.bakuplayz.spigotspin.menu.menus.abstracts;
 
-import com.github.bakuplayz.spigotspin.menu.items.ClickableItem;
-import com.github.bakuplayz.spigotspin.menu.items.Draggable;
-import com.github.bakuplayz.spigotspin.menu.items.DraggableItem;
 import com.github.bakuplayz.spigotspin.menu.items.Item;
+import com.github.bakuplayz.spigotspin.menu.items.ItemActionable;
 import com.github.bakuplayz.spigotspin.menu.items.actions.ItemAction;
 import com.github.bakuplayz.spigotspin.menu.items.paginated.CurrentPageItem;
 import com.github.bakuplayz.spigotspin.menu.items.paginated.NextPageItem;
 import com.github.bakuplayz.spigotspin.menu.items.paginated.PreviousPageItem;
-import com.github.bakuplayz.spigotspin.menu.items.state.ClickableStateItem;
 import com.github.bakuplayz.spigotspin.menu.items.state.StateItem;
 import com.github.bakuplayz.spigotspin.menu.menus.SizeType;
 import com.github.bakuplayz.spigotspin.menu.menus.common.handlers.OpenInventoryHandler;
@@ -28,7 +25,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH extends PaginatedMenuStateHandler<S>, PI>
-        extends AbstractStateMenu<S> implements PaginatedMenu<S, PI>, PaginatedMenuStateObserver<S> {
+        extends AbstractStateMenu<S, SH> implements PaginatedMenu<S, PI>, PaginatedMenuStateObserver<S> {
 
     public static final int PAGE_ITEM_INDEX_MIN = 0;
 
@@ -39,10 +36,6 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
     private final CurrentPageItem<S> currentItem;
 
     private final PreviousPageItem<S> previousItem;
-
-    @Setter
-    @NotNull
-    protected SH stateHandler;
 
     @Getter
     @Setter
@@ -94,13 +87,15 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
 
 
     @Override
+    @SuppressWarnings("unchecked")
     public final void loadPaginatedItems(@NotNull List<Item> batch) {
         batch.forEach(item -> {
             if (!(item instanceof StateItem)) {
                 return;
             }
 
-            ((StateItem<?>) item).injectDispatcher(getDispatcher());
+            ((StateItem<S>) item).injectDispatcher(getDispatcher());
+            ((StateItem<S>) item).injectState(stateHandler.getState());
         });
         batch.forEach(item -> setItem(item.getPosition(), item));
         batch.forEach(getDispatcher()::updateItem);
@@ -169,12 +164,8 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
         PI paginatedItem = paginationItems.get(itemPosition);
         Item item = loadPaginatedItem(paginatedItem, itemPosition);
 
-        if (item instanceof ClickableItem) {
-            ((ClickableItem) item).setAction(getPaginatedItemAction(paginatedItem, itemPosition));
-        } else if (item instanceof ClickableStateItem<?>) {
-            ((ClickableStateItem<?>) item).setAction(getPaginatedItemAction(paginatedItem, itemPosition));
-        } else if (item instanceof Draggable) {
-            ((DraggableItem) item).setAction(getPaginatedItemAction(paginatedItem, itemPosition));
+        if (item instanceof ItemActionable) {
+            ((ItemActionable) item).setAction(getPaginatedItemAction(paginatedItem, itemPosition));
         }
 
         item.setPosition(inventoryPosition);
