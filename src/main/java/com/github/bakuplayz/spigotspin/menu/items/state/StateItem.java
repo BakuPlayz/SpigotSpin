@@ -18,7 +18,7 @@ public abstract class StateItem<S extends MenuState> extends Item implements Sta
     private List<Integer> flags;
 
     @Getter
-    private S state;
+    private S initialState;
 
     private InventoryDispatcher dispatcher;
 
@@ -28,8 +28,8 @@ public abstract class StateItem<S extends MenuState> extends Item implements Sta
     }
 
 
-    public final void injectState(@NotNull S state) {
-        this.state = state;
+    public final void injectInitialState(@NotNull S state) {
+        this.initialState = state;
     }
 
 

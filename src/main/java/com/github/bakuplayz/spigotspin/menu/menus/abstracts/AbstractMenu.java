@@ -5,8 +5,10 @@ import com.github.bakuplayz.spigotspin.menu.dispatchers.InventoryDispatcher;
 import com.github.bakuplayz.spigotspin.menu.items.ItemsMap;
 import com.github.bakuplayz.spigotspin.menu.listeners.events.ExtendedInventoryDragEvent;
 import com.github.bakuplayz.spigotspin.menu.menus.Menu;
+import com.github.bakuplayz.spigotspin.menu.menus.common.ViewerMap;
 import com.github.bakuplayz.spigotspin.menu.menus.common.components.InteractComponent;
 import com.github.bakuplayz.spigotspin.menu.menus.common.handlers.OpenInventoryHandler;
+import com.github.bakuplayz.spigotspin.menu.utils.LazyEvaluator;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +23,8 @@ public abstract class AbstractMenu implements Menu {
 
     private final InteractComponent interactComponent;
 
+    private final LazyEvaluator<ViewerMap> viewers;
+
     @Setter(AccessLevel.MODULE)
     protected ItemsMap items;
 
@@ -32,6 +36,7 @@ public abstract class AbstractMenu implements Menu {
 
 
     protected AbstractMenu() {
+        this.viewers = ViewerMap::new;
         this.items = new ItemsMap(getMaxSize());
         this.dispatcher = new InventoryDispatcher(() -> inventory);
         this.interactComponent = new InteractComponent(this);
@@ -67,6 +72,7 @@ public abstract class AbstractMenu implements Menu {
         handler.afterInventoryLoaded();
         player.openInventory(inventory);
         handler.afterInventoryOpened();
+        viewers.get().add(player);
 
         SpigotSpin.Manager.REF.getHistory().addToBackStack(player, this);
         SpigotSpin.Manager.REF.getMenuManager().associatePlayerWithHandler(player, this);
@@ -82,6 +88,7 @@ public abstract class AbstractMenu implements Menu {
     @Override
     public void close(@NotNull Player player) {
         player.closeInventory();
+        viewers.get().remove(player);
     }
 
 

@@ -15,7 +15,7 @@ public interface StateUpdatable<S extends MenuState> {
 
 
     @NotNull
-    S getState();
+    S getInitialState();
 
 
     void update(@NotNull S state, int flag);
