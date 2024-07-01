@@ -46,20 +46,19 @@ public abstract class AbstractStateMenu<S extends MenuState, SH extends MenuStat
     }
 
 
-    @Override
-    public void setItem(int position, @NotNull ClickableStateItem<S> item, @NotNull ClickableAction<ClickableStateItem<S>> action, int flag) {
+    public <I extends ClickableStateItem<S>> void setItem(int position, @NotNull I item, @NotNull ClickableAction<I> action, int flag) {
         this.setItem(position, item, action, Collections.singletonList(flag));
     }
 
 
     @Override
-    public void setItemIf(boolean setIfTrue, int position, @NotNull ClickableStateItem<S> item, @NotNull ClickableAction<ClickableStateItem<S>> action, int flag) {
+    public <I extends ClickableStateItem<S>> void setItemIf(boolean setIfTrue, int position, @NotNull I item, @NotNull ClickableAction<I> action, int flag) {
         if (setIfTrue) setItem(position, item, action, flag);
     }
 
 
     @Override
-    public void setItem(int position, @NotNull ClickableStateItem<S> item, @NotNull ClickableAction<ClickableStateItem<S>> action, @NotNull List<Integer> flags) {
+    public <I extends ClickableStateItem<S>> void setItem(int position, @NotNull I item, @NotNull ClickableAction<I> action, @NotNull List<Integer> flags) {
         validatePosition(position);
         item.setFlags(flags);
         item.setAction(action);
@@ -71,7 +70,7 @@ public abstract class AbstractStateMenu<S extends MenuState, SH extends MenuStat
 
 
     @Override
-    public void setItemIf(boolean setIfTrue, int position, @NotNull ClickableStateItem<S> item, @NotNull ClickableAction<ClickableStateItem<S>> action, @NotNull List<Integer> flags) {
+    public <I extends ClickableStateItem<S>> void setItemIf(boolean setIfTrue, int position, @NotNull I item, @NotNull ClickableAction<I> action, @NotNull List<Integer> flags) {
         if (setIfTrue) setItem(position, item, action, flags);
     }
 
