@@ -17,19 +17,23 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
-@Getter
+
 public abstract class AbstractMenu implements Menu {
+
+    @Getter
+    protected final ViewerMap viewers;
 
     private final InteractComponent interactComponent;
 
-    private final ViewerMap viewers;
-
+    @Getter
     @Setter(AccessLevel.MODULE)
     protected ItemsMap items;
 
+    @Getter
     @Setter(AccessLevel.MODULE)
     private Inventory inventory;
 
+    @Getter
     @Setter(AccessLevel.MODULE)
     private InventoryDispatcher dispatcher;
 
@@ -66,12 +70,12 @@ public abstract class AbstractMenu implements Menu {
 
     @Override
     public final void open(@NotNull Player player, @NotNull OpenInventoryHandler handler) {
+        viewers.add(player);
         handler.beforeInventoryLoaded();
         handler.loadInventory();
         handler.afterInventoryLoaded();
         player.openInventory(inventory);
         handler.afterInventoryOpened();
-        viewers.add(player);
 
         SpigotSpin.Manager.REF.getHistory().addToBackStack(player, this);
         SpigotSpin.Manager.REF.getMenuManager().associatePlayerWithHandler(player, this);
