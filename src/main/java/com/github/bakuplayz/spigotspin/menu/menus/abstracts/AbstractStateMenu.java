@@ -8,6 +8,7 @@ import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuState;
 import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuStateHandler;
 import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuStateObserver;
 import com.github.bakuplayz.spigotspin.menu.menus.common.state.StateMenu;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -18,14 +19,24 @@ public abstract class AbstractStateMenu<S extends MenuState, SH extends MenuStat
 
     private final StateComponent<S> stateComponent;
 
-    @NotNull
+    /**
+     * Note: Initialized right before opening the menu,
+     * making it fully available during the runtime
+     * of the full menu opening pipeline.
+     */
     protected SH stateHandler;
 
 
     public AbstractStateMenu(@NotNull String title) {
         super(title);
+        this.stateComponent = new StateComponent<>(this, () -> stateHandler);
+    }
+
+
+    @Override
+    public void open(@NotNull Player player) {
         this.stateHandler = createStateHandler();
-        this.stateComponent = new StateComponent<>(this, stateHandler);
+        super.open(player);
     }
 
 
@@ -33,7 +44,7 @@ public abstract class AbstractStateMenu<S extends MenuState, SH extends MenuStat
     public void setItem(int position, @NotNull StateItem<S> item, int flag) {
         validatePosition(position);
         item.setFlags(Collections.singletonList(flag));
-        item.injectInitialState(stateComponent.getState());
+        item.injectInitialState(stateComponent.getInitialState().get());
         item.injectDispatcher(getDispatcher());
         item.setPosition(position);
         items.put(position, item);
@@ -64,7 +75,7 @@ public abstract class AbstractStateMenu<S extends MenuState, SH extends MenuStat
         item.setAction(action);
         item.setPosition(position);
         item.injectDispatcher(getDispatcher());
-        item.injectInitialState(stateComponent.getState());
+        item.injectInitialState(stateComponent.getInitialState().get());
         items.put(position, item);
     }
 
