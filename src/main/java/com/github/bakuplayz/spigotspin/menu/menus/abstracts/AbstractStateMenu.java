@@ -8,7 +8,6 @@ import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuState;
 import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuStateHandler;
 import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuStateObserver;
 import com.github.bakuplayz.spigotspin.menu.menus.common.state.StateMenu;
-import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +26,6 @@ public abstract class AbstractStateMenu<S extends MenuState, SH extends MenuStat
      * of the full menu opening pipeline.
      */
     @Setter
-    @Getter
     protected SH stateHandler;
 
 
@@ -48,7 +46,7 @@ public abstract class AbstractStateMenu<S extends MenuState, SH extends MenuStat
     public void setItem(int position, @NotNull StateItem<S> item, int flag) {
         validatePosition(position);
         item.setFlags(Collections.singletonList(flag));
-        item.injectInitialState(stateHandler.getState());
+        item.injectInitialState(stateHandler);
         item.injectDispatcher(getDispatcher());
         item.setPosition(position);
         items.put(position, item);
@@ -78,8 +76,8 @@ public abstract class AbstractStateMenu<S extends MenuState, SH extends MenuStat
         item.setFlags(flags);
         item.setAction(action);
         item.setPosition(position);
+        item.injectInitialState(stateHandler);
         item.injectDispatcher(getDispatcher());
-        item.injectInitialState(stateHandler.getState());
         items.put(position, item);
     }
 

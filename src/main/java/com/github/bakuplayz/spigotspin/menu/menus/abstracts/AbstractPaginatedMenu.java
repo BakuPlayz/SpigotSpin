@@ -96,7 +96,7 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
             }
 
             ((StateItem<S>) item).injectDispatcher(getDispatcher());
-            ((StateItem<S>) item).injectInitialState(stateHandler.getState());
+            ((StateItem<S>) item).injectInitialState(stateHandler);
         });
         batch.forEach(item -> setItem(item.getPosition(), item));
         batch.forEach(getDispatcher()::updateItem);

@@ -3,6 +3,8 @@ package com.github.bakuplayz.spigotspin.menu.items.state;
 import com.github.bakuplayz.spigotspin.menu.dispatchers.InventoryDispatcher;
 import com.github.bakuplayz.spigotspin.menu.items.Item;
 import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuState;
+import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuStateHandler;
+import com.github.bakuplayz.spigotspin.menu.utils.LazyEvaluator;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
@@ -17,8 +19,7 @@ public abstract class StateItem<S extends MenuState> extends Item implements Sta
     @NotNull
     private List<Integer> flags;
 
-    @Getter
-    private S initialState;
+    private LazyEvaluator<S> initialState;
 
     private InventoryDispatcher dispatcher;
 
@@ -28,8 +29,14 @@ public abstract class StateItem<S extends MenuState> extends Item implements Sta
     }
 
 
-    public final void injectInitialState(@NotNull S state) {
-        this.initialState = state;
+    public final void injectInitialState(@NotNull MenuStateHandler<S, ?> stateHandler) {
+        this.initialState = stateHandler::getState;
+    }
+
+
+    @NotNull
+    public S getInitialState() {
+        return initialState.get();
     }
 
 
