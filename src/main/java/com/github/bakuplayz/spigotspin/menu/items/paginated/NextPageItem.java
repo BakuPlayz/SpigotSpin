@@ -5,16 +5,17 @@ import com.github.bakuplayz.spigotspin.menu.items.state.ClickableStateItem;
 import com.github.bakuplayz.spigotspin.menu.items.utils.ViewState;
 import com.github.bakuplayz.spigotspin.menu.menus.common.paginated.PaginatedMenuState;
 import com.github.bakuplayz.spigotspin.menu.menus.common.paginated.PaginationContext;
+import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
+@AllArgsConstructor
 public class NextPageItem<S extends PaginatedMenuState> extends ClickableStateItem<S> {
 
     protected final PaginationContext context;
 
 
-    public NextPageItem(@NotNull PaginationContext context) {
-        this.context = context;
-
+    @Override
+    public void create() {
         setName("&7Next page");
         setMaterial(XMaterial.ARROW);
     }
@@ -24,5 +25,6 @@ public class NextPageItem<S extends PaginatedMenuState> extends ClickableStateIt
     public void update(@NotNull S state, int flag) {
         setViewState(context.hasNextPage() ? ViewState.VISIBLE : ViewState.INVISIBLE);
     }
+
 
 }

@@ -4,16 +4,17 @@ import com.cryptomorin.xseries.XMaterial;
 import com.github.bakuplayz.spigotspin.menu.items.state.StateItem;
 import com.github.bakuplayz.spigotspin.menu.menus.common.paginated.PaginatedMenuState;
 import com.github.bakuplayz.spigotspin.menu.menus.common.paginated.PaginationContext;
+import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
+@AllArgsConstructor
 public class CurrentPageItem<S extends PaginatedMenuState> extends StateItem<S> {
 
     protected final PaginationContext context;
 
 
-    public CurrentPageItem(@NotNull PaginationContext context) {
-        this.context = context;
-
+    @Override
+    public void create() {
         setName("&7Page: &e1");
         setMaterial(XMaterial.BOOK);
     }

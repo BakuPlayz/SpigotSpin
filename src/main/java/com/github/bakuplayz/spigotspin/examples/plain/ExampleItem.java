@@ -5,7 +5,8 @@ import com.github.bakuplayz.spigotspin.menu.items.ClickableItem;
 
 public class ExampleItem extends ClickableItem {
 
-    public ExampleItem() {
+    @Override
+    public void create() {
         setName("Test");
         setMaterial(XMaterial.ANVIL);
     }

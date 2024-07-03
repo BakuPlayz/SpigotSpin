@@ -36,10 +36,13 @@ public abstract class Item {
     private OfflinePlayer player;
 
 
-    public Item() {
+    protected Item() {
         this.builder = new ItemBuilder();
         this.viewState = ViewState.VISIBLE;
     }
+
+
+    public abstract void create();
 
 
     public void setLore(@NotNull String... lore) {
@@ -78,6 +81,7 @@ public abstract class Item {
 
 
     public ItemStack asItemStack() {
+        create();
         if (viewState == ViewState.INVISIBLE) {
             return null;
         }

@@ -46,7 +46,7 @@ public abstract class AbstractStateMenu<S extends MenuState, SH extends MenuStat
     public void setItem(int position, @NotNull StateItem<S> item, int flag) {
         validatePosition(position);
         item.setFlags(Collections.singletonList(flag));
-        item.injectInitialState(stateHandler);
+        item.injectInitialState(stateHandler.getState());
         item.injectDispatcher(getDispatcher());
         item.setPosition(position);
         items.put(position, item);
@@ -76,8 +76,8 @@ public abstract class AbstractStateMenu<S extends MenuState, SH extends MenuStat
         item.setFlags(flags);
         item.setAction(action);
         item.setPosition(position);
-        item.injectInitialState(stateHandler);
         item.injectDispatcher(getDispatcher());
+        item.injectInitialState(stateHandler.getState());
         items.put(position, item);
     }
 
