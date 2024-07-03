@@ -45,7 +45,7 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
     public AbstractPaginatedMenu(@NotNull String title) {
         super(title);
 
-        assureDynamic();
+        assureDynamicOrDoubleChest();
         this.nextItem = createNextItem();
         this.currentItem = createCurrentItem();
         this.previousItem = createPreviousItem();
@@ -196,12 +196,12 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
     }
 
 
-    private void assureDynamic() throws UnsupportedOperationException {
-        if (getSizeType() == SizeType.DYNAMIC) {
+    private void assureDynamicOrDoubleChest() throws UnsupportedOperationException {
+        if (getSizeType() == SizeType.DYNAMIC || getSizeType() == SizeType.DOUBLE_CHEST) {
             return;
         }
 
-        throw new UnsupportedOperationException("Only dynamic menus can be of type paginated menu.");
+        throw new UnsupportedOperationException("Only dynamic or double chest menus can be of type paginated menu.");
     }
 
 
