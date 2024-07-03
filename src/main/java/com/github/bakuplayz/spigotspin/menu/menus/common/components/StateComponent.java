@@ -2,8 +2,8 @@ package com.github.bakuplayz.spigotspin.menu.menus.common.components;
 
 import com.github.bakuplayz.spigotspin.menu.items.state.StateUpdatable;
 import com.github.bakuplayz.spigotspin.menu.menus.Menu;
+import com.github.bakuplayz.spigotspin.menu.menus.abstracts.AbstractStateMenu;
 import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuState;
-import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuStateHandler;
 import com.github.bakuplayz.spigotspin.menu.utils.LazyEvaluator;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
@@ -17,8 +17,8 @@ public final class StateComponent<S extends MenuState> {
     private final LazyEvaluator<S> initialState;
 
 
-    public StateComponent(@NotNull Menu menu, @NotNull LazyEvaluator<MenuStateHandler<S, ?>> stateHandler) {
-        this.initialState = () -> stateHandler.get().getState();
+    public StateComponent(@NotNull AbstractStateMenu<S, ?> menu) {
+        this.initialState = () -> menu.getStateHandler().getState();
         this.menu = menu;
     }
 
