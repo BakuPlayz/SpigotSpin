@@ -35,8 +35,11 @@ public abstract class Item {
     @Nullable
     private OfflinePlayer player;
 
+    private boolean isCreated;
+
 
     protected Item() {
+        this.isCreated = false;
         this.builder = new ItemBuilder();
         this.viewState = ViewState.VISIBLE;
     }
@@ -81,7 +84,10 @@ public abstract class Item {
 
 
     public ItemStack asItemStack() {
-        create();
+        if (!isCreated) {
+            isCreated = true;
+            create();
+        }
         if (viewState == ViewState.INVISIBLE) {
             return null;
         }

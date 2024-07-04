@@ -24,6 +24,7 @@ public abstract class AbstractSharedMenu<S extends MenuState, SH extends MenuSta
 
     @Override
     public final void join(@NotNull Player player, @NotNull String identifier) {
+        viewers.add(player);
         setStateHandler(createStateHandler());
         SharedInternal.STATE.ACTIVE_MENUS.getOrDefault(identifier, this).open(player, new OpenMenuHandler(identifier));
         SharedInternal.STATE.ACTIVE_MENUS.putIfAbsent(identifier, this);

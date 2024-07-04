@@ -55,6 +55,7 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
 
     @Override
     public void open(@NotNull Player player) {
+        viewers.add(player);
         setStateHandler(createStateHandler());
         open(player, new OpenMenuHandler());
     }

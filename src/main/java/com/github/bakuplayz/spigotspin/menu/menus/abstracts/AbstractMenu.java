@@ -70,7 +70,6 @@ public abstract class AbstractMenu implements Menu {
 
     @Override
     public final void open(@NotNull Player player, @NotNull OpenInventoryHandler handler) {
-        viewers.add(player);
         handler.beforeInventoryLoaded();
         handler.loadInventory();
         handler.afterInventoryLoaded();
@@ -84,6 +83,7 @@ public abstract class AbstractMenu implements Menu {
 
     @Override
     public void open(@NotNull Player player) {
+        viewers.add(player);
         open(player, new OpenMenuHandler());
     }
 
