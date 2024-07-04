@@ -48,6 +48,9 @@ public final class MenuListener implements Listener {
             return;
         }
 
+        MenuHandler handler = menuManager.findHandlerByPlayer(event.getWhoClicked());
+        if (handler == null) return;
+
         if (!ALLOWED_ACTIONS.contains(event.getAction())) {
             event.setCancelled(true);
             return;
@@ -57,9 +60,6 @@ public final class MenuListener implements Listener {
                 event.getWhoClicked().getUniqueId().toString(),
                 event.getSlot()
         );
-
-        MenuHandler handler = menuManager.findHandlerByPlayer(event.getWhoClicked());
-        if (handler == null) return;
 
         if (handler.shouldCloseClickingOutside() && event.getRawSlot() == -999) {
             event.getWhoClicked().closeInventory();
@@ -79,6 +79,9 @@ public final class MenuListener implements Listener {
             return;
         }
 
+        MenuHandler handler = menuManager.findHandlerByPlayer(event.getWhoClicked());
+        if (handler == null) return;
+
         String playerId = entity.getUniqueId().toString();
         Integer slot = lastClickedItemLocation.get(playerId);
 
@@ -86,9 +89,6 @@ public final class MenuListener implements Listener {
             lastClickedItemLocation.put(playerId, null);
             return;
         }
-
-        MenuHandler handler = menuManager.findHandlerByPlayer(event.getWhoClicked());
-        if (handler == null) return;
 
         handler.handleDrag(new ExtendedInventoryDragEvent(event, slot));
     }
