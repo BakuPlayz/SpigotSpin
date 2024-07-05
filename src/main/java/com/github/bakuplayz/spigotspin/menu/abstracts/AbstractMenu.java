@@ -113,8 +113,9 @@ public abstract class AbstractMenu implements Menu {
     @Override
     public void setFrameItems() {
         IntStream.rangeClosed(ITEM_MIN_AMOUNT, getMaxSize()).forEach((position) -> {
-            if (isFramePosition(position)) {
-                items.put(position, getFrameItem(position));
+            Item item = getFrameItem(position);
+            if (item != null && isFramePosition(position)) {
+                items.put(position, item);
             }
         });
     }
