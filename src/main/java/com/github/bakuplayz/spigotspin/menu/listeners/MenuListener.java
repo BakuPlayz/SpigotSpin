@@ -2,7 +2,7 @@ package com.github.bakuplayz.spigotspin.menu.listeners;
 
 import com.github.bakuplayz.spigotspin.menu.MenuManager;
 import com.github.bakuplayz.spigotspin.menu.listeners.events.ExtendedInventoryDragEvent;
-import com.github.bakuplayz.spigotspin.menu.menus.abstracts.AbstractSharedMenu;
+import com.github.bakuplayz.spigotspin.menu.abstracts.AbstractSharedMenu;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

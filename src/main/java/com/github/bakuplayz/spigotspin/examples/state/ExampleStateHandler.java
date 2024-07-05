@@ -1,7 +1,7 @@
 package com.github.bakuplayz.spigotspin.examples.state;
 
-import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuStateHandler;
-import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuStateObserver;
+import com.github.bakuplayz.spigotspin.menu.common.state.MenuStateHandler;
+import com.github.bakuplayz.spigotspin.menu.common.state.MenuStateObserver;
 import org.jetbrains.annotations.NotNull;
 
 public final class ExampleStateHandler extends MenuStateHandler<ExampleState, MenuStateObserver<ExampleState>> {

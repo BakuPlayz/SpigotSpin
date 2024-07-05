@@ -2,8 +2,8 @@ package com.github.bakuplayz.spigotspin.menu.items.paginated;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.github.bakuplayz.spigotspin.menu.items.state.StateItem;
-import com.github.bakuplayz.spigotspin.menu.menus.common.paginated.PaginatedMenuState;
-import com.github.bakuplayz.spigotspin.menu.menus.common.paginated.PaginationContext;
+import com.github.bakuplayz.spigotspin.menu.common.paginated.PaginatedMenuState;
+import com.github.bakuplayz.spigotspin.menu.common.paginated.PaginationContext;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 

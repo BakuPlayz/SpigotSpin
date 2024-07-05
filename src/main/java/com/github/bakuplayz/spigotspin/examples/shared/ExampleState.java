@@ -1,6 +1,6 @@
 package com.github.bakuplayz.spigotspin.examples.shared;
 
-import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuState;
+import com.github.bakuplayz.spigotspin.menu.common.state.MenuState;
 import lombok.Getter;
 import lombok.Setter;
 

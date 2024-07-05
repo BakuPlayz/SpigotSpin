@@ -1,6 +1,6 @@
 package com.github.bakuplayz.spigotspin.menu.dispatchers;
 
-import com.github.bakuplayz.spigotspin.menu.menus.Menu;
+import com.github.bakuplayz.spigotspin.menu.Menu;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

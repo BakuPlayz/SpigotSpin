@@ -1,9 +1,9 @@
 package com.github.bakuplayz.spigotspin.examples.pagination;
 
+import com.github.bakuplayz.spigotspin.menu.abstracts.AbstractPaginatedMenu;
+import com.github.bakuplayz.spigotspin.menu.common.SizeType;
 import com.github.bakuplayz.spigotspin.menu.items.Item;
 import com.github.bakuplayz.spigotspin.menu.items.actions.ItemAction;
-import com.github.bakuplayz.spigotspin.menu.menus.SizeType;
-import com.github.bakuplayz.spigotspin.menu.menus.abstracts.AbstractPaginatedMenu;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;

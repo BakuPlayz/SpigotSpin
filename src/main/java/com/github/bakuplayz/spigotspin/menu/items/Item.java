@@ -12,6 +12,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+// TODO: Make the disabled be replaced with
+//       and disabled item...
 public abstract class Item {
 
     private final ItemBuilder builder;
@@ -35,11 +37,8 @@ public abstract class Item {
     @Nullable
     private OfflinePlayer player;
 
-    private boolean isCreated;
-
 
     protected Item() {
-        this.isCreated = false;
         this.builder = new ItemBuilder();
         this.viewState = ViewState.VISIBLE;
     }
@@ -84,10 +83,6 @@ public abstract class Item {
 
 
     public ItemStack asItemStack() {
-        if (!isCreated) {
-            isCreated = true;
-            create();
-        }
         if (viewState == ViewState.INVISIBLE) {
             return null;
         }

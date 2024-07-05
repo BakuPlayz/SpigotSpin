@@ -1,6 +1,6 @@
 package com.github.bakuplayz.spigotspin.examples.shared;
 
-import com.github.bakuplayz.spigotspin.menu.menus.common.paginated.PaginatedMenuStateFlag;
+import com.github.bakuplayz.spigotspin.menu.common.paginated.PaginatedMenuStateFlag;
 
 public final class ExampleStateFlag extends PaginatedMenuStateFlag {
 

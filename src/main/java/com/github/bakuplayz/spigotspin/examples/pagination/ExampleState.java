@@ -1,6 +1,6 @@
 package com.github.bakuplayz.spigotspin.examples.pagination;
 
-import com.github.bakuplayz.spigotspin.menu.menus.common.paginated.PaginatedMenuState;
+import com.github.bakuplayz.spigotspin.menu.common.paginated.PaginatedMenuState;
 import lombok.Getter;
 import lombok.Setter;
 

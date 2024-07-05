@@ -2,7 +2,7 @@ package com.github.bakuplayz.spigotspin.menu.items.state;
 
 import com.github.bakuplayz.spigotspin.menu.dispatchers.InventoryDispatcher;
 import com.github.bakuplayz.spigotspin.menu.items.Item;
-import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuState;
+import com.github.bakuplayz.spigotspin.menu.common.state.MenuState;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +18,7 @@ public abstract class StateItem<S extends MenuState> extends Item implements Sta
     private List<Integer> flags;
 
     @Getter
-    private S initialState;
+    private S state;
 
     private InventoryDispatcher dispatcher;
 
@@ -28,8 +28,8 @@ public abstract class StateItem<S extends MenuState> extends Item implements Sta
     }
 
 
-    public final void injectInitialState(@NotNull S initialState) {
-        this.initialState = initialState;
+    public final void injectState(@NotNull S state) {
+        this.state = state;
     }
 
 

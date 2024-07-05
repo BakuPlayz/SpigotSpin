@@ -3,7 +3,7 @@ package com.github.bakuplayz.spigotspin.menu.items.state;
 import com.github.bakuplayz.spigotspin.menu.items.Clickable;
 import com.github.bakuplayz.spigotspin.menu.items.ItemActionable;
 import com.github.bakuplayz.spigotspin.menu.items.actions.ItemAction;
-import com.github.bakuplayz.spigotspin.menu.menus.common.state.MenuState;
+import com.github.bakuplayz.spigotspin.menu.common.state.MenuState;
 import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
