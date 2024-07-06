@@ -77,7 +77,6 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
                 .map((indexed) -> convertIndexedToItem(indexed, page))
                 .collect(Collectors.toList());
 
-        setFrameItems();
         setItems();
         loadPaginatedItems(items);
     }
