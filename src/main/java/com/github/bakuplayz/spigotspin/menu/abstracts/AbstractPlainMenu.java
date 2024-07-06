@@ -126,4 +126,27 @@ public abstract class AbstractPlainMenu extends AbstractMenu implements PlainMen
         // Do nothing
     }
 
+
+    @Override
+    public boolean isFramePosition(int position) {
+        return false;
+    }
+
+
+    @Override
+    public Item getFrameItem(int position) {
+        return null;
+    }
+
+
+    @Override
+    public void setFrameItems() {
+        IntStream.range(ITEM_MIN_AMOUNT, getMaxSize()).forEach((position) -> {
+            Item item = getFrameItem(position);
+            if (item != null && isFramePosition(position)) {
+                setItem(position, item);
+            }
+        });
+    }
+
 }

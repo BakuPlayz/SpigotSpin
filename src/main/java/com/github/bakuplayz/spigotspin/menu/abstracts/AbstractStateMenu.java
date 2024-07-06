@@ -5,6 +5,7 @@ import com.github.bakuplayz.spigotspin.menu.common.state.MenuState;
 import com.github.bakuplayz.spigotspin.menu.common.state.MenuStateHandler;
 import com.github.bakuplayz.spigotspin.menu.common.state.MenuStateObserver;
 import com.github.bakuplayz.spigotspin.menu.common.state.StateMenu;
+import com.github.bakuplayz.spigotspin.menu.items.Item;
 import com.github.bakuplayz.spigotspin.menu.items.actions.ClickableAction;
 import com.github.bakuplayz.spigotspin.menu.items.state.ClickableStateItem;
 import com.github.bakuplayz.spigotspin.menu.items.state.StateItem;
@@ -14,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public abstract class AbstractStateMenu<S extends MenuState, SH extends MenuStateHandler<S, ? extends MenuStateObserver<S>>>
         extends AbstractPlainMenu implements StateMenu<S, SH>, MenuStateObserver<S> {
@@ -60,6 +62,23 @@ public abstract class AbstractStateMenu<S extends MenuState, SH extends MenuStat
     }
 
 
+    @Override
+    public void setItem(int position, @NotNull StateItem<S> item, @NotNull List<Integer> flags) {
+        validatePosition(position);
+        item.setFlags(flags);
+        item.injectState(stateHandler.getState());
+        item.injectDispatcher(getDispatcher());
+        item.setPosition(position);
+        items.put(position, item);
+    }
+
+
+    @Override
+    public void setItemIf(boolean setIfTrue, int position, @NotNull StateItem<S> item, @NotNull List<Integer> flags) {
+        if (setIfTrue) setItem(position, item, flags);
+    }
+
+
     public <I extends ClickableStateItem<S>> void setItem(int position, @NotNull I item, @NotNull ClickableAction<I> action, int flag) {
         this.setItem(position, item, action, Collections.singletonList(flag));
     }
@@ -99,6 +118,28 @@ public abstract class AbstractStateMenu<S extends MenuState, SH extends MenuStat
     public void onPoppedTo() {
         setFrameItems();
         setItems();
+    }
+
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void setFrameItems() {
+        IntStream.range(ITEM_MIN_AMOUNT, getMaxSize()).forEach((position) -> {
+            Item item = getFrameItem(position);
+            if (item == null || !isFramePosition(position)) {
+                return;
+            }
+
+            if (item instanceof StateItem) {
+                // TODO: add a way to make the frame state updatable
+                //       meaning that the flags should be added somehow
+                //       and the action as well... for clickable.
+                setItem(position, (StateItem<S>) item, Collections.emptyList());
+                return;
+            }
+
+            setItem(position, item);
+        });
     }
 
 }

@@ -18,8 +18,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.stream.IntStream;
-
 
 public abstract class AbstractMenu implements Menu {
 
@@ -95,29 +93,6 @@ public abstract class AbstractMenu implements Menu {
     public void close(@NotNull Player player) {
         player.closeInventory();
         viewers.remove(player);
-    }
-
-
-    @Override
-    public boolean isFramePosition(int position) {
-        return false;
-    }
-
-
-    @Override
-    public Item getFrameItem(int position) {
-        return null;
-    }
-
-
-    @Override
-    public void setFrameItems() {
-        IntStream.rangeClosed(ITEM_MIN_AMOUNT, getMaxSize()).forEach((position) -> {
-            Item item = getFrameItem(position);
-            if (item != null && isFramePosition(position)) {
-                items.put(position, item);
-            }
-        });
     }
 
 

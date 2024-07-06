@@ -71,14 +71,17 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
 
         getDispatcher().clearItemsFromTo(items, ITEM_MIN_AMOUNT, getMaxSize());
 
-        List<Item> items = positions.stream()
+        List<Item> paginatedItems = positions.stream()
                 .map(CollectionUtils.toIndexed())
                 .filter((indexed) -> !isItemOutOfBounds(indexed.getIndex(), page))
                 .map((indexed) -> convertIndexedToItem(indexed, page))
                 .collect(Collectors.toList());
 
+        loadPaginatedItems(paginatedItems);
+        setFrameItems();
         setItems();
-        loadPaginatedItems(items);
+        items.values().forEach(Item::create);
+        items.values().forEach(getDispatcher()::updateItem);
     }
 
 
@@ -93,9 +96,7 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
             ((StateItem<S>) item).injectDispatcher(getDispatcher());
             ((StateItem<S>) item).injectState(stateHandler.getState());
         });
-        batch.forEach(item -> setItem(item.getPosition(), item));
-        batch.forEach(Item::create);
-        batch.forEach(getDispatcher()::updateItem);
+        batch.forEach(item -> items.put(item.getPosition(), item));
     }
 
 
