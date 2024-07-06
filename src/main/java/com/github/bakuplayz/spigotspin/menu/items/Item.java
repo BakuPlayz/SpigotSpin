@@ -67,6 +67,11 @@ public abstract class Item {
     }
 
 
+    public void setName(boolean shouldSetName, @NotNull String name) {
+        if (shouldSetName) setName(name);
+    }
+
+
     public void setMaterial(@NotNull XMaterial material) {
         setMaterial(material, XMaterial.STICK);
     }
