@@ -129,6 +129,10 @@ public final class ItemBuilder {
         ItemStack stack = new ItemStack(material, amount);
         ItemMeta meta = stack.getItemMeta();
 
+        if (meta == null || material == Material.AIR) {
+            return null;
+        }
+
         if (lore != null) {
             lore = lore.stream().map(this::colorize).collect(Collectors.toList());
             meta.setLore(lore);
@@ -146,10 +150,6 @@ public final class ItemBuilder {
             stack.setItemMeta(meta);
         }
 
-        if (material == Material.AIR) {
-            return null;
-        }
-
         return stack;
     }
 
@@ -158,6 +158,7 @@ public final class ItemBuilder {
      * Converts the {@link ItemBuilder item builder} to a {@link ItemStack item} of the {@link OfflinePlayer provided player's} head.
      *
      * @param player the player whose head you want to use.
+     *
      * @return the head of the provided {@link OfflinePlayer}.
      */
     public @NotNull ItemStack toPlayerHead(@NotNull OfflinePlayer player) {
@@ -185,6 +186,7 @@ public final class ItemBuilder {
      * Checks whether the passed {@link ItemStack item} is a tool or weapon.
      *
      * @param item the item to check.
+     *
      * @return true if is, otherwise false.
      */
     private boolean isToolOrWeapon(@NotNull ItemStack item) {
@@ -196,6 +198,7 @@ public final class ItemBuilder {
      * Colorizes the given content using the format of '&'.
      *
      * @param content the content to colorize.
+     *
      * @return the content being colorized.
      */
     @NotNull
