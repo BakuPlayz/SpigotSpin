@@ -21,9 +21,9 @@ public interface PlainMenu {
     void setItemIf(boolean setIfTrue, int position, @NotNull DraggableItem item, @NotNull DraggableAction action);
 
 
-    void setItem(int position, @NotNull ClickableItem item, @NotNull ClickableAction<ClickableItem> action);
+    <I extends ClickableItem> void setItem(int position, @NotNull I item, @NotNull ClickableAction<I> action);
 
 
-    void setItemIf(boolean setIfTrue, int position, @NotNull ClickableItem item, @NotNull ClickableAction<ClickableItem> action);
+    <I extends ClickableItem> void setItemIf(boolean setIfTrue, int position, @NotNull I item, @NotNull ClickableAction<I> action);
 
 }

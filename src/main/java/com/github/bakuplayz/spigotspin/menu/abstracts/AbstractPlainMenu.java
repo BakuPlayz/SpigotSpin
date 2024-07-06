@@ -60,7 +60,7 @@ public abstract class AbstractPlainMenu extends AbstractMenu implements PlainMen
 
 
     @Override
-    public final void setItem(int position, @NotNull ClickableItem item, @NotNull ClickableAction<ClickableItem> action) {
+    public <I extends ClickableItem> void setItem(int position, @NotNull I item, @NotNull ClickableAction<I> action) {
         validatePosition(position);
         item.setPosition(position);
         item.setAction(action);
@@ -69,7 +69,7 @@ public abstract class AbstractPlainMenu extends AbstractMenu implements PlainMen
 
 
     @Override
-    public void setItemIf(boolean setIfTrue, int position, @NotNull ClickableItem item, @NotNull ClickableAction<ClickableItem> action) {
+    public <I extends ClickableItem> void setItemIf(boolean setIfTrue, int position, @NotNull I item, @NotNull ClickableAction<I> action) {
         if (setIfTrue) setItem(position, item, action);
     }
 
