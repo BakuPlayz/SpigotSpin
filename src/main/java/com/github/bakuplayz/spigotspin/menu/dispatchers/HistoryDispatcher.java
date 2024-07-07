@@ -1,6 +1,7 @@
 package com.github.bakuplayz.spigotspin.menu.dispatchers;
 
 import com.github.bakuplayz.spigotspin.menu.Menu;
+import lombok.Getter;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -12,7 +13,11 @@ import java.util.Stack;
 
 public final class HistoryDispatcher {
 
+    @Getter
     private final Map<String, Stack<Menu>> backStack = new HashMap<>();
+
+
+    private final Map<String, Long> lastClosingTime = new HashMap<>();
 
 
     /**
@@ -55,9 +60,23 @@ public final class HistoryDispatcher {
      *
      * @param player The player to wipe the backstack of.
      */
-    // TODO: Find where this can optimally be placed.
     public void clearBackStack(@NotNull HumanEntity player) {
         backStack.put(player.getUniqueId().toString(), new Stack<>());
+    }
+
+
+    public void setLastClosingTime(@NotNull HumanEntity player) {
+        lastClosingTime.put(player.getUniqueId().toString(), System.currentTimeMillis());
+    }
+
+
+    public void clearLastClosingTime(@NotNull HumanEntity player) {
+        lastClosingTime.remove(player.getUniqueId().toString());
+    }
+
+
+    public long getLastClosingTime(@NotNull HumanEntity player) {
+        return lastClosingTime.getOrDefault(player.getUniqueId().toString(), 0L);
     }
 
 }

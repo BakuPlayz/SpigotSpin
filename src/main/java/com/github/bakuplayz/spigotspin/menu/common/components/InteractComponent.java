@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.jetbrains.annotations.NotNull;
 
 @AllArgsConstructor
@@ -66,11 +65,6 @@ public final class InteractComponent {
 
 
     public void handleClose(@NotNull InventoryCloseEvent event) {
-        // Do nothing yet...
-    }
-
-
-    public void handleOpen(@NotNull InventoryOpenEvent event) {
         // Do nothing yet...
     }
 

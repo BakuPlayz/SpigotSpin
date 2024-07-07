@@ -1,5 +1,6 @@
 package com.github.bakuplayz.spigotspin.menu;
 
+import com.github.bakuplayz.spigotspin.SpigotSpin;
 import com.github.bakuplayz.spigotspin.menu.listeners.MenuHandler;
 import org.bukkit.entity.HumanEntity;
 import org.jetbrains.annotations.NotNull;
@@ -23,11 +24,18 @@ public final class MenuManager {
 
     public void associatePlayerWithHandler(@NotNull HumanEntity player, MenuHandler handler) {
         menus.put(player.getUniqueId().toString(), handler);
+
+        long timeSinceClose = System.currentTimeMillis() - SpigotSpin.Manager.REF.getHistory().getLastClosingTime(player);
+        if (timeSinceClose >= handler.getBackStackClearingTime()) {
+            SpigotSpin.Manager.REF.getHistory().clearBackStack(player);
+            SpigotSpin.Manager.REF.getHistory().clearLastClosingTime(player);
+        }
     }
 
 
     public void dissociatePlayerFromHandler(@NotNull HumanEntity player) {
         menus.remove(player.getUniqueId().toString());
+        SpigotSpin.Manager.REF.getHistory().setLastClosingTime(player);
     }
 
 }

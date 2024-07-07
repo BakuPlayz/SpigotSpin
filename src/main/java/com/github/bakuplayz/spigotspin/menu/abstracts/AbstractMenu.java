@@ -15,7 +15,6 @@ import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
@@ -71,12 +70,6 @@ public abstract class AbstractMenu implements Menu {
 
 
     @Override
-    public void handleOpen(@NotNull InventoryOpenEvent event) {
-        interactComponent.handleOpen(event);
-    }
-
-
-    @Override
     public final void open(@NotNull Player player, @NotNull OpenInventoryHandler handler) {
         handler.beforeInventoryLoaded();
         handler.loadInventory();
@@ -84,8 +77,8 @@ public abstract class AbstractMenu implements Menu {
         player.openInventory(inventory);
         handler.afterInventoryOpened();
 
-        SpigotSpin.Manager.REF.getHistory().addToBackStack(player, this);
         SpigotSpin.Manager.REF.getMenuManager().associatePlayerWithHandler(player, this);
+        SpigotSpin.Manager.REF.getHistory().addToBackStack(player, this);
     }
 
 
