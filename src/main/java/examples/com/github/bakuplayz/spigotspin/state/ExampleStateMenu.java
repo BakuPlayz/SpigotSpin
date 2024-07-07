@@ -1,8 +1,8 @@
-package com.github.bakuplayz.spigotspin.examples.state;
+package examples.com.github.bakuplayz.spigotspin.state;
 
-import com.github.bakuplayz.spigotspin.menu.items.actions.ClickableAction;
-import com.github.bakuplayz.spigotspin.menu.common.SizeType;
 import com.github.bakuplayz.spigotspin.menu.abstracts.AbstractStateMenu;
+import com.github.bakuplayz.spigotspin.menu.common.SizeType;
+import com.github.bakuplayz.spigotspin.menu.items.actions.ClickableAction;
 import org.jetbrains.annotations.NotNull;
 
 public final class ExampleStateMenu extends AbstractStateMenu<ExampleState, ExampleStateHandler> {

@@ -1,4 +1,4 @@
-package com.github.bakuplayz.spigotspin.examples.state;
+package examples.com.github.bakuplayz.spigotspin.shared;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.github.bakuplayz.spigotspin.menu.items.state.ClickableStateItem;
@@ -8,13 +8,8 @@ import org.jetbrains.annotations.NotNull;
 @AllArgsConstructor
 public final class ExampleItem extends ClickableStateItem<ExampleState> {
 
+
     private final String name;
-
-
-    @Override
-    public void update(@NotNull ExampleState state, int flag) {
-        setLore(String.format("Count: %d", state.getCount()));
-    }
 
 
     @Override
@@ -22,5 +17,12 @@ public final class ExampleItem extends ClickableStateItem<ExampleState> {
         setName(String.format("&e%s", name));
         setMaterial(XMaterial.ANVIL);
     }
+
+
+    @Override
+    public void update(@NotNull ExampleState state, int flag) {
+        setLore(String.format("Count: %d", state.getCount()));
+    }
+
 
 }

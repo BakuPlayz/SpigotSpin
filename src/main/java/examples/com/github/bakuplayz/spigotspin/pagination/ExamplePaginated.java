@@ -1,4 +1,4 @@
-package com.github.bakuplayz.spigotspin.examples.pagination;
+package examples.com.github.bakuplayz.spigotspin.pagination;
 
 import com.github.bakuplayz.spigotspin.menu.abstracts.AbstractPaginatedMenu;
 import com.github.bakuplayz.spigotspin.menu.common.SizeType;

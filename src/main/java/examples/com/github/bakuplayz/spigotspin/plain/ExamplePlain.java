@@ -1,7 +1,7 @@
-package com.github.bakuplayz.spigotspin.examples.plain;
+package examples.com.github.bakuplayz.spigotspin.plain;
 
-import com.github.bakuplayz.spigotspin.menu.common.SizeType;
 import com.github.bakuplayz.spigotspin.menu.abstracts.AbstractPlainMenu;
+import com.github.bakuplayz.spigotspin.menu.common.SizeType;
 
 import java.util.logging.Logger;
 

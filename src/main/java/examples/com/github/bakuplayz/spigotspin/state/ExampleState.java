@@ -1,4 +1,4 @@
-package com.github.bakuplayz.spigotspin.examples.state;
+package examples.com.github.bakuplayz.spigotspin.state;
 
 import com.github.bakuplayz.spigotspin.menu.common.state.MenuState;
 import lombok.Getter;

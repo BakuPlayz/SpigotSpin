@@ -1,4 +1,4 @@
-package com.github.bakuplayz.spigotspin.examples.plain;
+package examples.com.github.bakuplayz.spigotspin.plain;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.github.bakuplayz.spigotspin.menu.items.ClickableItem;

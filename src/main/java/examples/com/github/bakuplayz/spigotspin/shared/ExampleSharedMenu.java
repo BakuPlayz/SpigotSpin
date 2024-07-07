@@ -1,7 +1,7 @@
-package com.github.bakuplayz.spigotspin.examples.shared;
+package examples.com.github.bakuplayz.spigotspin.shared;
 
-import com.github.bakuplayz.spigotspin.menu.common.SizeType;
 import com.github.bakuplayz.spigotspin.menu.abstracts.AbstractSharedMenu;
+import com.github.bakuplayz.spigotspin.menu.common.SizeType;
 import org.jetbrains.annotations.NotNull;
 
 public final class ExampleSharedMenu extends AbstractSharedMenu<ExampleState, ExampleStateHandler> {

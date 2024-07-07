@@ -1,4 +1,4 @@
-package com.github.bakuplayz.spigotspin.examples.shared;
+package examples.com.github.bakuplayz.spigotspin.shared;
 
 import com.github.bakuplayz.spigotspin.menu.common.state.MenuStateHandler;
 import com.github.bakuplayz.spigotspin.menu.common.state.MenuStateObserver;

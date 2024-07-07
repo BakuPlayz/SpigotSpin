@@ -1,13 +1,12 @@
-package com.github.bakuplayz.spigotspin.examples.shared;
+package examples.com.github.bakuplayz.spigotspin.pagination;
 
 import com.cryptomorin.xseries.XMaterial;
-import com.github.bakuplayz.spigotspin.menu.items.state.ClickableStateItem;
+import com.github.bakuplayz.spigotspin.menu.items.state.StateItem;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 @AllArgsConstructor
-public final class ExampleItem extends ClickableStateItem<ExampleState> {
-
+public final class ExampleItem extends StateItem<ExampleState> {
 
     private final String name;
 
@@ -23,6 +22,5 @@ public final class ExampleItem extends ClickableStateItem<ExampleState> {
     public void update(@NotNull ExampleState state, int flag) {
         setLore(String.format("Count: %d", state.getCount()));
     }
-
 
 }
