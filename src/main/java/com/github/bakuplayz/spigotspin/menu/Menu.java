@@ -43,6 +43,14 @@ public interface Menu extends MenuHandler {
     void setItems();
 
 
+    /*
+     * Renders all items, might be useful for working with
+     * #setItemIf conditionally on states that can be sat when
+     * an item is pressed.
+     * */
+    void rerender();
+
+
     Map<Integer, Item> getItems();
 
 

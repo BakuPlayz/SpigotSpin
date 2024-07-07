@@ -75,6 +75,14 @@ public abstract class AbstractPlainMenu extends AbstractMenu implements PlainMen
 
 
     @Override
+    public void rerender() {
+        setItems();
+        items.values().forEach(Item::create);
+        items.values().forEach(getDispatcher()::updateItem);
+    }
+
+
+    @Override
     public final int getMaxSize() {
         return getSizeType().getMaxSize();
     }
