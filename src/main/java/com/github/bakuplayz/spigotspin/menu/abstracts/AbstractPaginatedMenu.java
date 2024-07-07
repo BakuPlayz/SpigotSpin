@@ -11,7 +11,7 @@ import com.github.bakuplayz.spigotspin.menu.items.paginated.PreviousPageItem;
 import com.github.bakuplayz.spigotspin.menu.items.state.StateItem;
 import com.github.bakuplayz.spigotspin.menu.utils.CollectionUtils;
 import com.github.bakuplayz.spigotspin.menu.utils.TypeUtils;
-import lombok.Getter;
+import lombok.AccessLevel;
 import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -32,8 +32,7 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
 
     private final PreviousPageItem<S> previousItem;
 
-    @Getter
-    @Setter
+    @Setter(AccessLevel.PRIVATE)
     private List<PI> paginationItems;
 
 
@@ -51,6 +50,7 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
     public void open(@NotNull Player player) {
         viewers.add(player);
         setStateHandler(createStateHandler());
+        setPaginationItems(getPaginationItems());
         open(player, new OpenMenuHandler());
     }
 

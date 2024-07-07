@@ -17,7 +17,12 @@ public final class ExamplePaginated extends AbstractPaginatedMenu<ExampleState, 
 
     public ExamplePaginated() {
         super("Paginated example");
-        setPaginationItems(items);
+    }
+
+
+    @Override
+    public List<String> getPaginationItems() {
+        return items;
     }
 
 

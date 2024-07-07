@@ -20,9 +20,6 @@ public interface PaginatedMenu<S extends PaginatedMenuState, PI> extends Paginat
     List<PI> getPaginationItems();
 
 
-    void setPaginationItems(@NotNull List<PI> items);
-
-
     ItemAction getPaginatedItemAction(@NotNull PI paginatedItem, int position);
 
 
