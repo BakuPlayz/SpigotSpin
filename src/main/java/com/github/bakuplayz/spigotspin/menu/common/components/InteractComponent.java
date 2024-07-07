@@ -1,15 +1,16 @@
 package com.github.bakuplayz.spigotspin.menu.common.components;
 
+import com.github.bakuplayz.spigotspin.menu.Menu;
+import com.github.bakuplayz.spigotspin.menu.common.DragState;
 import com.github.bakuplayz.spigotspin.menu.items.Clickable;
 import com.github.bakuplayz.spigotspin.menu.items.Draggable;
 import com.github.bakuplayz.spigotspin.menu.items.Item;
 import com.github.bakuplayz.spigotspin.menu.listeners.events.ExtendedInventoryDragEvent;
-import com.github.bakuplayz.spigotspin.menu.common.DragState;
-import com.github.bakuplayz.spigotspin.menu.Menu;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.jetbrains.annotations.NotNull;
 
 @AllArgsConstructor
@@ -65,6 +66,11 @@ public final class InteractComponent {
 
 
     public void handleClose(@NotNull InventoryCloseEvent event) {
+        // Do nothing yet...
+    }
+
+
+    public void handleOpen(@NotNull InventoryOpenEvent event) {
         // Do nothing yet...
     }
 

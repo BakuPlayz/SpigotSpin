@@ -75,7 +75,7 @@ public abstract class AbstractPlainMenu extends AbstractMenu implements PlainMen
 
 
     @Override
-    public void rerender() {
+    public void forceRerender() {
         setItems();
         items.values().forEach(Item::create);
         items.values().forEach(getDispatcher()::updateItem);

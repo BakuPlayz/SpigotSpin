@@ -1,17 +1,15 @@
 package com.github.bakuplayz.spigotspin.menu.listeners;
 
+import com.github.bakuplayz.spigotspin.SpigotSpin;
 import com.github.bakuplayz.spigotspin.menu.MenuManager;
-import com.github.bakuplayz.spigotspin.menu.listeners.events.ExtendedInventoryDragEvent;
 import com.github.bakuplayz.spigotspin.menu.abstracts.AbstractSharedMenu;
+import com.github.bakuplayz.spigotspin.menu.listeners.events.ExtendedInventoryDragEvent;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -32,12 +30,16 @@ public final class MenuListener implements Listener {
             InventoryAction.NOTHING
     );
 
-    private final Map<String, Integer> lastClickedItemLocation = new HashMap<>();
+    private final Map<String, Long> lastClosingTime;
+
+    private final Map<String, Integer> lastClickedItemLocation;
 
     private final MenuManager menuManager;
 
 
     public MenuListener(@NotNull MenuManager menuManager) {
+        this.lastClickedItemLocation = new HashMap<>();
+        this.lastClosingTime = new HashMap<>();
         this.menuManager = menuManager;
     }
 
@@ -113,6 +115,26 @@ public final class MenuListener implements Listener {
 
 
     @EventHandler(priority = EventPriority.LOW)
+    public void onMenuOpen(@NotNull InventoryOpenEvent event) {
+        HumanEntity human = event.getPlayer();
+        if (!(human instanceof Player)) {
+            return;
+        }
+
+        MenuHandler handler = menuManager.findHandlerByPlayer(human);
+        if (handler == null) return;
+
+        long timeSinceClose = System.currentTimeMillis() - lastClosingTime.getOrDefault(human.getUniqueId().toString(), 0L);
+        if (timeSinceClose >= handler.getBackStackClearingTime()) {
+            SpigotSpin.Manager.REF.getHistory().clearBackStack(human);
+            lastClosingTime.remove(human.getUniqueId().toString());
+        }
+
+        handler.handleOpen(event);
+    }
+
+
+    @EventHandler(priority = EventPriority.LOW)
     public void onMenuClose(@NotNull InventoryCloseEvent event) {
         HumanEntity human = event.getPlayer();
         if (!(human instanceof Player)) {
@@ -130,6 +152,7 @@ public final class MenuListener implements Listener {
 
         handler.handleClose(event);
         menuManager.dissociatePlayerFromHandler(human);
+        lastClosingTime.put(human.getUniqueId().toString(), System.currentTimeMillis());
     }
 
 }
