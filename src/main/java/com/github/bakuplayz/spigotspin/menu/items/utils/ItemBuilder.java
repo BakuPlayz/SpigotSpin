@@ -20,7 +20,6 @@
 package com.github.bakuplayz.spigotspin.menu.items.utils;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -56,7 +55,6 @@ public final class ItemBuilder {
 
     private Material material;
 
-    @Setter
     private ItemStack item;
 
 
@@ -123,6 +121,12 @@ public final class ItemBuilder {
     }
 
 
+    public void setItem(ItemStack item) {
+        this.item = item;
+        this.material = item.getType();
+    }
+
+
     /**
      * Converts the {@link ItemBuilder item builder} to a {@link ItemStack item}.
      *
@@ -134,24 +138,24 @@ public final class ItemBuilder {
         ItemMeta meta = stack.getItemMeta();
         stack.setAmount(amount);
 
-        if (meta == null || material == Material.AIR) {
+        if (material == Material.AIR) {
             return null;
         }
 
-        if (lore != null) {
+        if (meta != null && lore != null) {
             lore = lore.stream().map(this::colorize).collect(Collectors.toList());
             meta.setLore(lore);
         }
 
-        if (name != null) {
+        if (meta != null && name != null) {
             meta.setDisplayName(colorize(name));
         }
 
-        if (isToolOrWeapon(stack)) {
+        if (meta != null && isToolOrWeapon(stack)) {
             meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         }
 
-        if (name != null || lore != null) {
+        if (meta != null && name != null || lore != null) {
             stack.setItemMeta(meta);
         }
 
