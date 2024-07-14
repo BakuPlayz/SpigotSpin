@@ -20,6 +20,7 @@
 package com.github.bakuplayz.spigotspin.menu.items.utils;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -54,6 +55,9 @@ public final class ItemBuilder {
     private List<String> lore;
 
     private Material material;
+
+    @Setter
+    private ItemStack item;
 
 
     public ItemBuilder() {
@@ -126,8 +130,9 @@ public final class ItemBuilder {
      */
     @Nullable
     public ItemStack toItemStack() {
-        ItemStack stack = new ItemStack(material, amount);
+        ItemStack stack = this.item != null ? item : new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();
+        stack.setAmount(amount);
 
         if (meta == null || material == Material.AIR) {
             return null;

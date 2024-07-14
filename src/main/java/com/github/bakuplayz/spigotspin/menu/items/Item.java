@@ -78,7 +78,7 @@ public abstract class Item {
 
 
     public void setMaterial(@NotNull XMaterial material, @NotNull XMaterial def) {
-        builder.setMaterial(material.or(def).parseMaterial());
+        builder.setItem(material.or(def).parseItem());
     }
 
 
