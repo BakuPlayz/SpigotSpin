@@ -17,9 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.github.bakuplayz.spigotspin.menu.items.utils;
+package com.github.bakuplayz.spigotspin.menu.items.common;
 
-import lombok.Getter;
+import com.cryptomorin.xseries.XMaterial;
+import com.github.bakuplayz.spigotspin.menu.common.VersionUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -44,7 +45,6 @@ import java.util.stream.Collectors;
  * @version 0.1-Beta
  * @since 0.1-Beta
  */
-@Getter
 public final class ItemBuilder {
 
     private int amount;
@@ -55,6 +55,7 @@ public final class ItemBuilder {
 
     private Material material;
 
+    @Nullable
     private ItemStack item;
 
 
@@ -78,16 +79,6 @@ public final class ItemBuilder {
      */
     public void setAmount(int amount) {
         this.amount = amount <= -1 ? this.amount : amount;
-    }
-
-
-    /**
-     * Sets the {@link #material} to the {@link Material provided material}.
-     *
-     * @param material the material to set.
-     */
-    public void setMaterial(Material material) {
-        this.material = material == null ? this.material : material;
     }
 
 
@@ -121,9 +112,9 @@ public final class ItemBuilder {
     }
 
 
-    public void setItem(ItemStack item) {
+    public void setItem(@Nullable ItemStack item) {
         this.item = item;
-        this.material = item.getType();
+        this.material = item == null ? Material.AIR : item.getType();
     }
 
 
@@ -142,20 +133,24 @@ public final class ItemBuilder {
             return null;
         }
 
-        if (meta != null && lore != null) {
+        if (meta == null) {
+            return stack;
+        }
+
+        if (lore != null) {
             lore = lore.stream().map(this::colorize).collect(Collectors.toList());
             meta.setLore(lore);
         }
 
-        if (meta != null && name != null) {
+        if (name != null) {
             meta.setDisplayName(colorize(name));
         }
 
-        if (meta != null && isToolOrWeapon(stack)) {
+        if (isToolOrWeapon(stack)) {
             meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         }
 
-        if (meta != null && name != null || lore != null) {
+        if (name != null || lore != null) {
             stack.setItemMeta(meta);
         }
 
@@ -170,9 +165,19 @@ public final class ItemBuilder {
      *
      * @return the head of the provided {@link OfflinePlayer}.
      */
-    public @NotNull ItemStack toPlayerHead(@NotNull OfflinePlayer player) {
-        ItemStack stack = new ItemStack(Material.PLAYER_HEAD, amount);
+    @Nullable
+    public ItemStack toPlayerHead(@NotNull OfflinePlayer player) {
+        ItemStack stack = XMaterial.PLAYER_HEAD.parseItem();
+        if (stack == null) {
+            return null;
+        }
+
         SkullMeta meta = (SkullMeta) stack.getItemMeta();
+        stack.setAmount(amount);
+
+        if (meta == null) {
+            return stack;
+        }
 
         if (lore != null) {
             meta.setLore(lore);
@@ -182,11 +187,17 @@ public final class ItemBuilder {
             meta.setDisplayName(name);
         }
 
-        if (name != null || lore != null) {
+        if (VersionUtils.between(0, 12.9)) {
+            meta.setOwner(player.getName());
+        } else {
             meta.setOwningPlayer(player);
+        }
+
+        if (name != null || lore != null) {
             stack.setItemMeta(meta);
         }
 
+        stack.setItemMeta(meta);
         return stack;
     }
 

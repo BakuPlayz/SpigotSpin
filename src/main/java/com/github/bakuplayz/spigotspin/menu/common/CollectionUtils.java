@@ -1,4 +1,4 @@
-package com.github.bakuplayz.spigotspin.menu.utils;
+package com.github.bakuplayz.spigotspin.menu.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +12,7 @@ import java.util.function.Function;
  * list mappings, using e.g. Stream#map
  *
  * @param <T> The type to create an indexed collection from.
+ *
  * @apiNote Heavily inspired by the answer from <a href="https://stackoverflow.com/a/45976269">alex.b</a>.
  */
 @Getter

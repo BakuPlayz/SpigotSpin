@@ -1,5 +1,6 @@
 package com.github.bakuplayz.spigotspin.menu.abstracts;
 
+import com.github.bakuplayz.spigotspin.menu.common.Preconditions;
 import com.github.bakuplayz.spigotspin.menu.common.SizeType;
 import com.github.bakuplayz.spigotspin.menu.common.plain.PlainMenu;
 import com.github.bakuplayz.spigotspin.menu.items.ClickableItem;
@@ -7,7 +8,6 @@ import com.github.bakuplayz.spigotspin.menu.items.DraggableItem;
 import com.github.bakuplayz.spigotspin.menu.items.Item;
 import com.github.bakuplayz.spigotspin.menu.items.actions.ClickableAction;
 import com.github.bakuplayz.spigotspin.menu.items.actions.DraggableAction;
-import com.github.bakuplayz.spigotspin.menu.utils.Preconditions;
 import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;

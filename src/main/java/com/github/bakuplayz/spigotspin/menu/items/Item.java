@@ -1,8 +1,8 @@
 package com.github.bakuplayz.spigotspin.menu.items;
 
 import com.cryptomorin.xseries.XMaterial;
-import com.github.bakuplayz.spigotspin.menu.items.utils.ItemBuilder;
-import com.github.bakuplayz.spigotspin.menu.items.utils.ViewState;
+import com.github.bakuplayz.spigotspin.menu.items.common.ItemBuilder;
+import com.github.bakuplayz.spigotspin.menu.items.common.ViewState;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.OfflinePlayer;

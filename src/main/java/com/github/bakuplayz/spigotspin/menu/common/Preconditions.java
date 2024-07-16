@@ -1,4 +1,4 @@
-package com.github.bakuplayz.spigotspin.menu.utils;
+package com.github.bakuplayz.spigotspin.menu.common;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -11,5 +11,5 @@ public final class Preconditions {
 
         throw new IllegalArgumentException(String.format(message, argument));
     }
-    
+
 }

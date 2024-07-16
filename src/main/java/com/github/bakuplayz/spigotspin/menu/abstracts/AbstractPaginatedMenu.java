@@ -1,5 +1,7 @@
 package com.github.bakuplayz.spigotspin.menu.abstracts;
 
+import com.github.bakuplayz.spigotspin.menu.common.CollectionUtils;
+import com.github.bakuplayz.spigotspin.menu.common.TypeUtils;
 import com.github.bakuplayz.spigotspin.menu.common.handlers.OpenInventoryHandler;
 import com.github.bakuplayz.spigotspin.menu.common.paginated.*;
 import com.github.bakuplayz.spigotspin.menu.items.Item;
@@ -9,8 +11,6 @@ import com.github.bakuplayz.spigotspin.menu.items.paginated.CurrentPageItem;
 import com.github.bakuplayz.spigotspin.menu.items.paginated.NextPageItem;
 import com.github.bakuplayz.spigotspin.menu.items.paginated.PreviousPageItem;
 import com.github.bakuplayz.spigotspin.menu.items.state.StateItem;
-import com.github.bakuplayz.spigotspin.menu.utils.CollectionUtils;
-import com.github.bakuplayz.spigotspin.menu.utils.TypeUtils;
 import lombok.AccessLevel;
 import lombok.Setter;
 import org.bukkit.entity.Player;

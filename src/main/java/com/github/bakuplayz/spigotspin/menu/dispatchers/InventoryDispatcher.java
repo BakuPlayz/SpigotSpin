@@ -1,7 +1,7 @@
 package com.github.bakuplayz.spigotspin.menu.dispatchers;
 
+import com.github.bakuplayz.spigotspin.menu.common.LazyEvaluator;
 import com.github.bakuplayz.spigotspin.menu.items.Item;
-import com.github.bakuplayz.spigotspin.menu.utils.LazyEvaluator;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;

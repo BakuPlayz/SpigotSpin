@@ -1,6 +1,6 @@
 package com.github.bakuplayz.spigotspin.menu.common.state;
 
-import com.github.bakuplayz.spigotspin.menu.utils.TypeUtils;
+import com.github.bakuplayz.spigotspin.menu.common.TypeUtils;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 

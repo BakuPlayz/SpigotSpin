@@ -1,4 +1,4 @@
-package com.github.bakuplayz.spigotspin.menu.items.utils;
+package com.github.bakuplayz.spigotspin.menu.items.common;
 
 public enum ViewState {
 
