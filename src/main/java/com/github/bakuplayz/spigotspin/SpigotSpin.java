@@ -11,12 +11,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
 import java.util.logging.Logger;
 
 // TODO: Make this reference creation,
 //  and registering of listeners become
 //  annotation automated.
 public final class SpigotSpin {
+
+    public static final String IDENTIFIER = UUID.randomUUID().toString();
 
     public static final Logger LOGGER = Logger.getLogger("SpigotSpin");
 
