@@ -1,6 +1,5 @@
 package com.github.bakuplayz.spigotspin.container.common;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +29,7 @@ public final class JacksonParser {
         try {
             return Optional.of(MAPPER.readValue(json, new TypeReference<O>() {
             }));
-        } catch (JsonProcessingException e) {
+        } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to deserialize json: {}", json);
         }
         return Optional.empty();
