@@ -32,7 +32,7 @@ import java.util.logging.Level;
 
 public abstract class DataContainer<D> {
 
-    private final String fileName;
+    protected final String fileName;
 
     @Setter
     @Getter
@@ -42,10 +42,12 @@ public abstract class DataContainer<D> {
     private File file;
 
     @Setter
+    @NotNull
     private EventHandler handler;
 
 
     public DataContainer(@NotNull String fileName) {
+        this.handler = new BasicEventHandler();
         this.fileName = fileName;
     }
 
@@ -58,13 +60,9 @@ public abstract class DataContainer<D> {
         try {
             Files.createFile(Paths.get(file.getAbsolutePath()));
             setData(JacksonParser.deserializeFile(file));
-            if (handler != null) handler.onCreateSuccess();
+            handler.onCreateSuccess();
         } catch (IOException e) {
-            if (handler != null) {
-                handler.onCreateFailure();
-            } else {
-                SpigotSpin.LOGGER.log(Level.WARNING, "Could not create file: {}", file.getAbsolutePath());
-            }
+            handler.onCreateFailure();
         }
     }
 
@@ -76,13 +74,9 @@ public abstract class DataContainer<D> {
         setFile(getNewFileInstance());
         try {
             setData(JacksonParser.deserializeFile(file));
-            if (handler != null) handler.onReloadSuccess();
+            handler.onReloadSuccess();
         } catch (IOException e) {
-            if (handler != null) {
-                handler.onReloadSuccess();
-            } else {
-                SpigotSpin.LOGGER.log(Level.WARNING, "Could not reload file: {}", file.getAbsolutePath());
-            }
+            handler.onReloadSuccess();
         }
     }
 
@@ -93,13 +87,9 @@ public abstract class DataContainer<D> {
     public void save() {
         try {
             JacksonParser.serializeFile(file.getAbsolutePath(), data);
-            if (handler != null) handler.onSaveSuccess();
+            handler.onSaveSuccess();
         } catch (IOException e) {
-            if (handler != null) {
-                handler.onSaveFailure();
-            } else {
-                SpigotSpin.LOGGER.log(Level.WARNING, "Could not save file: {}", file.getAbsolutePath());
-            }
+            handler.onSaveFailure();
         }
     }
 
@@ -111,13 +101,9 @@ public abstract class DataContainer<D> {
         try {
             Files.deleteIfExists(file.toPath());
             create();
-            if (handler != null) handler.onResetSuccess();
+            handler.onResetSuccess();
         } catch (IOException exception) {
-            if (handler != null) {
-                handler.onReloadFailure();
-            } else {
-                SpigotSpin.LOGGER.log(Level.WARNING, "Could not reset file: {}", file.getAbsolutePath());
-            }
+            handler.onReloadFailure();
         }
     }
 
@@ -152,6 +138,57 @@ public abstract class DataContainer<D> {
 
 
         void onResetFailure();
+
+    }
+
+    private final class BasicEventHandler implements EventHandler {
+
+        @Override
+        public void onCreateSuccess() {
+
+        }
+
+
+        @Override
+        public void onCreateFailure() {
+            SpigotSpin.LOGGER.log(Level.WARNING, "Could not create file: {}", file.getAbsolutePath());
+        }
+
+
+        @Override
+        public void onReloadSuccess() {
+
+        }
+
+
+        @Override
+        public void onReloadFailure() {
+            SpigotSpin.LOGGER.log(Level.WARNING, "Could not reload file: {}", file.getAbsolutePath());
+        }
+
+
+        @Override
+        public void onSaveSuccess() {
+
+        }
+
+
+        @Override
+        public void onSaveFailure() {
+            SpigotSpin.LOGGER.log(Level.WARNING, "Could not save file: {}", file.getAbsolutePath());
+        }
+
+
+        @Override
+        public void onResetSuccess() {
+
+        }
+
+
+        @Override
+        public void onResetFailure() {
+            SpigotSpin.LOGGER.log(Level.WARNING, "Could not reset file: {}", file.getAbsolutePath());
+        }
 
     }
 
