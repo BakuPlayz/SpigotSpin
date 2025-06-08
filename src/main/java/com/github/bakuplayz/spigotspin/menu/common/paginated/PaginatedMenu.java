@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public interface PaginatedMenu<S extends PaginatedMenuState, PI> extends PaginationContext {
 
@@ -18,6 +19,10 @@ public interface PaginatedMenu<S extends PaginatedMenuState, PI> extends Paginat
 
     @Nullable
     List<PI> getPaginationItems();
+
+
+    @Nullable
+    CompletableFuture<List<PI>> getFuturePaginationItems();
 
 
     ItemAction getPaginatedItemAction(@NotNull PI paginatedItem, int position);

@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -48,10 +49,21 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
 
     @Override
     public void open(@NotNull Player player) {
-        viewers.add(player);
-        setStateHandler(createStateHandler());
-        setPaginationItems(getPaginationItems());
-        open(player, new OpenMenuHandler());
+        CompletableFuture<List<PI>> future = getFuturePaginationItems();
+
+        if (future != null) {
+            future.thenAccept(items -> {
+                viewers.add(player);
+                setStateHandler(createStateHandler());
+                setPaginationItems(items);
+                open(player, new OpenMenuHandler());
+            });
+        } else {
+            viewers.add(player);
+            setStateHandler(createStateHandler());
+            setPaginationItems(getPaginationItems());
+            open(player, new OpenMenuHandler());
+        }
     }
 
 
@@ -66,16 +78,16 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
     @Override
     public final void onChangePage(int page) {
         List<Integer> positions = IntStream.range(ITEM_MIN_AMOUNT, getMaxSize())
-                .boxed().filter((position) -> !isFramePosition(position))
-                .collect(Collectors.toList());
+                                          .boxed().filter((position) -> !isFramePosition(position))
+                                          .collect(Collectors.toList());
 
         getDispatcher().clearItemsFromTo(items, ITEM_MIN_AMOUNT, getMaxSize());
 
         List<Item> paginatedItems = positions.stream()
-                .map(CollectionUtils.toIndexed())
-                .filter((indexed) -> !isItemOutOfBounds(indexed.getIndex(), page))
-                .map((indexed) -> convertIndexedToItem(indexed, page))
-                .collect(Collectors.toList());
+                                            .map(CollectionUtils.toIndexed())
+                                            .filter((indexed) -> !isItemOutOfBounds(indexed.getIndex(), page))
+                                            .map((indexed) -> convertIndexedToItem(indexed, page))
+                                            .collect(Collectors.toList());
 
         loadPaginatedItems(paginatedItems);
         setFrameItems();
@@ -97,28 +109,6 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
             ((StateItem<S>) item).injectState(stateHandler.getState());
         });
         batch.forEach(item -> items.put(item.getPosition(), item));
-    }
-
-
-    @Override
-    public boolean isFramePosition(int position) {
-        boolean isLeft = position % 9 == 0;
-        boolean isRight = position % 9 == 8;
-        boolean isTop = (position / 9.0d) <= 1.0d;
-        boolean isBottom = position / (4.0d * 9.0d) >= 1.0;
-        return isLeft || isRight || isTop || isBottom;
-    }
-
-
-    @Override
-    public final boolean isItemOutOfBounds(int itemIndex, int page) {
-        return calculateItemPosition(itemIndex, page) >= getItemsAmount() || itemIndex >= calculateMaxItemsPerPage(this::isFramePosition);
-    }
-
-
-    @Override
-    public final boolean hasNextPage() {
-        return calculateMaxItemsPerPage(this::isFramePosition) * stateHandler.getState().getDisplayPage() <= getItemsAmount();
     }
 
 
@@ -146,6 +136,28 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
     @Override
     public final NextPageItem<S> getNextItem() {
         return nextItem;
+    }
+
+
+    @Override
+    public boolean isFramePosition(int position) {
+        boolean isLeft = position % 9 == 0;
+        boolean isRight = position % 9 == 8;
+        boolean isTop = (position / 9.0d) <= 1.0d;
+        boolean isBottom = position / (4.0d * 9.0d) >= 1.0;
+        return isLeft || isRight || isTop || isBottom;
+    }
+
+
+    @Override
+    public final boolean hasNextPage() {
+        return calculateMaxItemsPerPage(this::isFramePosition) * stateHandler.getState().getDisplayPage() <= getItemsAmount();
+    }
+
+
+    @Override
+    public final boolean isItemOutOfBounds(int itemIndex, int page) {
+        return calculateItemPosition(itemIndex, page) >= getItemsAmount() || itemIndex >= calculateMaxItemsPerPage(this::isFramePosition);
     }
 
 
