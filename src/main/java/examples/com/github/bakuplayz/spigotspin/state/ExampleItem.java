@@ -5,6 +5,8 @@ import com.github.bakuplayz.spigotspin.menu.items.state.ClickableStateItem;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.CompletableFuture;
+
 @AllArgsConstructor
 public final class ExampleItem extends ClickableStateItem<ExampleState> {
 
@@ -17,10 +19,13 @@ public final class ExampleItem extends ClickableStateItem<ExampleState> {
     }
 
 
+    @NotNull
     @Override
-    public void create() {
-        setName(String.format("&e%s", name));
-        setMaterial(XMaterial.ANVIL);
+    public CompletableFuture<Void> create() {
+        return createSync(() -> {
+            setName(String.format("&e%s", name));
+            setMaterial(XMaterial.ANVIL);
+        });
     }
 
 }

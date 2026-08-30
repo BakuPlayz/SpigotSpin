@@ -44,6 +44,17 @@ public abstract class MenuStateHandler<S extends MenuState, O extends MenuStateO
     }
 
 
+    @NotNull
+    protected <E> UnaryOperator<E> identity() {
+        return (state) -> state;
+    }
+
+
+    protected <P> void notifyStateChange(@NotNull P partialState, int flag) {
+        observer.onStateChanged(onUpdateStateMiddleware(identity().apply(partialState), flag), flag);
+    }
+
+
     protected <P> void updateState(@NotNull P partialState, @NotNull UnaryOperator<P> mutator, int flag) {
         observer.onStateChanged(onUpdateStateMiddleware(mutator.apply(partialState), flag), flag);
     }

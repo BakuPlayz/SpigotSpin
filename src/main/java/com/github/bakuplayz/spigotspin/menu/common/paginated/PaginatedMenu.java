@@ -8,6 +8,7 @@ import com.github.bakuplayz.spigotspin.menu.items.paginated.PreviousPageItem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -18,11 +19,15 @@ public interface PaginatedMenu<S extends PaginatedMenuState, PI> extends Paginat
 
 
     @Nullable
-    List<PI> getPaginationItems();
+    default List<PI> getPaginationItems() {
+        return Collections.emptyList();
+    }
 
 
     @Nullable
-    CompletableFuture<List<PI>> getFuturePaginationItems();
+    default CompletableFuture<List<PI>> getFuturePaginationItems() {
+        return null;
+    }
 
 
     ItemAction getPaginatedItemAction(@NotNull PI paginatedItem, int position);

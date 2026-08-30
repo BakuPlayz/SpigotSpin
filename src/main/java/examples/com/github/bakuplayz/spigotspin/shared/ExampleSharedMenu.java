@@ -2,6 +2,7 @@ package examples.com.github.bakuplayz.spigotspin.shared;
 
 import com.github.bakuplayz.spigotspin.menu.abstracts.AbstractSharedMenu;
 import com.github.bakuplayz.spigotspin.menu.common.SizeType;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public final class ExampleSharedMenu extends AbstractSharedMenu<ExampleState, ExampleStateHandler> {
@@ -26,8 +27,15 @@ public final class ExampleSharedMenu extends AbstractSharedMenu<ExampleState, Ex
 
     @NotNull
     @Override
-    public ExampleStateHandler createStateHandler() {
+    public ExampleStateHandler createStateHandler(@NotNull Player player) {
         return new ExampleStateHandler(this);
+    }
+
+
+    @NotNull
+    @Override
+    public String getIdentifier() {
+        return "Shared Menu Example";
     }
 
 }

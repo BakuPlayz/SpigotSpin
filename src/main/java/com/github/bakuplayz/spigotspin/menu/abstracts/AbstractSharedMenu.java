@@ -1,16 +1,19 @@
 package com.github.bakuplayz.spigotspin.menu.abstracts;
 
+import com.github.bakuplayz.spigotspin.SpigotSpin;
 import com.github.bakuplayz.spigotspin.menu.common.handlers.OpenInventoryHandler;
 import com.github.bakuplayz.spigotspin.menu.common.shared.SharedInternal;
 import com.github.bakuplayz.spigotspin.menu.common.shared.SharedMenu;
 import com.github.bakuplayz.spigotspin.menu.common.state.MenuState;
 import com.github.bakuplayz.spigotspin.menu.common.state.MenuStateHandler;
 import com.github.bakuplayz.spigotspin.menu.common.state.MenuStateObserver;
-import com.github.bakuplayz.spigotspin.menu.items.Item;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 @Getter
 @Setter
@@ -26,20 +29,10 @@ public abstract class AbstractSharedMenu<S extends MenuState, SH extends MenuSta
     @Override
     public final void join(@NotNull Player player, @NotNull String identifier) {
         viewers.add(player);
-        setStateHandler(createStateHandler());
+        setStateHandler(createStateHandler(player));
         SharedInternal.STATE.ACTIVE_MENUS.getOrDefault(identifier, this).open(player, new OpenMenuHandler(identifier));
         SharedInternal.STATE.ACTIVE_MENUS.putIfAbsent(identifier, this);
         SharedInternal.STATE.PLAYER_OPENED_MENUS.put(player.getUniqueId().toString(), identifier);
-    }
-
-
-    /**
-     * This method is not meant to be called directly, by an extending class.
-     * But instead is called by {@link #join(Player, String)} instead.
-     */
-    @Override
-    public final void open(@NotNull Player player) {
-        throw new UnsupportedOperationException("This method is not allowed to be called in a shared menu, see comment of this function.");
     }
 
 
@@ -50,6 +43,16 @@ public abstract class AbstractSharedMenu<S extends MenuState, SH extends MenuSta
         if (!SharedInternal.STATE.PLAYER_OPENED_MENUS.containsValue(identifier)) {
             SharedInternal.STATE.ACTIVE_MENUS.remove(identifier);
         }
+    }
+
+
+    /**
+     * This method is not meant to be called directly, by an extending class.
+     * But instead is called by {@link #join(Player, String)} instead.
+     */
+    @Override
+    public final void open(@NotNull Player player) {
+        throw new UnsupportedOperationException("This method is not allowed to be called in a shared menu, see comment of this function.");
     }
 
 
@@ -89,7 +92,13 @@ public abstract class AbstractSharedMenu<S extends MenuState, SH extends MenuSta
 
         @Override
         public void afterInventoryOpened() {
-            items.values().forEach(Item::create);
+            items.values().forEach(item -> {
+                try {
+                    item.create().get(500, TimeUnit.MILLISECONDS);
+                } catch (Exception e) {
+                    SpigotSpin.LOGGER.log(Level.WARNING, "Failed to render items.", e);
+                }
+            });
             items.values().forEach(getDispatcher()::updateItem);
         }
 

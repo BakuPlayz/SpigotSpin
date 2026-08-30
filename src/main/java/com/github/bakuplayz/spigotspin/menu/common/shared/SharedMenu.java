@@ -11,4 +11,7 @@ public interface SharedMenu {
 
     void leave(@NotNull Player player);
 
+
+    String getIdentifier();
+
 }

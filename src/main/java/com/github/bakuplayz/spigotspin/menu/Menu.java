@@ -10,11 +10,8 @@ import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
-import java.util.UUID;
 
 public interface Menu extends MenuHandler {
-
-    String IDENTIFIER = UUID.randomUUID().toString();
 
     int ITEM_MIN_AMOUNT = 0;
 
@@ -29,6 +26,9 @@ public interface Menu extends MenuHandler {
 
 
     void onPoppedTo();
+
+
+    void onClose();
 
 
     boolean isFramePosition(int position);

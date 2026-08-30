@@ -39,8 +39,7 @@ public abstract class AbstractStateMenu<S extends MenuState, SH extends MenuStat
 
     @Override
     public void open(@NotNull Player player) {
-        viewers.add(player);
-        setStateHandler(createStateHandler());
+        setStateHandler(createStateHandler(player));
         super.open(player);
     }
 

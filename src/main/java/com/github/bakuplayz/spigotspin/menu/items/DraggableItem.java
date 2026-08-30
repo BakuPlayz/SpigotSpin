@@ -14,7 +14,16 @@ public abstract class DraggableItem extends Item implements ItemActionable, Drag
 
 
     @Override
+    @Nullable
+    public ItemAction getAction() {
+        return action;
+    }
+
+
+    @Override
     public final void performAction(@NotNull Player player) {
+        ItemAction action = getAction();
+
         if (action == null) {
             throw new IllegalArgumentException("Action cannot be null.");
         }

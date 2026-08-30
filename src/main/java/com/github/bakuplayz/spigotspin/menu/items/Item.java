@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 // TODO: Make the disabled be replaced with
 //       and disabled item...
@@ -44,7 +45,18 @@ public abstract class Item {
     }
 
 
-    public abstract void create();
+    /**
+     * Ideally used for synchronous items, that is
+     * most of the items inside the menus.
+     */
+    public abstract CompletableFuture<Void> create();
+
+
+    @NotNull
+    public final CompletableFuture<Void> createSync(@NotNull Runnable task) {
+        task.run();
+        return CompletableFuture.completedFuture(null);
+    }
 
 
     public void setLore(@NotNull String... lore) {

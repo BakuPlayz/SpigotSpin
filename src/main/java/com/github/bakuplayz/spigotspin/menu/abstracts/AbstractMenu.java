@@ -6,7 +6,6 @@ import com.github.bakuplayz.spigotspin.menu.common.ViewerMap;
 import com.github.bakuplayz.spigotspin.menu.common.components.InteractComponent;
 import com.github.bakuplayz.spigotspin.menu.common.handlers.OpenInventoryHandler;
 import com.github.bakuplayz.spigotspin.menu.dispatchers.InventoryDispatcher;
-import com.github.bakuplayz.spigotspin.menu.items.Item;
 import com.github.bakuplayz.spigotspin.menu.items.ItemsMap;
 import com.github.bakuplayz.spigotspin.menu.listeners.events.ExtendedInventoryDragEvent;
 import lombok.AccessLevel;
@@ -17,6 +16,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 
 public abstract class AbstractMenu implements Menu {
@@ -91,6 +93,7 @@ public abstract class AbstractMenu implements Menu {
 
     @Override
     public void close(@NotNull Player player) {
+        onClose();
         player.closeInventory();
         viewers.remove(player);
     }
@@ -113,7 +116,13 @@ public abstract class AbstractMenu implements Menu {
 
         @Override
         public void afterInventoryLoaded() {
-            items.values().forEach(Item::create);
+            items.values().forEach(item -> {
+                try {
+                    item.create().get(500, TimeUnit.MILLISECONDS);
+                } catch (Exception e) {
+                    SpigotSpin.LOGGER.log(Level.WARNING, "Failed to render items.", e);
+                }
+            });
             items.values().forEach(dispatcher::updateItem);
         }
 

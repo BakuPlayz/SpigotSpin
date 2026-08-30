@@ -3,6 +3,7 @@ package examples.com.github.bakuplayz.spigotspin.state;
 import com.github.bakuplayz.spigotspin.menu.abstracts.AbstractStateMenu;
 import com.github.bakuplayz.spigotspin.menu.common.SizeType;
 import com.github.bakuplayz.spigotspin.menu.items.actions.ClickableAction;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public final class ExampleStateMenu extends AbstractStateMenu<ExampleState, ExampleStateHandler> {
@@ -19,12 +20,6 @@ public final class ExampleStateMenu extends AbstractStateMenu<ExampleState, Exam
     }
 
 
-    @NotNull
-    public ClickableAction<ExampleItem> getExampleAction() {
-        return (ignored, player) -> stateHandler.incrementCounter();
-    }
-
-
     @Override
     public SizeType getSizeType() {
         return SizeType.DYNAMIC;
@@ -32,8 +27,14 @@ public final class ExampleStateMenu extends AbstractStateMenu<ExampleState, Exam
 
 
     @NotNull
+    public ClickableAction<ExampleItem> getExampleAction() {
+        return (ignored, player) -> stateHandler.incrementCounter();
+    }
+
+
+    @NotNull
     @Override
-    public ExampleStateHandler createStateHandler() {
+    public ExampleStateHandler createStateHandler(@NotNull Player player) {
         return new ExampleStateHandler(this);
     }
 }

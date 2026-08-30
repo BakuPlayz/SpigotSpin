@@ -1,5 +1,6 @@
 package com.github.bakuplayz.spigotspin.menu.abstracts;
 
+import com.github.bakuplayz.spigotspin.SpigotSpin;
 import com.github.bakuplayz.spigotspin.menu.common.CollectionUtils;
 import com.github.bakuplayz.spigotspin.menu.common.TypeUtils;
 import com.github.bakuplayz.spigotspin.menu.common.handlers.OpenInventoryHandler;
@@ -19,8 +20,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -49,18 +52,20 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
 
     @Override
     public void open(@NotNull Player player) {
+        viewers.add(player);
+
         CompletableFuture<List<PI>> future = getFuturePaginationItems();
 
         if (future != null) {
-            future.thenAccept(items -> {
-                viewers.add(player);
-                setStateHandler(createStateHandler());
-                setPaginationItems(items);
+            try {
+                setStateHandler(createStateHandler(player));
+                setPaginationItems(future.get());
                 open(player, new OpenMenuHandler());
-            });
+            } catch (Exception e) {
+                SpigotSpin.LOGGER.log(Level.WARNING, "Failed to render items.", e);
+            }
         } else {
-            viewers.add(player);
-            setStateHandler(createStateHandler());
+            setStateHandler(createStateHandler(player));
             setPaginationItems(getPaginationItems());
             open(player, new OpenMenuHandler());
         }
@@ -92,7 +97,14 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
         loadPaginatedItems(paginatedItems);
         setFrameItems();
         setItems();
-        items.values().forEach(Item::create);
+
+        items.values().forEach(item -> {
+            try {
+                item.create().get(500, TimeUnit.MILLISECONDS);
+            } catch (Exception e) {
+                SpigotSpin.LOGGER.log(Level.WARNING, "Failed to render items.", e);
+            }
+        });
         items.values().forEach(getDispatcher()::updateItem);
     }
 
@@ -151,7 +163,7 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
 
     @Override
     public final boolean hasNextPage() {
-        return calculateMaxItemsPerPage(this::isFramePosition) * stateHandler.getState().getDisplayPage() <= getItemsAmount();
+        return calculateMaxItemsPerPage(this::isFramePosition) * stateHandler.getState().getDisplayPage() < getItemsAmount();
     }
 
 
@@ -174,7 +186,7 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
         PI paginatedItem = paginationItems.get(itemPosition);
         Item item = loadPaginatedItem(paginatedItem, itemPosition);
 
-        if (item instanceof ItemActionable) {
+        if (item instanceof ItemActionable && ((ItemActionable) item).getAction() == null) {
             ((ItemActionable) item).setAction(getPaginatedItemAction(paginatedItem, itemPosition));
         }
 
@@ -229,7 +241,13 @@ public abstract class AbstractPaginatedMenu<S extends PaginatedMenuState, SH ext
 
         @Override
         public void afterInventoryOpened() {
-            items.values().forEach(Item::create);
+            items.values().forEach(item -> {
+                try {
+                    item.create().get(500, TimeUnit.MILLISECONDS);
+                } catch (Exception e) {
+                    SpigotSpin.LOGGER.log(Level.WARNING, "Failed to render items.", e);
+                }
+            });
             items.values().forEach(getDispatcher()::updateItem);
         }
 

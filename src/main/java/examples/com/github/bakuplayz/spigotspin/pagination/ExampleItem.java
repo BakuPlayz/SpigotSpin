@@ -5,16 +5,21 @@ import com.github.bakuplayz.spigotspin.menu.items.state.StateItem;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.CompletableFuture;
+
 @AllArgsConstructor
 public final class ExampleItem extends StateItem<ExampleState> {
 
     private final String name;
 
 
+    @NotNull
     @Override
-    public void create() {
-        setName(String.format("&e%s", name));
-        setMaterial(XMaterial.ANVIL);
+    public CompletableFuture<Void> create() {
+        return createSync(() -> {
+            setName(String.format("&e%s", name));
+            setMaterial(XMaterial.ANVIL);
+        });
     }
 
 

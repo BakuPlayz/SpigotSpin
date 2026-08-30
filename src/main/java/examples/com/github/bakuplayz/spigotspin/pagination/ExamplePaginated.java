@@ -4,6 +4,7 @@ import com.github.bakuplayz.spigotspin.menu.abstracts.AbstractPaginatedMenu;
 import com.github.bakuplayz.spigotspin.menu.common.SizeType;
 import com.github.bakuplayz.spigotspin.menu.items.Item;
 import com.github.bakuplayz.spigotspin.menu.items.actions.ItemAction;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -17,12 +18,6 @@ public final class ExamplePaginated extends AbstractPaginatedMenu<ExampleState, 
 
     public ExamplePaginated() {
         super("Paginated example");
-    }
-
-
-    @Override
-    public List<String> getPaginationItems() {
-        return items;
     }
 
 
@@ -48,7 +43,7 @@ public final class ExamplePaginated extends AbstractPaginatedMenu<ExampleState, 
 
     @NotNull
     @Override
-    public ExampleStateHandler createStateHandler() {
+    public ExampleStateHandler createStateHandler(@NotNull Player player) {
         return new ExampleStateHandler(this);
     }
 
